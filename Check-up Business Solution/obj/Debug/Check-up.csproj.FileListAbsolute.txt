@@ -1,0 +1,150 @@
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\bin\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\bin\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\bin\Debug\MySql.Data.dll
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmBusinessPartners.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmChangePW.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmCrystalReportViewer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmDialog.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmARInvoice.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmGoodsReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmGRPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmInventoryTransfer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmItemMasterData.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmLogin.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmMDIParent.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmSalesReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmUsers.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmWarehouse.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.Properties.Resources.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check-up.csproj.GenerateResource.Cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe.config
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\MySql.Data.dll
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDBConfig.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmBusinessPartners.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmChangePW.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmCrystalReportViewer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDialog.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmARInvoice.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGoodsReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGRPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmImportFiles.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryTransfer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmItemMasterData.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmItemSearch.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmLogin.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmMDIParent.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmExportDBRecords.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmTransmitRecToSvr.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmUsers.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmWarehouse.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.Properties.Resources.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csproj.GenerateResource.Cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDeliveryReceipt.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGRPOReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryTransferReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmPOReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReturnReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDRReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryPostingReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryPosting.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe.config
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csprojResolveAssemblyReference.cache
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDBConfig.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmBusinessPartners.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmChangePW.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmCrystalReportViewer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDeliveryReceipt.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDialog.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmARInvoice.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGoodsReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGRPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmImportFiles.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryPosting.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryTransfer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmItemMasterData.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmItemSearch.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmLogin.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmMDIParent.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmExportDBRecords.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmTransmitRecToSvr.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmUsers.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmWarehouse.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDRReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGRPOReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryPostingReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryTransferReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmPOReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReturnReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.Properties.Resources.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csproj.GenerateResource.Cache
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\MySql.Data.dll
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe.config
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\MySql.Data.dll
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csprojResolveAssemblyReference.cache
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDBConfig.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmBusinessPartners.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmChangePW.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmCrystalReportViewer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDeliveryReceipt.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDialog.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmARInvoice.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGoodsReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGRPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmImportFiles.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryPosting.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryTransfer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmItemMasterData.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmItemSearch.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmLogin.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmMDIParent.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmExportDBRecords.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmTransmitRecToSvr.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmUsers.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmWarehouse.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDRReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmGRPOReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryPostingReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmInventoryTransferReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmPOReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReturnReport.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.Properties.Resources.resources
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csproj.GenerateResource.Cache

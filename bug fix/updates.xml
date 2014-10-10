@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<check-up>
+  <version>1.3.0.0</version>
+  <downloadUrl>ftp://jhunexjun.hostei.com/public_html/check-up/updates/</downloadUrl>
+  <files>
+	<filename>Check-up Business Solutions.exe</filename>
+	<filename></filename>
+  </files>
+</check-up>

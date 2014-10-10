@@ -1,0 +1,75 @@
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\bin\Debug\MySql.Data.dll
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\ResolveAssemblyReference.cache
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human Resource.csproj.GenerateResource.Cache
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\bin\Debug\Human Resource.exe
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\bin\Debug\Human Resource.pdb
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human_Resource.Properties.Resources.resources
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human Resource.exe
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human Resource.pdb
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human_Resource.frmLogin.resources
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human_Resource.frmMDIParent.resources
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human_Resource.frmUsers.resources
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human_Resource.frmDialog.resources
+D:\My Documents\Visual Studio 2008\Projects\Human Resource\Human Resource\obj\Debug\Human_Resource.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory System.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory System.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory_System.forms.frmDialog.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory_System.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory_System.forms.frmLogin.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory_System.forms.frmMDIParent.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory_System.forms.frmUsers.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory_System.Properties.Resources.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\obj\Debug\Inventory System.csproj.GenerateResource.Cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\bin\Debug\Inventory System.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\bin\Debug\Inventory System.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System-test\Inventory System\bin\Debug\MySql.Data.dll
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\bin\Debug\Check-out Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\bin\Debug\Check-out Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\bin\Debug\MySql.Data.dll
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Inventory System.csproj.GenerateResource.Cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check-out Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check-out Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.Properties.Resources.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmBusinessPartners.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmChangePW.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmDialog.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmARInvoice.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmItemMasterData.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmLogin.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmMDIParent.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmUsers.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmWarehouse.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmGRPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmSalesReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmGoodsReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\Check_Out.forms.frmInventoryTransfer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\RdlCompile.cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Inventory System\Inventory System\obj\Debug\RdlCompile.compiled
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Inventory System.csproj.GenerateResource.Cache
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\bin\Debug\MySql.Data.dll
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.Properties.Resources.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmBusinessPartners.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmChangePW.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmCrystalReportViewer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmDialog.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.frmEmployees.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmARInvoice.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmGoodsReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmGRPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmInventoryTransfer.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmItemMasterData.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmLogin.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmMDIParent.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmPO.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmSalesReturn.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmUsers.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check_up.forms.frmWarehouse.resources
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\bin\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\bin\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2008\Projects\Check-up Business Solution\Inventory System\obj\Debug\Check-up Business Solutions.pdb
