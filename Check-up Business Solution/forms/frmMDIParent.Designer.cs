@@ -336,7 +336,7 @@
             this.toolStripMenuItem8.Size = new System.Drawing.Size(182, 22);
             this.toolStripMenuItem8.Text = "Goods Return";
             this.toolStripMenuItem8.ToolTipText = "The goods return document is used to return delivered goods to vendors or to reve" +
-                "rse a purchasing transaction.";
+    "rse a purchasing transaction.";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // toolStripSeparator4
@@ -507,10 +507,12 @@
             // 
             // transmitRecordsToServerToolStripMenuItem
             // 
+            this.transmitRecordsToServerToolStripMenuItem.Enabled = false;
             this.transmitRecordsToServerToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("transmitRecordsToServerToolStripMenuItem.Image")));
             this.transmitRecordsToServerToolStripMenuItem.Name = "transmitRecordsToServerToolStripMenuItem";
             this.transmitRecordsToServerToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.transmitRecordsToServerToolStripMenuItem.Text = "Transmit Records to Branches";
+            this.transmitRecordsToServerToolStripMenuItem.Visible = false;
             this.transmitRecordsToServerToolStripMenuItem.Click += new System.EventHandler(this.transmitRecordsToServerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1

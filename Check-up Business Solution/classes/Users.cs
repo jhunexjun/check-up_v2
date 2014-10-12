@@ -104,9 +104,10 @@ namespace Check_up.classes
                 sql = String.Format(sql, ht["fName"], ht["midName"], ht["lName"], ht["email"], ht["address"], ht["gender"], ht["picLocation"], ht["deactivated"], ht["role"], ht["updatedBy"], ht["username"]);
 
             MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
-            cmd.ExecuteNonQuery();
-
-            return true;
+            if (cmd.ExecuteNonQuery() > 0)
+                return true;
+            else
+                return false;
         }
 
         public DataTable selectUser(Hashtable ht)

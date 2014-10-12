@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Check_up.forms
 {
@@ -49,6 +50,25 @@ namespace Check_up.forms
             }
             else
                 MessageBox.Show(this, "Please enter required values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void frmDBConfig_Load(object sender, EventArgs e)
+        {
+            using (StreamReader sr = new StreamReader("check-up.ini"))
+            {
+                string line; int position;
+
+                while ((line = sr.ReadLine()) != null)
+                {
+                    position = line.IndexOf("=");
+                    if (line.StartsWith("datasource"))
+                        txtDatasource.Text = line.Substring(position + 1);
+                    if (line.StartsWith("database"))
+                        txtDatabase.Text = line.Substring(position + 1);
+                    if (line.StartsWith("username"))
+                        txtUsername.Text = line.Substring(position + 1);
+                }
+            }
         }
     }
 }

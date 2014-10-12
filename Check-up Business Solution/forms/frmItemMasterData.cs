@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using MySql.Data.MySqlClient;
+using Check_up.classes;
 
 namespace Check_up.forms
 {
@@ -307,9 +308,6 @@ namespace Check_up.forms
                     
                     sql += "COMMIT;"; //Finally make it permanent
 
-                    //if (MessageBox.Show(this, sql, "SQL", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                    //    return;
-
                     if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                     {
                         //copy values into htFromDB
@@ -334,10 +332,31 @@ namespace Check_up.forms
                     if (MessageBox.Show(this, "Are you sure you want to save this?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                         return;
 
-                    string deactivate = (chkDeactivate.Checked == true) ? "Y" : "N";
-                    string varWeightItem = chkVarWeightItm.Checked == true ? "Y" : "N";
-                    string v = chkVatable.Checked == true ? "Y" : "N";
+                    Hashtable items = new Hashtable();
+                    items.Add("vatable", chkVatable.Checked == true ? "Y" : "N");
+                    items.Add("qtyPrPrchsUoM", txtQtyPrPrchsUoM.Text.Trim());
+                    items.Add("qtyPrSaleUoM", txtQtyPrSalesUoM.Text.Trim());
+                    items.Add("prchsUoM", txtPurchaseUoM.Text.Trim());
+                    items.Add("saleUoM", txtSaleUoM.Text.Trim());
+                    items.Add("varWeightItm", chkVarWeightItm.Checked == true ? "Y" : "N");
+                    items.Add("minStock", txtMinStock.Text.Trim()); // zero means no minimum
+                    items.Add("maxStock", txtMaxStock.Text.Trim()); // zero means no maximum
+                    items.Add("createdBy", vars.user_id);
+                    items.Add("description", txtDescription.Text.Trim());
+                    items.Add("shortName", txtShortName.Text.Trim());
+                    items.Add("vendor", txtVendor.Text.Trim());
+                    items.Add("remarks", txtRemarks.Text.Trim());
+                    items.Add("deactivated", (chkDeactivate.Checked == true) ? "Y" : "N");
 
+                    ArrayList barcodes = new ArrayList();
+                    rowCount = Convert.ToInt16(dgvBarcode.Rows.Count);
+                    for (i = 0; i < rowCount; i++)
+                        if (!dgvBarcode.Rows[i].IsNewRow)
+                            if (dgvBarcode.Rows[i].Cells[0].Value.ToString().Trim() != "")
+                                barcodes.Add(dgvBarcode.Rows[i].Cells[0].Value.ToString());
+
+
+                    /*
                     sql = "START TRANSACTION;";
                     sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
                     sql += "SET @user_id=" + vars.user_id + ";";
@@ -399,6 +418,16 @@ namespace Check_up.forms
                         btnFind.Text = "&Find";
                         cleanUpUI();
                     }
+                     */
+
+                    ItemMasterData itemmasterdata = new ItemMasterData();
+                    if (itemmasterdata.addItem(items, htNewPrice, barcodes))
+                    {
+                        MessageBox.Show(this, "Saving has been successful!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnFind.Text = "&Find";
+                        cleanUpUI();
+                    }
+
                 }
             }
         }

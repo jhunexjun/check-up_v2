@@ -3,4 +3,7 @@ databases
 References
 *.xls
 *.ini
-doc
+docs
+InventoryTransfer1.cs
+InventoryTransfer1.rpt
+Setup3

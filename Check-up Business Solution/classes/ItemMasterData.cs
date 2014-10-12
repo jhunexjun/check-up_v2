@@ -4,44 +4,163 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Check_up.classes
 {
     public class ItemMasterData
     {
+        private int priceList(string s)
+        {
+            s = s.ToLower();
+            if (s == "purchase price")
+                return 0;
+            else if (s == "retail price")
+                return 1;
+            else
+            {
+                MessageBox.Show("Unrecognized price.");
+                return -1;
+            }
+        }
+
+        private string priceList(int i)
+        {
+            if (i == 0)
+                return "Purchase price";
+            else if (i == 1)
+                return "Retail price";
+            else
+            {
+                MessageBox.Show("Unrecognized price code.");
+                return "";
+            }
+        }
+
         private Hashtable formatParams(Hashtable ht)
         {
-            if (ht.Contains("description"))
-                ht["description"] = "'" + ht["description"] + "'";
+            if (ht.Contains("description") && ht["description"].ToString() != "")
+                ht["description"] = "'" + ht["description"].ToString().Replace("'", "''") + "'";
             else
                 ht["description"] = "null";
 
-            if (ht.Contains("shortName"))
-                ht["shortName"] = "'" + ht["shortName"] + "'";
+            if (ht.Contains("shortName") && ht["shortName"].ToString() != "")
+                ht["shortName"] = "'" + ht["shortName"].ToString().Replace("'", "''") + "'";
             else
                 ht["shortName"] = "null";
 
-            if (ht.Contains("vatable"))
-                ht["vatable"] = "'" + ht["vatable"] + "'";
+           ht["vatable"] = "'" + ht["vatable"] + "'";
+
+           if (ht.Contains("vendor") && ht["vendor"].ToString() != "")
+                ht["vendor"] = "'" + ht["vendor"] + "'";
             else
-                ht["vatable"] = "null";
+                ht["vendor"] = "null";
 
-            // not yet done
+           if (ht.Contains("remarks") && ht["remarks"].ToString() != "")
+                ht["remarks"] = "'" + ht["remarks"].ToString().Replace("'", "''") + "'";
+            else
+                ht["remarks"] = "null";
 
+            if (ht.Contains("deactivated"))
+                ht["deactivated"] = "'" + ht["deactivated"] + "'";
+            else
+                ht["deactivated"] = "'N'"; // let's put a default value
+
+            // if not create date, db should create it
+
+            // updateDate and updatedBy are default to null
+
+            ht["prchsUoM"] = "'" + ht["prchsUoM"] + "'";
+            ht["saleUoM"] = "'" + ht["saleUoM"] + "'";
+            ht["varWeightItm"] = "'" + ht["varWeightItm"] + "'";
+            
             return ht;
         }
 
-        public bool addItem(Hashtable ht)
+        public bool addItem(Hashtable itemMasterData, Hashtable prices, ArrayList barcodes)
         {
-            if (!ht.Contains("itemCode"))
+            // if there's no values of the ff exit immediately as they are not nullable items.
+
+            if (!itemMasterData.Contains("vatable"))
             {
-                MessageBox.Show("Please indicate item code in the hash.");
+                MessageBox.Show("Please indicate vatable in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("qtyPrPrchsUoM"))
+            {
+                MessageBox.Show("Please indicate quantity per purchase UoM in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("qtyPrSaleUoM"))
+            {
+                MessageBox.Show("Please indicate quantity per sale UoM in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("prchsUoM"))
+            {
+                MessageBox.Show("Please indicate purchase UoM in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("saleUoM"))
+            {
+                MessageBox.Show("Please indicate purchase UoM in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("varWeightItm"))
+            {
+                MessageBox.Show("Please indicate variable weight item in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("minStock"))
+            {
+                MessageBox.Show("Please indicate minimum stock in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("maxStock"))
+            {
+                MessageBox.Show("Please indicate max stock in the hash.");
+                return false;
+            }
+            if (!itemMasterData.Contains("createdBy"))
+            {
+                MessageBox.Show("Please indicate 'created by' in the hash.");
                 return false;
             }
 
-            ht = formatParams(ht);
+            itemMasterData = formatParams(itemMasterData);
+
+            string sql = "START TRANSACTION;";
+            sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
+            sql += "SET @user_id=" + vars.user_id + ";";
+            sql += "SET @varWeightItm=" + itemMasterData["varWeightItm"] + ";";
+            sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='IMD');";
+            sql += "SET @itemCode=CONCAT('" + vars.terminalId + "', 'ITM', @newId);";
+            if (itemMasterData.Contains("vendor"))
+                sql += "SET @vendor=(SELECT code FROM businesspartner WHERE code=" + itemMasterData["vendor"] + " AND BPType=0 AND deactivated='N');";
+
+            sql += "INSERT INTO itemmasterdata(itemCode,description,shortName,vatable,vendor,deactivated,qtyPrPrchsUoM,qtyPrSaleUoM,prchsUoM,saleUoM,varWeightItm,remarks,minStock,maxStock,createdBy)";
+            sql += " VALUES(@itemCode," + itemMasterData["description"] + "," + itemMasterData["shortName"] + "," + itemMasterData["vatable"] + "," + itemMasterData["vendor"] + "," + itemMasterData["deactivated"] + "," + itemMasterData["qtyPrPrchsUoM"] + "," + itemMasterData["qtyPrSaleUoM"] + "," + itemMasterData["prchsUoM"] + "," + itemMasterData["saleUoM"] + "," + itemMasterData["varWeightItm"] + "," + itemMasterData["remarks"] + "," + itemMasterData["minStock"] + "," + itemMasterData["maxStock"] + ",@user_id);";
             
-            return true;
+            int priceListCode; double thePrice;
+            foreach (DictionaryEntry item in prices)
+            {
+                priceListCode = (int)item.Key;
+                thePrice = Convert.ToDouble(prices[item.Key]);
+                sql += "INSERT INTO pricelist(itemCode,priceListCode,netPrice,createdBy) VALUES(@itemCode," + priceListCode + "," + thePrice + "," + vars.user_id + ");";
+            }
+
+            int rowCount = barcodes.Count;
+            foreach( string barcode in barcodes)
+                sql += "INSERT INTO barcode(itemCode,barcode,createDate,createdBy) VALUES(@itemCode,'" + barcode + "',@date,@user_id);";
+
+            sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IMD';";
+            sql += " COMMIT;";
+
+            MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            if (cmd.ExecuteNonQuery() > 0)
+                return true;
+            else
+                return false;
         }
     }
 }

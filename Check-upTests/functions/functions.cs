@@ -88,7 +88,6 @@ namespace Check_upTests
             {
                 MySqlCommand cmd = new MySqlCommand(query, vars.MySqlConnection);
                 cmd.ExecuteNonQuery();
-
                 return true;
             }
             catch (MySqlException e)
@@ -97,6 +96,31 @@ namespace Check_upTests
                 return false;
             }
             
+        }
+
+        public static bool createDefaultRecordsIntoDB()
+        {
+            string sql = "insert into warehouse(code,`name`,branchType) values('MAIN', 'Main branch', 'Main');";
+            sql += "insert into terminal values('MAIN', 'MAIN', '192.168.0.100', 'MAIN', 'Main');";
+            sql += "insert into documents(documentCode,documentName,lastNo) values('PO', 'Purchase Order', 0)";
+            sql += " ,('SI', 'Sales Invoice', 0)";
+            sql += " ,('GRPO', 'Goods Receipt PO', 0)";
+            sql += " ,('IMD', 'Item Master Data', 0)";
+            sql += " ,('SR', 'Sales Return', 0)";
+            sql += " ,('GR', 'Goods Return', 0)";
+            sql += " ,('IT', 'Inventory Transfer', 0)";
+            sql += " ,('DR', 'Delivery Receipt', 0)";
+            sql += " ,('IP', 'Inventory Posting', 0);";
+            
+            // 1 records has already been added by class Users
+            //sql += "insert into users(username,`password`)";
+            //sql += " values('admin', '$2a$10$5gcpxMRDi2wKdZkwaZ.G/uwJeFpPLw6RVnIKCy48haolWoVvqiKJy');";
+
+            MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            if (cmd.ExecuteNonQuery() > 0)
+                return true;
+            else
+                return false;
         }
     }
 }
