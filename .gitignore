@@ -1,5 +1,8 @@
-*.sql
-databases
+# only *.sql revisions are allowed.
+0schema.sql
+backup
+test
+
 References
 *.xls
 *.ini
