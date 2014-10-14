@@ -1,4 +1,5 @@
-# only *.sql revisions are allowed.
+# Databases.
+0schema_revision_1.sql
 0schema.sql
 backup
 test

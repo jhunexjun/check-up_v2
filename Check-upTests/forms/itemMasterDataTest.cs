@@ -7,6 +7,9 @@ using Check_up;
 using System.Data;
 using MySql.Data.MySqlClient;
 
+// temp
+using System.Windows.Forms;
+
 namespace Check_upTests.forms
 {
     [TestClass]
@@ -23,7 +26,7 @@ namespace Check_upTests.forms
         [TestMethod]
         public void addItem()
         {
-           Assert.IsTrue( functions.createDefaultRecordsIntoDB());
+           Assert.IsTrue(functions.createDefaultRecordsIntoDB());
 
             vars.terminalId = "MAIN";
             vars.user_id = 1;
@@ -57,11 +60,12 @@ namespace Check_upTests.forms
             Assert.IsTrue(itemMasterData.addItem(items, prices, barcodes));
 
             DataTable dt = new DataTable();
-            string sql = "select * from itemmasterdata left join barcode using(itemcode) left join pricelist using(itemcode)";
+            //string sql = "select * from itemmasterdata left join barcode using(itemcode) left join pricelist using(itemcode)";
+            string sql = "select * from itemmasterdata";
             MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             da.Fill(dt);
-            Assert.AreEqual(dt.Rows.Count, 4, "Number of records count are not the same.");
+            Assert.AreEqual(dt.Rows.Count, 1, "Number of records count are not the same.");
             Assert.AreEqual(dt.Rows[0]["itemCode"], "MAINITM1");
             Assert.AreEqual(dt.Rows[0]["description"], "Long Bike");
             Assert.AreEqual(dt.Rows[0]["shortName"], "Bike");
@@ -82,6 +86,34 @@ namespace Check_upTests.forms
             Assert.AreEqual(dt.Rows[0]["updatedBy"].ToString(), "");
             Assert.AreEqual(dt.Rows[0]["trans"].ToString(), "");
             Assert.AreEqual(dt.Rows[0]["exported"].ToString(), "");
+
+            sql = "select * from barcode";
+            cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            dt = new DataTable();
+            da.Fill(dt);
+            Assert.AreEqual(dt.Rows.Count, 2);
+
+            ArrayList dt_barcodes = new ArrayList(dt.Rows.Count);
+            foreach(DataRow row in dt.Rows)
+                dt_barcodes.Add(row["barcode"]);                
+            
+            Assert.IsTrue(dt_barcodes.Contains("987654321"));
+            Assert.IsTrue(dt_barcodes.Contains("1234567890"));
+            Assert.IsNotNull(dt.Rows[0]["createDate"]);
+            Assert.IsNotNull(dt.Rows[1]["createDate"]);
+            Assert.AreEqual(dt.Rows[0]["createdBy"], 1);
+            Assert.AreEqual(dt.Rows[1]["createdBy"], 1);
+            Assert.AreEqual(dt.Rows[0]["exported"], DBNull.Value);
+            Assert.AreEqual(dt.Rows[1]["exported"], DBNull.Value);
+
+            sql = "select * from pricelist";
+            cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            dt = new DataTable();
+            da.Fill(dt);
+            Assert.AreEqual(dt.Rows.Count, 2);
+            // continue here
         }
 
         [TestMethod]
