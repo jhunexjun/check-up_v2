@@ -126,6 +126,7 @@
     <Compile Include="classes\BCrypt.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="classes\InventoryTransfer.cs" />
     <Compile Include="classes\ItemMasterData.cs" />
     <Compile Include="classes\convertRole.cs" />
     <Compile Include="classes\CryptorEngine.cs">

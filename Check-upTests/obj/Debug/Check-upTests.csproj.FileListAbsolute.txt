@@ -1,4 +1,3 @@
-C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\obj\Debug\Check-upTests.csprojResolveAssemblyReference.cache
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\bin\Debug\Check-upTests.dll
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\bin\Debug\Check-upTests.pdb
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\bin\Debug\Check-up Business Solutions.exe
@@ -7,5 +6,6 @@ C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Busi
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\bin\Debug\Check-up Business Solutions.pdb
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\obj\Debug\Check-upTests.csprojResolveAssemblyReference.cache
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\obj\Debug\Check-upTests.dll
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-upTests\obj\Debug\Check-upTests.pdb

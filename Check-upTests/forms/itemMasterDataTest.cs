@@ -94,12 +94,12 @@ namespace Check_upTests.forms
             da.Fill(dt);
             Assert.AreEqual(dt.Rows.Count, 2);
 
-            ArrayList dt_barcodes = new ArrayList(dt.Rows.Count);
+            ArrayList dt_rows = new ArrayList(dt.Rows.Count);
             foreach(DataRow row in dt.Rows)
-                dt_barcodes.Add(row["barcode"]);                
+                dt_rows.Add(row["barcode"]);                
             
-            Assert.IsTrue(dt_barcodes.Contains("987654321"));
-            Assert.IsTrue(dt_barcodes.Contains("1234567890"));
+            Assert.IsTrue(dt_rows.Contains("987654321"));
+            Assert.IsTrue(dt_rows.Contains("1234567890"));
             Assert.IsNotNull(dt.Rows[0]["createDate"]);
             Assert.IsNotNull(dt.Rows[1]["createDate"]);
             Assert.AreEqual(dt.Rows[0]["createdBy"], 1);
@@ -113,7 +113,33 @@ namespace Check_upTests.forms
             dt = new DataTable();
             da.Fill(dt);
             Assert.AreEqual(dt.Rows.Count, 2);
-            // continue here
+
+            /*
+            Hashtable ht = new Hashtable();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Assert.AreEqual(row["itemCode"], "MAINITM1");
+
+                dt_rows = new ArrayList(dt.Rows.Count);
+                foreach (DataRow row2 in dt.Rows)
+                    dt_rows.Add(row2["priceListCode"]);
+
+                Assert.IsTrue(dt_rows.Contains(0)); // pricelistcode = 0
+                Assert.IsTrue(dt_rows.Contains(1)); // pricelistcode = 1
+
+                int i = 0; ht.Clear();
+                foreach (DataRow row2 in dt.Rows)
+                {
+                    ht.Add(i, row2["netPrice"]);
+                    i += 1;
+                }                   
+
+                Assert.IsTrue(ht.ContainsValue("120.500000"));
+                Assert.IsTrue(ht.ContainsValue("99.500000"));
+            }
+            */
+
         }
 
         [TestMethod]

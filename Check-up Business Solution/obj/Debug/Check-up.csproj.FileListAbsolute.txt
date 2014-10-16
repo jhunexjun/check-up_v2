@@ -107,15 +107,12 @@ C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe.config
-C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.exe
-C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.pdb
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.exe
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Check-up Business Solutions.pdb
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\MySql.Data.dll
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csprojResolveAssemblyReference.cache
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmDBConfig.resources
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmBusinessPartners.resources
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmChangePW.resources
@@ -148,3 +145,5 @@ C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Busi
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.forms.frmSalesReturnReport.resources
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check_up.Properties.Resources.resources
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csproj.GenerateResource.Cache
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.exe
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.pdb
