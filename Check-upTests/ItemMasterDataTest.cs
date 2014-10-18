@@ -26,7 +26,7 @@ namespace Check_upTests.forms
         [TestMethod]
         public void addItem()
         {
-           Assert.IsTrue(functions.createDefaultRecordsIntoDB());
+           Assert.IsTrue(functions.createDefaultRecordsForTheTests());
 
             vars.terminalId = "MAIN";
             vars.user_id = 1;

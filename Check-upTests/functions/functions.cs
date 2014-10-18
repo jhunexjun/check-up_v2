@@ -98,7 +98,7 @@ namespace Check_upTests
             
         }
 
-        public static bool createDefaultRecordsIntoDB()
+        public static bool createDefaultRecordsForTheTests()
         {
             string sql = "insert into warehouse(code,`name`,branchType) values('MAIN', 'Main branch', 'Main');";
             sql += "insert into terminal values('MAIN', 'MAIN', '192.168.0.100', 'MAIN', 'Main');";

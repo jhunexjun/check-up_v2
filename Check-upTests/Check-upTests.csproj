@@ -57,10 +57,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="forms\ItemMasterDataTest.cs" />
-    <Compile Include="forms\BusinessPartnerTest.cs" />
-    <Compile Include="forms\WarehouseTest.cs" />
-    <Compile Include="forms\UserTests.cs" />
+    <Compile Include="ItemMasterDataTest.cs" />
+    <Compile Include="BusinessPartnerTest.cs" />
+    <Compile Include="InventoryTransferTest.cs" />
+    <Compile Include="WarehouseTest.cs" />
+    <Compile Include="UserTests.cs" />
     <Compile Include="functions\functions.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -72,6 +73,7 @@
       <Name>Check-up</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

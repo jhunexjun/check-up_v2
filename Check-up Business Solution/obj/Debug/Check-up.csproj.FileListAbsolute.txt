@@ -147,3 +147,4 @@ C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Busi
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csproj.GenerateResource.Cache
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.exe
 C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up Business Solutions.pdb
+C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\Check-up Business Solution\obj\Debug\Check-up.csprojResolveAssemblyReference.cache

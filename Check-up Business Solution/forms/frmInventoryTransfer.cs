@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using Check_up.classes;
 
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.ReportSource;
@@ -786,110 +787,118 @@ namespace Check_up.forms
                     if (MessageBox.Show(this, "Are you sure you want to save this?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                         return;
 
-                    decimal totalPrcntDscnt, totalAmtDscnt, netTotal, grossTotal;
-                    decimal totalPrcntDscntRtl, totalAmtDscntRtl, netTotalRtl, grossTotalRtl;
-
-                    // purchases
-                    totalPrcntDscnt = Decimal.Parse(txtTotalPrcntPrchsDscnt.Text);
-                    totalAmtDscnt = Decimal.Parse(txtTotalAmtPrchsDscnt.Text);
-                    netTotal = Decimal.Parse(txtNetPrchsTotal.Text);
-                    grossTotal = Decimal.Parse(txtGrossPrchsTotal.Text);
-
-                    //retail
-                    totalPrcntDscntRtl = Decimal.Parse(txtTotalPrcntDscntRtl.Text);
-                    totalAmtDscntRtl = Decimal.Parse(txtTotalAmtDscntRtl.Text);
-                    netTotalRtl = Decimal.Parse(txtNetTotalRtl.Text);
-                    grossTotalRtl = Decimal.Parse(txtGrossTotalRtl.Text);
+                    Hashtable header = new Hashtable();
+                    header.Add("terminalId", vars.terminalId);
+                    header.Add("frmWHouse", cboComboFrom.Text);
+                    header.Add("toWHouse", cboComboTo.Text);
+                    header.Add("createdBy", vars.user_id);
 
                     DateTime dateTime = DateTime.Parse(txtPostingDate.Text.Trim());
-                    string strDateTime = dateTime.ToString("yyyy/MM/dd");
+                    header.Add("postingDate", dateTime.ToString("yyyy/MM/dd"));
 
-                    sql = "START TRANSACTION;";
-                    sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
-                    sql += "SET @postingDate=DATE_FORMAT('" + strDateTime + "', '%Y-%m-%d');";
-                    sql += "SET @user_id=" + vars.user_id + ";";
-                    sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='IT');";
-                    sql += "SET @docId=CONCAT('" + vars.terminalId + "', @newId);";
-                    sql += "SET @totalPrcntDscnt=" + totalPrcntDscnt + ";";
-                    sql += "SET @totalAmtDscnt=" + totalAmtDscnt + ";";
-                    sql += "SET @netTotal=" + netTotal + ";";
-                    sql += "SET @grossTotal=" + grossTotal + ";";
-                    sql += "SET @totalPrcntDscntRtl=" + totalPrcntDscntRtl + ";";
-                    sql += "SET @totalAmtDscntRtl=" + totalAmtDscntRtl + ";";
-                    sql += "SET @netTotalRtl=" + netTotalRtl + ";";
-                    sql += "SET @grossTotalRtl=" + grossTotalRtl + ";";
-                    sql += "INSERT INTO inventorytransfer(docId,frmWHouse,toWHouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,totalPrcntDscntRtl,totalAmtDscntRtl,netTotalRtl,grossTotalRtl";
-                    if (txtRemarks1.Text.Trim() != "")
-                        sql += ",remarks1";
-                    if (txtRemarks2.Text.Trim() != "")
-                        sql += ",remarks2";
-                    sql += ",createDate,createdBy)";
-                    sql += " VALUES(@docId,'" + cboComboFrom.Text + "','" + cboComboTo.Text + "',@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@totalPrcntDscntRtl,@totalAmtDscntRtl,@netTotalRtl,@grossTotalRtl";
-                    if (txtRemarks1.Text.Trim() != "")
-                        sql += ",'" + txtRemarks1.Text.Trim() + "'";
-                    if (txtRemarks2.Text.Trim() != "")
-                        sql += ",'" + txtRemarks2.Text.Trim() + "'";
-                    sql += ",@date,@user_id);";
+                    try
+                    {
+                        //purchase prices
+                        header.Add("totalPrcntDscnt", Decimal.Parse(txtTotalPrcntPrchsDscnt.Text));
+                        header.Add("totalAmtDscnt", Decimal.Parse(txtTotalAmtPrchsDscnt.Text));
+                        header.Add("netTotal", Decimal.Parse(txtNetPrchsTotal.Text));
+                        header.Add("grossTotal", Decimal.Parse(txtGrossPrchsTotal.Text));
+                        //retail prices
+                        header.Add("totalPrcntDscntRtl", Decimal.Parse(txtTotalPrcntDscntRtl.Text));
+                        header.Add("totalAmtDscntRtl", Decimal.Parse(txtTotalAmtDscntRtl.Text));
+                        header.Add("netTotalRtl", Decimal.Parse(txtNetTotalRtl.Text));
+                        header.Add("grossTotalRtl", Decimal.Parse(txtGrossTotalRtl.Text));
+                    }
+                    catch (ExecutionEngineException ex)
+                    {
+                        MessageBox.Show(this, ex.ToString());
+                        return;
+                    }
+
+                    DataTable table = new DataTable();
+                    table.Columns.Add("docId");
+                    table.Columns.Add("indx");
+                    table.Columns.Add("itemCode");
+                    table.Columns.Add("description");
+                    table.Columns.Add("vatable");
+                    table.Columns.Add("realBsNetPrchsPrc");
+                    table.Columns.Add("realBsGrossPrchsPrc");
+                    table.Columns.Add("realNetPrchsPrc");
+                    table.Columns.Add("realGrossPrchsPrc");
+                    table.Columns.Add("qty");
+                    table.Columns.Add("baseUoM");
+                    table.Columns.Add("qtyPrPrchsUoM");
+                    table.Columns.Add("prcntDscnt");
+                    table.Columns.Add("amtDscnt");
+                    table.Columns.Add("netPrchsPrc");
+                    table.Columns.Add("grossPrchsPrc");
+                    table.Columns.Add("rowNetTotal");
+                    table.Columns.Add("rowGrossTotal");
+                    table.Columns.Add("qtyPrRtlUoM");
+                    table.Columns.Add("realBsNetPrcRtl");
+                    table.Columns.Add("realBsGrossPrcRtl");
+                    table.Columns.Add("realNetPrcRtl");
+                    table.Columns.Add("realGrossPrcRtl");
+                    table.Columns.Add("netPrcRtl");
+                    table.Columns.Add("grossPrcRtl");
+                    table.Columns.Add("prcntDscntRtl");
+                    table.Columns.Add("amtDscntRtl");
+                    table.Columns.Add("rowNetTotalRtl");
+                    table.Columns.Add("rowGrossTotalRtl");
 
                     rowCount = dgvItems.Rows.Count;
+                    DataRow row;
 
-                    for (i = 0; i < rowCount; i++)
+                    try
                     {
-                        if (!dgvItems.Rows[i].IsNewRow && dgvItems.Rows[i].Cells[0].Value.ToString() != "")
+                        for (i = 0; i < rowCount; i++)
                         {
-                            string varItemCode, varDescription, varVatable, varBaseUoM;
-                            decimal varQty, varPrcntDscnt, varAmtDscnt, varNetPrchsPrc, varGrossPrchsPrc, varRowNetTotal, varRowGrossTotal, varQtyPrPrchsUoM, varRealNetPrchsPrc, varRealGrossPrchsPrc, varRealBsNetPrchsPrc, varRealBsGrossPrchsPrc, varBaseQty;
-                            decimal varPrcntDscntRtl, varAmtDscntRtl, varNetPrcRtl, varGrossPrcRtl, varRowNetTotalRtl, varRowGrossTotalRtl, varQtyPrRtlUoM, varRealNetPrcRtl, varRealGrossPrcRtl, varRealBsNetPrcRtl, varRealBsGrossPrcRtl, varBaseQtyRtl;
+                            if (!dgvItems.Rows[i].IsNewRow && dgvItems.Rows[i].Cells[0].Value.ToString() != "")
+                            {
+                                row = table.NewRow();
+                                row["indx"] = i;
+                                row["itemCode"] = dgvItems.Rows[i].Cells["itemCode"].Value.ToString();
+                                row["description"] = dgvItems.Rows[i].Cells["description"].Value.ToString();
+                                row["qty"] = Decimal.Parse(dgvItems.Rows[i].Cells["Qty"].Value.ToString());
+                                row["vatable"] = dgvItems.Rows[i].Cells["vatable"].Value.ToString();
+                                row["baseUoM"] = fx.null2EmptyStr(dgvItems.Rows[i].Cells["baseUoM"].Value);
+                                //purchase prices
+                                row["qtyPrPrchsUoM"] = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrPrchsUoM"].Value.ToString());
+                                row["realBsNetPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsNetPrchsPrc"].Value.ToString());
+                                row["realBsGrossPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsGrossPrchsPrc"].Value.ToString());
+                                row["realNetPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realNetPrchsPrc"].Value.ToString());
+                                row["realGrossPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realGrossPrchsPrc"].Value.ToString());
+                                row["prcntDscnt"] = Decimal.Parse(dgvItems.Rows[i].Cells["prcntDscnt"].Value.ToString());
+                                row["grossPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["grossPrchsPrc"].Value.ToString());
+                                row["netPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["netPrchsPrc"].Value.ToString());
+                                row["amtDscnt"] = Decimal.Parse(dgvItems.Rows[i].Cells["amtDscnt"].Value.ToString());
+                                row["rowNetTotal"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowNetTotal"].Value.ToString());
+                                row["rowGrossTotal"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowGrossTotal"].Value.ToString());
+                                //retail
+                                row["qtyPrRtlUo"] = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrRtlUoM"].Value.ToString());
+                                row["realBsNetPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsNetPrcRtl"].Value.ToString());
+                                row["realBsGrossPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsGrossPrcRtl"].Value.ToString());
+                                row["realNetPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["realNetPrcRtl"].Value.ToString());
+                                row["realGrossPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["realGrossPrcRtl"].Value.ToString());
+                                row["prcntDscntRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["prcntDscntRtl"].Value.ToString());
+                                row["grossPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["grossPrcRtl"].Value.ToString());
+                                row["netPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["netPrcRtl"].Value.ToString());
+                                row["amtDscntRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["amtDscntRtl"].Value.ToString());
+                                row["rowNetTotalRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowNetTotalRtl"].Value.ToString());
+                                row["rowGrossTotalRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowGrossTotalRtl"].Value.ToString());
 
-                            varItemCode = dgvItems.Rows[i].Cells["itemCode"].Value.ToString();
-                            varDescription = dgvItems.Rows[i].Cells["description"].Value.ToString();
-                            varQty = Decimal.Parse(dgvItems.Rows[i].Cells["Qty"].Value.ToString());
-                            varVatable = dgvItems.Rows[i].Cells["vatable"].Value.ToString();                            
-                            varBaseUoM = fx.null2EmptyStr(dgvItems.Rows[i].Cells["baseUoM"].Value);
-
-                            //purchase prices
-                            varQtyPrPrchsUoM = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrPrchsUoM"].Value.ToString());
-                            varRealBsNetPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realBsNetPrchsPrc"].Value.ToString());
-                            varRealBsGrossPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realBsGrossPrchsPrc"].Value.ToString());
-                            varRealNetPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realNetPrchsPrc"].Value.ToString());
-                            varRealGrossPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realGrossPrchsPrc"].Value.ToString());
-                            varPrcntDscnt = Decimal.Parse(dgvItems.Rows[i].Cells["prcntDscnt"].Value.ToString());
-                            varGrossPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["grossPrchsPrc"].Value.ToString());
-                            varNetPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["netPrchsPrc"].Value.ToString());
-                            varAmtDscnt = Decimal.Parse(dgvItems.Rows[i].Cells["amtDscnt"].Value.ToString());
-                            varRowNetTotal = Decimal.Parse(dgvItems.Rows[i].Cells["rowNetTotal"].Value.ToString());
-                            varRowGrossTotal = Decimal.Parse(dgvItems.Rows[i].Cells["rowGrossTotal"].Value.ToString());
-
-                            //retail
-                            varQtyPrRtlUoM = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrRtlUoM"].Value.ToString());
-                            varRealBsNetPrcRtl = Decimal.Parse(dgvItems.Rows[i].Cells["realBsNetPrcRtl"].Value.ToString());
-                            varRealBsGrossPrcRtl = Decimal.Parse(dgvItems.Rows[i].Cells["realBsGrossPrcRtl"].Value.ToString());
-                            varRealNetPrcRtl = Decimal.Parse(dgvItems.Rows[i].Cells["realNetPrcRtl"].Value.ToString());
-                            varRealGrossPrcRtl = Decimal.Parse(dgvItems.Rows[i].Cells["realGrossPrcRtl"].Value.ToString());
-                            varPrcntDscntRtl = Decimal.Parse(dgvItems.Rows[i].Cells["prcntDscntRtl"].Value.ToString());
-                            varGrossPrcRtl = Decimal.Parse(dgvItems.Rows[i].Cells["grossPrcRtl"].Value.ToString());
-                            varNetPrcRtl = Decimal.Parse(dgvItems.Rows[i].Cells["netPrcRtl"].Value.ToString());
-                            varAmtDscnt = Decimal.Parse(dgvItems.Rows[i].Cells["amtDscntRtl"].Value.ToString());
-                            varRowNetTotal = Decimal.Parse(dgvItems.Rows[i].Cells["rowNetTotalRtl"].Value.ToString());
-                            varRowGrossTotal = Decimal.Parse(dgvItems.Rows[i].Cells["rowGrossTotalRtl"].Value.ToString());
-
-                            varBaseQty = ((varBaseUoM == "N") ? varQtyPrRtlUoM * varQty : varQty);
-
-                            sql += "INSERT INTO inventorytransfer_item(docId,indx,itemCode,description,vatable,realBsNetPrchsPrc,realBsGrossPrchsPrc,realNetPrchsPrc,realGrossPrchsPrc,qty,baseUoM,qtyPrPrchsUoM,prcntDscnt,amtDscnt,netPrchsPrc,grossPrchsPrc,rowNetTotal,rowGrossTotal";
-                            sql += ",realBsNetPrcRtl,realBsGrossPrcRtl,realNetPrcRtl,realGrossPrcRtl,qtyPrRtlUoM,prcntDscntRtl,netPrcRtl,grossPrcRtl,amtDscntRtl,rowNetTotalRtl,rowGrossTotalRtl)";
-                            sql += " VALUES(@docId," + i + ",'" + varItemCode + "','" + varDescription + "','" + varVatable + "'," + varRealBsNetPrchsPrc + "," + varRealBsGrossPrchsPrc + "," + varRealNetPrchsPrc + "," + varRealGrossPrchsPrc + "," + varQty + ",'" + varBaseUoM + "'," + varQtyPrPrchsUoM + "," + varPrcntDscnt + "," + varAmtDscnt + "," + varNetPrchsPrc + "," + varGrossPrchsPrc + "," + varRowNetTotal + "," + varRowGrossTotal;
-                            sql += "," + varRealBsNetPrcRtl + "," + varRealBsGrossPrcRtl + "," + varRealNetPrcRtl + "," + varRealGrossPrcRtl + "," + varQtyPrRtlUoM + "," + varPrcntDscntRtl + "," + varNetPrcRtl + "," + varGrossPrcRtl + "," + varAmtDscnt + "," + varRowNetTotal + "," + varRowGrossTotal + ");";
-
-                            sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + cboComboTo.Text + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + varBaseQty + ";";
-                            sql += "UPDATE item_warehouse SET inStock=inStock-" + varBaseQty + " WHERE itemCode='" + varItemCode + "' AND wHCode='" + cboComboFrom.Text + "';";
+                                table.Rows.Add(row);
+                            }
                         }
                     }
-                    sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IT';";
-                    sql += "COMMIT;";
+                    catch (ExecutionEngineException ex)
+                    {
+                        MessageBox.Show(this, ex.ToString());
+                        return;
+                    }
 
-                    db = new database();
-                    if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
+                    InventoryTransfer inventoryTransfer = new InventoryTransfer();
+                    if (inventoryTransfer.addInventoryTransfer(header, table))
                     {
                         MessageBox.Show(this, "Saving has been successful", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         db = new database(); dt = new DataTable();
