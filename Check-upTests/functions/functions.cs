@@ -13,6 +13,7 @@ namespace Check_upTests
 {
     public static class functions
     {
+        //used to read the database.ini file for the database login
         public static Hashtable readDbConfigFile()
         {
            vars.db_credentials db_con = new vars.db_credentials();
@@ -54,6 +55,7 @@ namespace Check_upTests
             }
         }
 
+        //we need to make sure that a fresh new copy of database is used.
         public static bool dropAndCreateDatabase(Hashtable ht)
         {
             string connectionString = "SERVER=" + ht["datasource"] + ";DATABASE=" + ht["database"] + ";UID=" + ht["username"] + ";PASSWORD=" + ht["password"] + ";Allow User Variables=True";
@@ -76,6 +78,7 @@ namespace Check_upTests
             }
         }
 
+        //this recreate database.
         public static bool reloadDatabase() {
             string query;
             string path = @"C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\databases\0schema.sql";
@@ -98,6 +101,7 @@ namespace Check_upTests
             
         }
 
+        //before the system is used, default values are inserted into the db just like default login
         public static bool createDefaultRecordsForTheTests()
         {
             string sql = "insert into warehouse(code,`name`,branchType) values('MAIN', 'Main branch', 'Main');";

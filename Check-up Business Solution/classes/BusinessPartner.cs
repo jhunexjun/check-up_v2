@@ -47,7 +47,7 @@ namespace Check_up.classes
             if (ht.Contains("tel1"))
                 ht["tel1"] = "'" + ht["tel1"] + "'";
             else
-                ht["tel2"] = "null";
+                ht["tel1"] = "null";
 
              if (ht.Contains("tel2"))
                 ht["tel2"] = "'" + ht["tel2"] + "'";

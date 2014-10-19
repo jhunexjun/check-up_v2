@@ -23,7 +23,7 @@ namespace Check_upTests.forms
         public void addWarehouse()
         {
             Hashtable ht = new Hashtable();
-            ht.Add("code", "NAVAL");
+            ht.Add("code", "US-NY");
             ht.Add("name", "Main Warehouse");
             ht.Add("branchType", "Main");
             ht.Add("ftp_url", "ftp://192.168.1.100/incoming/");
@@ -43,7 +43,7 @@ namespace Check_upTests.forms
             da.Fill(dt);
 
             Assert.AreEqual(dt.Rows[0]["id"], 1);   // this is assumed to be 1
-            Assert.AreEqual(dt.Rows[0]["code"], "NAVAL");
+            Assert.AreEqual(dt.Rows[0]["code"], "US-NY");
             Assert.AreEqual(dt.Rows[0]["name"], "Main Warehouse");
             Assert.AreEqual(dt.Rows[0]["branchType"], "Main");
             Assert.AreEqual(dt.Rows[0]["ftp_url"], "ftp://192.168.1.100/incoming/");

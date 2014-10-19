@@ -77,10 +77,9 @@ namespace Check_up.classes
             return ht;
         }
 
-        public bool addItem(Hashtable itemMasterData, Hashtable prices, ArrayList barcodes)
+        //this checks the data passed for data integrity
+        private bool checkPassedData(Hashtable itemMasterData)
         {
-            // if there's no values of the ff exit immediately as they are not nullable items.
-
             if (!itemMasterData.Contains("vatable"))
             {
                 MessageBox.Show("Please indicate vatable in the hash.");
@@ -127,6 +126,15 @@ namespace Check_up.classes
                 return false;
             }
 
+            return true;
+        }
+
+        public bool addItem(Hashtable itemMasterData, Hashtable prices, ArrayList barcodes = null)
+        {
+            // if there's no values of the ff exit immediately as they are not nullable items.
+            if (!checkPassedData(itemMasterData))
+                return false;            
+
             itemMasterData = formatParams(itemMasterData);
 
             string sql = "START TRANSACTION;";
@@ -149,9 +157,10 @@ namespace Check_up.classes
                 sql += "INSERT INTO pricelist(itemCode,priceListCode,netPrice,createdBy) VALUES(@itemCode," + priceListCode + "," + thePrice + "," + vars.user_id + ");";
             }
 
-            int rowCount = barcodes.Count;
-            foreach( string barcode in barcodes)
-                sql += "INSERT INTO barcode(itemCode,barcode,createDate,createdBy) VALUES(@itemCode,'" + barcode + "',@date,@user_id);";
+            // int rowCount = barcodes.Count;
+            if (barcodes != null)
+                foreach( string barcode in barcodes)
+                    sql += "INSERT INTO barcode(itemCode,barcode,createDate,createdBy) VALUES(@itemCode,'" + barcode + "',@date,@user_id);";
 
             sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IMD';";
             sql += " COMMIT;";

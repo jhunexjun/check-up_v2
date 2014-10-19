@@ -101,6 +101,11 @@ namespace Check_up.classes
                 MessageBox.Show("Please indicate 'created by' key in the hash.");
                 return false;
             }
+            if (String.Compare(header["frmWHouse"].ToString(), header["toWHouse"].ToString()) == 0)
+            {
+                MessageBox.Show("From and to warehouse should not be the same.");
+                return false;
+            }
 
             return true;
         }
@@ -160,19 +165,27 @@ namespace Check_up.classes
                     MessageBox.Show("Row Index cannot be empty.");
 
                 int result;
-                if (int.TryParse(row["indx"].ToString(), out result))
+                if (!int.TryParse(row["indx"].ToString(), out result))
                     MessageBox.Show("Row index must be numeric.");
 
                 if (row["itemCode"].ToString() == "")
                     MessageBox.Show("Row item code cannot be empty.");
 
-                // continuation
+                // Continuation. This must check if the values given are correct. They must be equal.
             }
 
             // if everything passed return true;
             return true;
         }
 
+        // this check and relationships of header and its rows data i.e. sum of rows is equal to the header.
+        private bool checkHeaderAndRows(Hashtable header, DataTable tableRows)
+        {
+            
+            return true;
+        }
+
+        //this is where we add inventory transaction records.
         public bool addInventoryTransfer(Hashtable header, DataTable tableRows)
         {
             if (!checkHeaders(header))
@@ -184,7 +197,7 @@ namespace Check_up.classes
             int rowsCount = tableRows.Rows.Count;
             if (rowsCount < 1)
             {
-                MessageBox.Show("No rows passed.");
+                MessageBox.Show("No data to record.");
                 return false;
             }
 
@@ -196,7 +209,7 @@ namespace Check_up.classes
             sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='IT');";
             sql += "SET @docId=CONCAT(@terminalId, @newId);";
             sql += "INSERT INTO inventorytransfer(docId,frmWHouse,toWHouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,totalPrcntDscntRtl,totalAmtDscntRtl,netTotalRtl,grossTotalRtl,remarks1,remarks2,createdBy)";
-            sql += " VALUES(@docId,@from,@to,DATE_FORMAT(@postingDate, '%Y-%m-%d'),@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@totalPrcntDscntRtl,@totalAmtDscntRtl,@netTotalRtl,@grossTotalRtl,@remarks1,@remarks2,@createdBy);";
+            sql += " VALUES(@docId,@frmWHouse,@toWHouse,DATE_FORMAT(@postingDate, '%Y-%m-%d'),@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@totalPrcntDscntRtl,@totalAmtDscntRtl,@netTotalRtl,@grossTotalRtl,@remarks1,@remarks2,@createdBy);";
 
             int i = 0;
             for (i = 0; i < rowsCount; i++)
@@ -235,11 +248,11 @@ namespace Check_up.classes
                 sql += " VALUES(@docId," + sql_indx + "," + sql_itemCode + "," + sql_description + "," + sql_vatable + "," + sql_realBsNetPrchsPrc + "," + sql_realBsGrossPrchsPrc + "," + sql_realNetPrchsPrc + "," + sql_realGrossPrchsPrc + "," + sql_qty + "," + sql_baseUoM + "," + sql_qtyPrPrchsUoM + "," + sql_prcntDscnt + "," + sql_amtDscnt + "," + sql_netPrchsPrc + "," + sql_grossPrchsPrc + "," + sql_rowNetTotal + "," + sql_rowGrossTotal;
                 sql += "," + sql_realBsNetPrcRtl + "," + sql_realBsGrossPrcRtl + "," + sql_realNetPrcRtl + "," + sql_realGrossPrcRtl + "," + sql_qtyPrRtlUoM + "," + sql_prcntDscntRtl + "," + sql_netPrcRtl + "," + sql_grossPrcRtl + "," + sql_amtDscnt + "," + sql_rowNetTotal + "," + sql_rowGrossTotal + ");";
 
-                string sql_baseQty = "@baseQty=" + i + "(case when " + sql_baseUoM + "='N' then " + sql_qtyPrPrchsUoM + "*" + sql_qty + " else " + sql_qty + " end);"; // ((varBaseUoM == "N") ? varQtyPrPrchsUoM * varQty : varQty);
+                sql += "SET @baseQty" + i + "=(case when " + sql_baseUoM + "='N' then " + sql_qtyPrPrchsUoM + "*" + sql_qty + " else " + sql_qty + " end);"; // ((varBaseUoM == "N") ? varQtyPrPrchsUoM * varQty : varQty);
 
                 sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode=" + sql_itemCode + ";";
-                sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + sql_itemCode + ",@to," + sql_baseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + sql_baseQty + ";";
-                sql += "UPDATE item_warehouse SET inStock=inStock-" + sql_baseQty + " WHERE itemCode=" + sql_itemCode + " AND wHCode=@from;";
+                sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + sql_itemCode + ", @toWHouse, @baseQty) ON DUPLICATE KEY UPDATE inStock=inStock+@baseQty;";
+                sql += "UPDATE item_warehouse SET inStock=inStock-@baseQty WHERE itemCode=" + sql_itemCode + " AND wHCode=@frmWHouse;";
             }
             sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IT';";
             sql += "COMMIT;";
@@ -253,10 +266,10 @@ namespace Check_up.classes
 
                 // header
                 cmd.Parameters.AddWithValue("@postingDate", header["postingDate"]);
+                cmd.Parameters.AddWithValue("@frmWHouse", header["frmWHouse"]);
+                cmd.Parameters.AddWithValue("@toWHouse", header["toWHouse"]);
                 cmd.Parameters.AddWithValue("@createdBy", header["createdBy"]);
                 cmd.Parameters.AddWithValue("@terminalId", header["terminalId"]);
-                cmd.Parameters.AddWithValue("@totalPrcntDscnt", header["totalPrcntDscnt"]);
-                cmd.Parameters.AddWithValue("@totalAmtDscnt", header["totalAmtDscnt"]);
                 cmd.Parameters.AddWithValue("@totalPrcntDscnt", header["totalPrcntDscnt"]);
                 cmd.Parameters.AddWithValue("@totalAmtDscnt", header["totalAmtDscnt"]);
                 cmd.Parameters.AddWithValue("@netTotal", header["netTotal"]);
@@ -269,35 +282,35 @@ namespace Check_up.classes
                 // rows
                 for (i = 0; i < rowsCount; i++)
                 {
-                    cmd.Parameters.AddWithValue("@indx", tableRows.Rows[i]["indx"]);
-                    cmd.Parameters.AddWithValue("@itemCode", tableRows.Rows[i]["itemCode"]);
-                    cmd.Parameters.AddWithValue("@description", tableRows.Rows[i]["description"]);
-                    cmd.Parameters.AddWithValue("@vatable", tableRows.Rows[i]["vatable"]);
-                    cmd.Parameters.AddWithValue("@realBsNetPrchsPrc", tableRows.Rows[i]["realBsNetPrchsPrc"]);
-                    cmd.Parameters.AddWithValue("@realBsGrossPrchsPrc", tableRows.Rows[i]["realBsGrossPrchsPrc"]);
-                    cmd.Parameters.AddWithValue("@realNetPrchsPrc", tableRows.Rows[i]["realNetPrchsPrc"]);
-                    cmd.Parameters.AddWithValue("@realGrossPrchsPrc", tableRows.Rows[i]["realGrossPrchsPrc"]);
-                    cmd.Parameters.AddWithValue("@qty", tableRows.Rows[i]["qty"]);
-                    cmd.Parameters.AddWithValue("@baseUoM", tableRows.Rows[i]["baseUoM"]);
-                    cmd.Parameters.AddWithValue("@qtyPrPrchsUoM", tableRows.Rows[i]["qtyPrPrchsUoM"]);
-                    cmd.Parameters.AddWithValue("@prcntDscnt", tableRows.Rows[i]["prcntDscnt"]);
-                    cmd.Parameters.AddWithValue("@amtDscnt", tableRows.Rows[i]["amtDscnt"]);
-                    cmd.Parameters.AddWithValue("@netPrchsPrc", tableRows.Rows[i]["netPrchsPrc"]);
-                    cmd.Parameters.AddWithValue("@grossPrchsPrc", tableRows.Rows[i]["grossPrchsPrc"]);
-                    cmd.Parameters.AddWithValue("@rowNetTotal", tableRows.Rows[i]["rowNetTotal"]);
-                    cmd.Parameters.AddWithValue("@rowGrossTotal", tableRows.Rows[i]["rowGrossTotal"]);
-                    cmd.Parameters.AddWithValue("@realBsNetPrcRtl", tableRows.Rows[i]["realBsNetPrcRtl"]);
-                    cmd.Parameters.AddWithValue("@realBsGrossPrcRtl", tableRows.Rows[i]["realBsGrossPrcRtl"]);
-                    cmd.Parameters.AddWithValue("@realNetPrcRtl", tableRows.Rows[i]["realNetPrcRtl"]);
-                    cmd.Parameters.AddWithValue("@realGrossPrcRtl", tableRows.Rows[i]["realGrossPrcRtl"]);
-                    cmd.Parameters.AddWithValue("@qtyPrRtlUoM", tableRows.Rows[i]["qtyPrRtlUoM"]);
-                    cmd.Parameters.AddWithValue("@prcntDscntRtl", tableRows.Rows[i]["prcntDscntRtl"]);
-                    cmd.Parameters.AddWithValue("@netPrcRtl", tableRows.Rows[i]["netPrcRtl"]);
-                    cmd.Parameters.AddWithValue("@grossPrcRtl", tableRows.Rows[i]["grossPrcRtl"]);
-                    cmd.Parameters.AddWithValue("@amtDscntRtl", tableRows.Rows[i]["amtDscntRtl"]);
-                    cmd.Parameters.AddWithValue("@rowNetTotalRtl", tableRows.Rows[i]["rowNetTotalRtl"]);
-                    cmd.Parameters.AddWithValue("@rowGrossTotalRtl", tableRows.Rows[i]["rowGrossTotalRtl"]);
-                }                
+                    cmd.Parameters.AddWithValue("@indx" + i, tableRows.Rows[i]["indx"]);
+                    cmd.Parameters.AddWithValue("@itemCode" + i, tableRows.Rows[i]["itemCode"]);
+                    cmd.Parameters.AddWithValue("@description" + i, tableRows.Rows[i]["description"]);
+                    cmd.Parameters.AddWithValue("@vatable" + i, tableRows.Rows[i]["vatable"]);
+                    cmd.Parameters.AddWithValue("@realBsNetPrchsPrc" + i, tableRows.Rows[i]["realBsNetPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@realBsGrossPrchsPrc" + i, tableRows.Rows[i]["realBsGrossPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@realNetPrchsPrc" + i, tableRows.Rows[i]["realNetPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@realGrossPrchsPrc" + i, tableRows.Rows[i]["realGrossPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@qty" + i, tableRows.Rows[i]["qty"]);
+                    cmd.Parameters.AddWithValue("@baseUoM" + i, tableRows.Rows[i]["baseUoM"]);
+                    cmd.Parameters.AddWithValue("@qtyPrPrchsUoM" + i, tableRows.Rows[i]["qtyPrPrchsUoM"]);
+                    cmd.Parameters.AddWithValue("@prcntDscnt" + i, tableRows.Rows[i]["prcntDscnt"]);
+                    cmd.Parameters.AddWithValue("@amtDscnt" + i, tableRows.Rows[i]["amtDscnt"]);
+                    cmd.Parameters.AddWithValue("@netPrchsPrc" + i, tableRows.Rows[i]["netPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@grossPrchsPrc" + i, tableRows.Rows[i]["grossPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@rowNetTotal" + i, tableRows.Rows[i]["rowNetTotal"]);
+                    cmd.Parameters.AddWithValue("@rowGrossTotal" + i, tableRows.Rows[i]["rowGrossTotal"]);
+                    cmd.Parameters.AddWithValue("@realBsNetPrcRtl" + i, tableRows.Rows[i]["realBsNetPrcRtl"]);
+                    cmd.Parameters.AddWithValue("@realBsGrossPrcRtl" + i, tableRows.Rows[i]["realBsGrossPrcRtl"]);
+                    cmd.Parameters.AddWithValue("@realNetPrcRtl" + i, tableRows.Rows[i]["realNetPrcRtl"]);
+                    cmd.Parameters.AddWithValue("@realGrossPrcRtl" + i, tableRows.Rows[i]["realGrossPrcRtl"]);
+                    cmd.Parameters.AddWithValue("@qtyPrRtlUoM" + i, tableRows.Rows[i]["qtyPrRtlUoM"]);
+                    cmd.Parameters.AddWithValue("@prcntDscntRtl" + i, tableRows.Rows[i]["prcntDscntRtl"]);
+                    cmd.Parameters.AddWithValue("@netPrcRtl" + i, tableRows.Rows[i]["netPrcRtl"]);
+                    cmd.Parameters.AddWithValue("@grossPrcRtl" + i, tableRows.Rows[i]["grossPrcRtl"]);
+                    cmd.Parameters.AddWithValue("@amtDscntRtl" + i, tableRows.Rows[i]["amtDscntRtl"]);
+                    cmd.Parameters.AddWithValue("@rowNetTotalRtl" + i, tableRows.Rows[i]["rowNetTotalRtl"]);
+                    cmd.Parameters.AddWithValue("@rowGrossTotalRtl" + i, tableRows.Rows[i]["rowGrossTotalRtl"]);
+                }
 
                 int result = cmd.ExecuteNonQuery();
                 if (result > 1)
