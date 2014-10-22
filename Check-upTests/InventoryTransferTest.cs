@@ -4,6 +4,7 @@ using Check_up;
 using Check_up.classes;
 using System.Collections;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace Check_upTests
 {
@@ -317,7 +318,18 @@ namespace Check_upTests
 
             InventoryTransfer inventoryTransfer = new InventoryTransfer();
             Assert.IsTrue(inventoryTransfer.addInventoryTransfer(header, table));
-
+            MySqlCommand cmd = new MySqlCommand("select * from inventorytransfer", vars.MySqlConnection);
+            DataTable dt = new DataTable();
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+            Assert.AreEqual(dt.Rows[0]["id"], 1); //firtst record starts with 1
+            Assert.AreEqual(dt.Rows[0]["docId"], "MAIN1");
+            Assert.AreEqual(dt.Rows[0]["frmWHouse"], "MAIN");
+            Assert.AreEqual(dt.Rows[0]["toWHouse"], "US-FL");
+            Assert.AreEqual(dt.Rows[0]["postingDate"], DateTime.Today);
+            Assert.AreEqual(dt.Rows[0]["remarks1"], DBNull.Value);
+            Assert.AreEqual(dt.Rows[0]["remarks2"], DBNull.Value);
+            Assert.AreEqual(dt.Rows[0]["totalPrcntDscnt"], 0m);
         }
     }
 }

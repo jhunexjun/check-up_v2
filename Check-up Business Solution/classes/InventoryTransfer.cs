@@ -158,29 +158,394 @@ namespace Check_up.classes
                 }
             }
 
-            // let's check other criteria
+            // let's check other criterias
             foreach (DataRow row in tableRows.Rows)
             {
                 if (row["indx"].ToString() == "")
+                {
                     MessageBox.Show("Row Index cannot be empty.");
+                    return false;
+                }
 
                 int result;
                 if (!int.TryParse(row["indx"].ToString(), out result))
+                {
                     MessageBox.Show("Row index must be numeric.");
+                    return false;
+                }
 
                 if (row["itemCode"].ToString() == "")
+                {
                     MessageBox.Show("Row item code cannot be empty.");
+                    return false;
+                }
 
-                // Continuation. This must check if the values given are correct. They must be equal.
-            }
+                string[] vatable = {"Y", "N"};
+                if (!vatable.Contains(row["vatable"].ToString()))
+                {
+                    MessageBox.Show("Vatable should only either be Y or N.");
+                    return false;
+                }
 
-            // if everything passed return true;
+                decimal value;
+                if (!Decimal.TryParse(row["realBsNetPrchsPrc"].ToString(), out value))
+                {
+                    MessageBox.Show("realBsNetPrchsPrc is not in decimal value.");
+                    return false;
+                }
+                else
+                    if (Decimal.Parse(row["realBsNetPrchsPrc"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realBsNetPrchsPrc'.");
+                        return false;
+                    }
+
+                if (!Decimal.TryParse(row["realBsGrossPrchsPrc"].ToString(), out value))
+                {
+                    MessageBox.Show("realBsGrossPrchsPrc is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["realBsGrossPrchsPrc"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realBsGrossPrchsPrc'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["realNetPrchsPrc"].ToString(), out value))
+                {
+                    MessageBox.Show("realNetPrchsPrc is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["realNetPrchsPrc"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realNetPrchsPrc'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["realGrossPrchsPrc"].ToString(), out value))
+                {
+                    MessageBox.Show("realGrossPrchsPrc is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["realGrossPrchsPrc"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realGrossPrchsPrc'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["qty"].ToString(), out value))
+                {
+                    MessageBox.Show("realNetPrchsPrc is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["qty"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'qty'.");
+                        return false;
+                    }
+                }
+
+                string[] baseUoM = { "Y", "N" };
+                if (!vatable.Contains(row["baseUoM"].ToString()))
+                {
+                    MessageBox.Show("baseUoM should only either be Y or N.");
+                    return false;
+                }
+
+                if (!Decimal.TryParse(row["qtyPrPrchsUoM"].ToString(), out value))
+                {
+                    MessageBox.Show("qtyPrPrchsUoM is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["qtyPrPrchsUoM"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'qtyPrPrchsUoM'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["prcntDscnt"].ToString(), out value))
+                {
+                    MessageBox.Show("prcntDscnt is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["prcntDscnt"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'prcntDscnt'.");
+                        return false;
+                    }
+
+                }
+
+                if (!Decimal.TryParse(row["amtDscnt"].ToString(), out value))
+                {
+                    MessageBox.Show("amtDscnt is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["amtDscnt"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'amtDscnt'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["netPrchsPrc"].ToString(), out value))
+                {
+                    MessageBox.Show("netPrchsPrc is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["netPrchsPrc"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'netPrchsPrc'.");
+                        return false;
+                    }
+                }
+                    
+
+                if (!Decimal.TryParse(row["grossPrchsPrc"].ToString(), out value))
+                {
+                    MessageBox.Show("grossPrchsPrc is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["grossPrchsPrc"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'grossPrchsPrc'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["rowNetTotal"].ToString(), out value))
+                {
+                    MessageBox.Show("rowNetTotal is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["rowNetTotal"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'rowNetTotal'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["rowGrossTotal"].ToString(), out value))
+                {
+                    MessageBox.Show("rowGrossTotal is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["rowGrossTotal"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'rowGrossTotal'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["qtyPrRtlUoM"].ToString(), out value))
+                {
+                    MessageBox.Show("qtyPrRtlUoM is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["qtyPrRtlUoM"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'qtyPrRtlUoM'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["realBsNetPrcRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("realBsNetPrcRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["realBsNetPrcRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realBsNetPrcRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["realBsGrossPrcRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("realBsGrossPrcRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["realBsGrossPrcRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realBsGrossPrcRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["realNetPrcRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("realNetPrcRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["realNetPrcRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realNetPrcRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["realGrossPrcRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("realGrossPrcRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["realGrossPrcRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'realGrossPrcRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["netPrcRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("netPrcRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["netPrcRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'netPrcRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["grossPrcRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("grossPrcRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["grossPrcRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'grossPrcRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["prcntDscntRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("prcntDscntRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["prcntDscntRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'prcntDscntRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["amtDscntRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("amtDscntRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["amtDscntRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'amtDscntRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["rowNetTotalRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("rowNetTotalRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["rowNetTotalRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'rowNetTotalRtl'.");
+                        return false;
+                    }
+                }
+
+                if (!Decimal.TryParse(row["rowGrossTotalRtl"].ToString(), out value))
+                {
+                    MessageBox.Show("rowGrossTotalRtl is not in decimal value.");
+                    return false;
+                }
+                else
+                {
+                    if (Decimal.Parse(row["rowGrossTotalRtl"].ToString()) < 0m)
+                    {
+                        MessageBox.Show("We do not allow negative value for 'rowGrossTotalRtl'.");
+                        return false;
+                    }
+                }
+            } //end for foreach (DataRow row in tableRows.Rows)
+
+            // if everything passed on check, returns true;
             return true;
         }
 
         // this check and relationships of header and its rows data i.e. sum of rows is equal to the header.
         private bool checkHeaderAndRows(Hashtable header, DataTable tableRows)
         {
+            decimal total = 0; int rowsCount = tableRows.Rows.Count;
+            for (int i = 0; i < rowsCount; i++)
+                total += Decimal.Parse(tableRows.Rows[i]["rowGrossTotalRtl"].ToString());
+
+            if (total != Decimal.Parse(header["grossTotalRtl"].ToString()))
+            {
+                MessageBox.Show("Price discrepancy on grossTotalRtl.");
+                return false;
+            }
+
+            total = 0;
+            for (int i = 0; i < rowsCount; i++)
+                total += Decimal.Parse(tableRows.Rows[i]["prcntDscnt"].ToString());
+
+            total /= 2;
+
+            if (total != Decimal.Parse(header["totalPrcntDscnt"].ToString()))
+            {
+                MessageBox.Show("Price discrepancy on totalPrcntDscnt.");
+                return false;
+            }
             
             return true;
         }
