@@ -700,7 +700,7 @@ namespace Check_up.forms
                             sql += " VALUES(@docId," + i + ",'" + varItemCode + "','" + varDescription + "','" + varWhCode + "','" + varVatable + "'," + varRealBsNetPrchsPrc + "," + varRealBsGrossPrchsPrc + "," + varRealNetPrchsPrc + "," + varRealGrossPrchsPrc + "," + varQty + ",'" + varBaseUoM + "'," + varQtyPrPrchsUoM + "," + varPrcntDscnt + "," + varAmtDscnt + "," + varNetPrchsPrc + "," + varGrossPrchsPrc + "," + varRowNetTotal + "," + varRowGrossTotal + ");";
 
                             sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + varWhCode + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + varBaseQty + ";";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + varWhCode + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + varBaseQty + ";";
                         }
                     }
                     sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='GRPO';";

@@ -800,7 +800,7 @@ namespace Check_up.forms
 
                             sql += "UPDATE businesspartner SET trans='Y' WHERE code='" + varVendorCode + "';";
                             sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + varWhCode + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + varBaseQty + ";";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + varWhCode + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + varBaseQty + ";";
                         }
                     }
                     sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='DR';";

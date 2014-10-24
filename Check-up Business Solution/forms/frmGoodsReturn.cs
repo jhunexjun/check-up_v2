@@ -609,7 +609,7 @@ namespace Check_up.forms
                             sql += " VALUES(@docId," + i + ",'" + varItemCode + "','" + varDescription + "','" + varWhCode + "','" + varVatable + "'," + varRealBsNetPrchsPrc + "," + varRealBsGrossPrchsPrc + "," + varRealNetPrchsPrc + "," + varRealGrossPrchsPrc + "," + varQty + ",'" + varBaseUoM + "'," + varQtyPrPrchsUoM + "," + varPrcntDscnt + "," + varAmtDscnt + "," + varNetPrchsPrc + "," + varGrossPrchsPrc + "," + varRowNetTotal + "," + varRowGrossTotal + ");";
 
                             sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + varWhCode + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock-" + varBaseQty + ";";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + varWhCode + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + varBaseQty + ";";
                         }
                     }
                     sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='GR';";
@@ -799,7 +799,7 @@ namespace Check_up.forms
 
                     db = new database(); dt = new DataTable();
                     sql = "SET @varBaseQty=" + varBaseQty + ";";
-                    sql += "SELECT itemCode FROM item_warehouse WHERE itemCode = '" + dgvItems.Rows[i].Cells["itemCode"].Value + "' AND whCode = '" + cboWarehouse.Text.Trim() + "' AND inStock < @varBaseQty;";
+                    sql += "SELECT itemCode FROM item_warehouse WHERE itemCode = '" + dgvItems.Rows[i].Cells["itemCode"].Value + "' AND whCode = '" + cboWarehouse.Text.Trim() + "' AND ifnull(inStock, 0) < @varBaseQty;";
                     dt = db.select(sql, vars.MySqlConnection);
                     if (dt.Rows.Count > 0)
                     {

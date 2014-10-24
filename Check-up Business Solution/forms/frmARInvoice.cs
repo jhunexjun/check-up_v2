@@ -658,7 +658,7 @@ namespace Check_up.forms
                             sql += " VALUES(@docId," + i + ",'" + varItemCode + "','" + varDescription + "','" + varSaleUoM + "'," + varQtyPrSaleUoM + "," + varQty + ",'" + varBaseUoM + "'," + varPrcntDscnt + "," + varAmtDscnt + ",'" + varVatable + "'," + varNetSalePrc + "," + varGrossSalePrc + "," + varRealBsNetSalePrc + "," + varRealBsGrossSalePrc + "," + varNetPrchsPrc + "," + varGrossPrchsPrc + "," + varRowNetTotal + "," + varRowGrossTotal + ");";
 
                             sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + cboWarehouse.Text + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock-" + varBaseQty + ";";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + cboWarehouse.Text + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + varBaseQty + ";";
                         }
                     }
                     sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='SI';";
@@ -831,7 +831,7 @@ namespace Check_up.forms
 
                     db = new database(); dt = new DataTable();
                     sql = "SET @varBaseQty=" + varBaseQty + ";";
-                    sql += "SELECT itemCode FROM item_warehouse WHERE itemCode = '" + dgvItems.Rows[i].Cells["itemCode"].Value + "' AND whCode = '" + cboWarehouse.Text.Trim() + "' AND inStock < @varBaseQty;";
+                    sql += "SELECT itemCode FROM item_warehouse WHERE itemCode = '" + dgvItems.Rows[i].Cells["itemCode"].Value + "' AND whCode = '" + cboWarehouse.Text.Trim() + "' AND ifnull(inStock, 0) < @varBaseQty;";
                     dt = db.select(sql, vars.MySqlConnection);
                     if (dt.Rows.Count > 0)
                     {
@@ -866,7 +866,7 @@ namespace Check_up.forms
 
                     db = new database(); dt = new DataTable();
                     sql = "SET @varBaseQty=" + varBaseQty + ";";
-                    sql += "SELECT itemCode FROM itemmasterdata JOIN item_warehouse USING(itemCode) WHERE itemCode = '" + itemCode + "' AND whCode = '" + cboWarehouse.Text + "' AND minStock > 0 AND minStock > (inStock - @varBaseQty);";
+                    sql += "SELECT itemCode FROM itemmasterdata JOIN item_warehouse USING(itemCode) WHERE itemCode = '" + itemCode + "' AND whCode = '" + cboWarehouse.Text + "' AND minStock > 0 AND minStock > (ifnull(inStock, 0) - @varBaseQty);";
                     dt = db.select(sql, vars.MySqlConnection);
                     if (dt.Rows.Count > 0)
                     {

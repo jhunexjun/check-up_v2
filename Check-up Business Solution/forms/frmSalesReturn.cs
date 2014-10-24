@@ -664,7 +664,7 @@ namespace Check_up.forms
                             sql += " VALUES(@docId," + i + ",'" + varItemCode + "','" + varDescription + "','" + varSaleUoM + "'," + varQtyPrSaleUoM + "," + varQty + ",'" + varBaseUoM + "'," + varPrcntDscnt + "," + varAmtDscnt + ",'" + varVatable + "'," + varNetSalePrc + "," + varGrossSalePrc + "," + varRealBsNetSalePrc + "," + varRealBsGrossSalePrc + "," + varNetPrchsPrc + "," + varGrossPrchsPrc + "," + varRowNetTotal + "," + varRowGrossTotal + ");";
 
                             sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + cboWarehouse.Text + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + varBaseQty + ";";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + cboWarehouse.Text + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + varBaseQty + ";";
                         }
                     }
                     sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='SR';";

@@ -643,7 +643,7 @@ namespace Check_up.forms
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
-                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + baseQty;
+                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty;
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -731,7 +731,7 @@ namespace Check_up.forms
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
-                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + baseQty;
+                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty;
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -898,8 +898,8 @@ namespace Check_up.forms
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
                             sql = "SET @frmWHouse=(SELECT frmWHouse FROM inventorytransfer WHERE docId='" + docId + "');";
                             sql += "SET @toWHouse=(SELECT frmWHouse FROM inventorytransfer WHERE docId='" + docId + "');";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@toWHouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + baseQty + ";";
-                            sql += "UPDATE item_warehouse SET inStock=inStock-" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@frmWHouse;";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@toWHouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty + ";";
+                            sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@frmWHouse;";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -987,7 +987,7 @@ namespace Check_up.forms
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
-                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock-" + baseQty;
+                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + baseQty;
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -1076,7 +1076,7 @@ namespace Check_up.forms
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrSaleUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
                             sql = "SET @warehouse=(SELECT warehouse FROM salesinvoice WHERE docId='" + docId + "');";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock-" + baseQty + ";";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + baseQty + ";";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -1165,7 +1165,7 @@ namespace Check_up.forms
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrSaleUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
                             sql = "SET @warehouse=(SELECT warehouse FROM salesreturn WHERE docId='" + docId + "');";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=inStock+" + baseQty + ";";
+                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty + ";";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }

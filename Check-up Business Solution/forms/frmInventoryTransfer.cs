@@ -1093,7 +1093,7 @@ namespace Check_up.forms
 
                     db = new database(); dt = new DataTable();
                     sql = "SET @varBaseQty=" + varBaseQty + ";";
-                    sql += "SELECT itemCode FROM item_warehouse WHERE itemCode = '" + dgvItems.Rows[i].Cells["itemCode"].Value + "' AND whCode = '" + cboComboFrom.Text + "' AND inStock < @varBaseQty;";
+                    sql += "SELECT itemCode FROM item_warehouse WHERE itemCode = '" + dgvItems.Rows[i].Cells["itemCode"].Value + "' AND whCode = '" + cboComboFrom.Text + "' AND ifnull(inStock,0) < @varBaseQty;";
                     dt = db.select(sql, vars.MySqlConnection);
                     if (dt.Rows.Count > 0)
                     {
@@ -1105,7 +1105,7 @@ namespace Check_up.forms
                         db = new database(); dt = new DataTable();
                         sql = "SELECT itemCode FROM item_warehouse WHERE itemCode = '" + dgvItems.Rows[i].Cells["itemCode"].Value + "' AND whCode = '" + cboComboFrom.Text + "'";
                         dt = db.select(sql, vars.MySqlConnection);
-                        if (dt.Rows.Count < 1)
+                        if (dt.Rows.Count < 1)  // if there's no data it is assumed that inventory is zero.
                         {
                             MessageBox.Show(this, "Insufficient inventory for item " + dgvItems.Rows[i].Cells["itemCode"].Value, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return false;

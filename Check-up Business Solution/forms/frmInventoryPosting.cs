@@ -444,9 +444,9 @@ namespace Check_up.forms
                             sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
                             sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + cboWarehouse.Text + "'," + varVariance + ") ON DUPLICATE KEY UPDATE";
                             if (varVariance < 0)
-                                sql += " inStock=inStock-" + Math.Abs(varVariance) + ";";
+                                sql += " inStock=ifnull(inStock, 0)-" + Math.Abs(varVariance) + ";";
                             else
-                                sql += " inStock=inStock+" + varVariance + ";";
+                                sql += " inStock=ifnull(inStock, 0)+" + varVariance + ";";
                         }
                     }
                     sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IP';";

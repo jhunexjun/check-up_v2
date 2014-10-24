@@ -599,8 +599,8 @@ namespace Check_up.classes
                 sql += "SET @baseQty" + i + "=(case when " + sql_baseUoM + "='N' then " + sql_qtyPrPrchsUoM + "*" + sql_qty + " else " + sql_qty + " end);"; // ((varBaseUoM == "N") ? varQtyPrPrchsUoM * varQty : varQty);
 
                 sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode=" + sql_itemCode + ";";
-                sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + sql_itemCode + ", @toWHouse, @baseQty) ON DUPLICATE KEY UPDATE inStock=inStock+@baseQty;";
-                sql += "UPDATE item_warehouse SET inStock=inStock-@baseQty WHERE itemCode=" + sql_itemCode + " AND wHCode=@frmWHouse;";
+                sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + sql_itemCode + ", @toWHouse, @baseQty) ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+@baseQty;";
+                sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-@baseQty WHERE itemCode=" + sql_itemCode + " AND wHCode=@frmWHouse;";
             }
             sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IT';";
             sql += "COMMIT;";
