@@ -13,26 +13,6 @@ namespace Check_up.classes
 {
     public class InventoryTransfer
     {
-        private Hashtable formatHeaderParams(Hashtable ht)
-        {
-            if (ht.Contains("remarks1"))
-                ht["remarks1"] = "'" + ht["remarks1"] + "'";
-            else
-                ht["remarks1"] = "null";
-
-            if (ht.Contains("remarks2"))
-                ht["remarks2"] = "'" + ht["remarks2"] + "'";
-            else
-                ht["remarks2"] = "null";
-
-            return ht;
-        }
-
-        private DataTable formatRowDataParams(DataTable dt)
-        {
-            return dt;
-        }
-
         private bool checkHeaders(Hashtable header)
         {
             // Note: it is this class that should create the docId, give the terminal id instead.
@@ -546,6 +526,8 @@ namespace Check_up.classes
                 MessageBox.Show("Price discrepancy on totalPrcntDscnt.");
                 return false;
             }
+
+            //continue here
             
             return true;
         }
@@ -566,8 +548,8 @@ namespace Check_up.classes
                 return false;
             }
 
-            header = formatHeaderParams(header);
-            tableRows = formatRowDataParams(tableRows);
+            if (!checkHeaderAndRows(header, tableRows))
+                return false;
 
             string sql;
             sql = "START TRANSACTION;";
@@ -596,6 +578,7 @@ namespace Check_up.classes
                 string sql_grossPrchsPrc = "@grossPrchsPrc" + i;
                 string sql_rowNetTotal = "@rowNetTotal" + i;
                 string sql_rowGrossTotal = "@rowGrossTotal" + i;
+                //retail
                 string sql_realBsNetPrcRtl = "@realBsNetPrcRtl" + i;
                 string sql_realBsGrossPrcRtl = "@realBsGrossPrcRtl" + i;
                 string sql_realNetPrcRtl = "@realNetPrcRtl" + i;
@@ -611,7 +594,7 @@ namespace Check_up.classes
                 sql += "INSERT INTO inventorytransfer_item(docId,indx,itemCode,description,vatable,realBsNetPrchsPrc,realBsGrossPrchsPrc,realNetPrchsPrc,realGrossPrchsPrc,qty,baseUoM,qtyPrPrchsUoM,prcntDscnt,amtDscnt,netPrchsPrc,grossPrchsPrc,rowNetTotal,rowGrossTotal";
                 sql += ",realBsNetPrcRtl,realBsGrossPrcRtl,realNetPrcRtl,realGrossPrcRtl,qtyPrRtlUoM,prcntDscntRtl,netPrcRtl,grossPrcRtl,amtDscntRtl,rowNetTotalRtl,rowGrossTotalRtl)";
                 sql += " VALUES(@docId," + sql_indx + "," + sql_itemCode + "," + sql_description + "," + sql_vatable + "," + sql_realBsNetPrchsPrc + "," + sql_realBsGrossPrchsPrc + "," + sql_realNetPrchsPrc + "," + sql_realGrossPrchsPrc + "," + sql_qty + "," + sql_baseUoM + "," + sql_qtyPrPrchsUoM + "," + sql_prcntDscnt + "," + sql_amtDscnt + "," + sql_netPrchsPrc + "," + sql_grossPrchsPrc + "," + sql_rowNetTotal + "," + sql_rowGrossTotal;
-                sql += "," + sql_realBsNetPrcRtl + "," + sql_realBsGrossPrcRtl + "," + sql_realNetPrcRtl + "," + sql_realGrossPrcRtl + "," + sql_qtyPrRtlUoM + "," + sql_prcntDscntRtl + "," + sql_netPrcRtl + "," + sql_grossPrcRtl + "," + sql_amtDscnt + "," + sql_rowNetTotal + "," + sql_rowGrossTotal + ");";
+                sql += "," + sql_realBsNetPrcRtl + "," + sql_realBsGrossPrcRtl + "," + sql_realNetPrcRtl + "," + sql_realGrossPrcRtl + "," + sql_qtyPrRtlUoM + "," + sql_prcntDscntRtl + "," + sql_netPrcRtl + "," + sql_grossPrcRtl + "," + sql_amtDscntRtl + "," + sql_rowNetTotalRtl + "," + sql_rowGrossTotalRtl + ");";
 
                 sql += "SET @baseQty" + i + "=(case when " + sql_baseUoM + "='N' then " + sql_qtyPrPrchsUoM + "*" + sql_qty + " else " + sql_qty + " end);"; // ((varBaseUoM == "N") ? varQtyPrPrchsUoM * varQty : varQty);
 
@@ -635,6 +618,8 @@ namespace Check_up.classes
                 cmd.Parameters.AddWithValue("@toWHouse", header["toWHouse"]);
                 cmd.Parameters.AddWithValue("@createdBy", header["createdBy"]);
                 cmd.Parameters.AddWithValue("@terminalId", header["terminalId"]);
+                cmd.Parameters.AddWithValue("@remarks1", header["remarks1"]);
+                cmd.Parameters.AddWithValue("@remarks2", header["remarks2"]);
                 cmd.Parameters.AddWithValue("@totalPrcntDscnt", header["totalPrcntDscnt"]);
                 cmd.Parameters.AddWithValue("@totalAmtDscnt", header["totalAmtDscnt"]);
                 cmd.Parameters.AddWithValue("@netTotal", header["netTotal"]);

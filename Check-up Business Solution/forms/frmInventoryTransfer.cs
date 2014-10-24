@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using Check_up.classes;
+using MySql.Data.MySqlClient;
 
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.ReportSource;
@@ -18,8 +19,8 @@ namespace Check_up.forms
 {
     public partial class frmInventoryTransfer : Form
     {
-        DataTable table;
-        DataTable dt;
+        DataTable table; DataTable dt;
+        MySqlCommand cmd; MySqlDataAdapter da;
         database db = new database();
         private frmDialog frmDialogForm;
         private frmCrystalReportViewer crystalReportViewerForm;
@@ -655,9 +656,10 @@ namespace Check_up.forms
                 if (txtInventoryTransferNo.Text.Trim() != "" && !txtInventoryTransferNo.Text.Contains("*"))
                 {
                     sql += "docId='" + txtInventoryTransferNo.Text.Trim().Replace("'", "''") + "'";
-                    db = new database();
                     dt = new DataTable();
-                    dt = db.select(sql, vars.MySqlConnection);
+                    cmd = new MySqlCommand(sql, vars.MySqlConnection);
+                    da = new MySqlDataAdapter(cmd);
+                    da.Fill(dt);
                     if (dt.Rows.Count < 1)
                     {
                         MessageBox.Show(this, "No matching record found.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -795,6 +797,8 @@ namespace Check_up.forms
 
                     DateTime dateTime = DateTime.Parse(txtPostingDate.Text.Trim());
                     header.Add("postingDate", dateTime.ToString("yyyy/MM/dd"));
+                    header.Add("remarks1", txtRemarks1.Text.Trim());
+                    header.Add("remarks2", txtRemarks2.Text.Trim());
 
                     try
                     {
@@ -875,7 +879,7 @@ namespace Check_up.forms
                                 row["rowNetTotal"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowNetTotal"].Value.ToString());
                                 row["rowGrossTotal"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowGrossTotal"].Value.ToString());
                                 //retail
-                                row["qtyPrRtlUo"] = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrRtlUoM"].Value.ToString());
+                                row["qtyPrRtlUoM"] = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrRtlUoM"].Value.ToString());
                                 row["realBsNetPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsNetPrcRtl"].Value.ToString());
                                 row["realBsGrossPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsGrossPrcRtl"].Value.ToString());
                                 row["realNetPrcRtl"] = Decimal.Parse(dgvItems.Rows[i].Cells["realNetPrcRtl"].Value.ToString());
@@ -901,8 +905,12 @@ namespace Check_up.forms
                     if (inventoryTransfer.addInventoryTransfer(header, table))
                     {
                         MessageBox.Show(this, "Saving has been successful", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        db = new database(); dt = new DataTable();
-                        dt = db.select("SELECT docId FROM inventorytransfer ORDER BY id DESC LIMIT 1", vars.MySqlConnection);
+                        
+                        sql = "SELECT docId FROM inventorytransfer ORDER BY id DESC LIMIT 1";
+                        DataTable dt = new DataTable();
+                        MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
+                        MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                        da.Fill(dt);
                         txtInventoryTransferNo.Text = dt.Rows[0][0].ToString();
                         
                         setToAfterSaveState();
