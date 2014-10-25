@@ -963,6 +963,7 @@ namespace Check_up.forms
             table.Rows.Add("txtRemarks2", "remarks2", "");
         }
 
+        //this validates entries if they are indeed correctly computed. Some of this maybe transferred to the class as duplicate in the future.
         private bool checkValues()
         {
             if (btnFind.Text == "&Save" && (dgvItems.Rows.Count - 1) == 0)
