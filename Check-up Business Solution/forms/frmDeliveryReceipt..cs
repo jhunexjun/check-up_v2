@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using Check_up.classes;
 
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.ReportSource;
@@ -17,13 +18,13 @@ namespace Check_up.forms
 {
     public partial class frmDeliveryReceipt : Form
     {
-        DataTable table;
-        DataTable dt;
+        DataTable table, dt;
         database db = new database();
         private frmDialog frmDialogForm;
         private frmCrystalReportViewer crystalReportViewerForm;
-        string sql;
-        int i, rowCount;
+        string sql; int i, rowCount;
+
+        Hashtable header;
 
         public frmDeliveryReceipt()
         {
@@ -727,7 +728,102 @@ namespace Check_up.forms
                     if (MessageBox.Show(this, "Are you sure you want to save this?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                         return;
 
-                    decimal totalPrcntDscnt, totalAmtDscnt, netTotal, grossTotal;
+                    header = new Hashtable();
+                    header.Add("terminalId", vars.terminalId);
+                    header.Add("warehouse", cboWarehouse.Text);
+                    
+                    DateTime dateTime = DateTime.Parse(txtPostingDate.Text.Trim());
+                    header.Add("postingDate", dateTime.ToString("yyyy/MM/dd"));
+
+                    header.Add("totalPrcntDscnt", txtTotalPrcntDscnt.Text.Trim());
+                    header.Add("totalAmtDscnt", txtTotalAmtDscnt.Text.Trim());
+                    header.Add("netTotal", txtNetTotal.Text.Trim());
+                    header.Add("grossTotal", txtGrossTotal.Text.Trim());
+                    header.Add("remarks1", txtRemarks1.Text.Trim());
+                    header.Add("remarks2", txtRemarks2.Text.Trim());
+                    header.Add("createdBy", vars.user_id);
+
+                    table = new DataTable();
+                    table.Columns.Add("indx");
+                    table.Columns.Add("vendorCode");
+                    table.Columns.Add("vendorName");
+                    table.Columns.Add("itemCode");
+                    table.Columns.Add("description");
+                    table.Columns.Add("warehouseRow");
+                    table.Columns.Add("vatable");
+                    table.Columns.Add("realBsNetPrchsPrc");
+                    table.Columns.Add("realBsGrossPrchsPrc");
+                    table.Columns.Add("realNetPrchsPrc");
+                    table.Columns.Add("realGrossPrchsPrc");
+                    table.Columns.Add("qty");
+                    table.Columns.Add("baseUoM");
+                    table.Columns.Add("qtyPrPrchsUoM");
+                    table.Columns.Add("prcntDscnt");
+                    table.Columns.Add("amtDscnt");
+                    table.Columns.Add("netPrchsPrc");
+                    table.Columns.Add("grossPrchsPrc");
+                    table.Columns.Add("rowNetTotal");
+                    table.Columns.Add("rowGrossTotal");
+
+                    rowCount = dgvItems.Rows.Count;
+                    DataRow row;
+
+                    try
+                    {
+                        for (i = 0; i < rowCount; i++)
+                        {
+                            if (!dgvItems.Rows[i].IsNewRow && dgvItems.Rows[i].Cells[0].Value.ToString() != "")
+                            {
+                                row = table.NewRow();
+                                row["indx"] = i;
+                                row["vendorCode"] = dgvItems.Rows[i].Cells["colVendorCode"].Value.ToString();
+
+                                row["vendorName"] = dgvItems.Rows[i].Cells["colVendorName"].Value.ToString();
+                                row["vendorName"] = row["vendorName"].ToString().Replace("'", "''");
+
+                                row["itemCode"] = dgvItems.Rows[i].Cells["itemCode"].Value.ToString();
+                                row["description"] = dgvItems.Rows[i].Cells["description"].Value.ToString();
+                                row["qty"] = Decimal.Parse(dgvItems.Rows[i].Cells["Qty"].Value.ToString());
+                                row["vatable"] = dgvItems.Rows[i].Cells["vatable"].Value.ToString();
+                                row["qtyPrPrchsUoM"] = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrPrchsUoM"].Value.ToString());
+                                row["baseUoM"] = fx.null2EmptyStr(dgvItems.Rows[i].Cells["baseUoM"].Value);
+                                row["realBsNetPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsNetPrchsPrc"].Value.ToString());
+                                row["realBsGrossPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realBsGrossPrchsPrc"].Value.ToString());
+                                row["realNetPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realNetPrchsPrc"].Value.ToString());
+                                row["realGrossPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["realGrossPrchsPrc"].Value.ToString());
+                                row["prcntDscnt"] = Decimal.Parse(dgvItems.Rows[i].Cells["prcntDscnt"].Value.ToString());
+                                row["grossPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["grossPrchsPrc"].Value.ToString());
+                                row["netPrchsPrc"] = Decimal.Parse(dgvItems.Rows[i].Cells["netPrchsPrc"].Value.ToString());
+                                row["amtDscnt"] = Decimal.Parse(dgvItems.Rows[i].Cells["amtDscnt"].Value.ToString());
+                                row["rowNetTotal"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowNetTotal"].Value.ToString());
+                                row["rowGrossTotal"] = Decimal.Parse(dgvItems.Rows[i].Cells["rowGrossTotal"].Value.ToString());
+
+                                // for the meantime we just deduct the qty from warehouse in the header so we just override it.
+                                row["warehouseRow"] = header["warehouse"];
+
+                                table.Rows.Add(row);
+                            } // end if
+                        } //end for
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(this, ex.ToString());
+                        return;
+                    }
+                    
+                    DeliveryReceipt deliveryReceipt = new DeliveryReceipt();
+                    if (deliveryReceipt.addDeliveryReceipt(header, table))
+                    {
+                        MessageBox.Show(this, "Saving has been successful", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        db = new database(); dt = new DataTable();
+                        dt = db.select("SELECT docId FROM deliveryreceipt ORDER BY id DESC LIMIT 1", vars.MySqlConnection);
+                        txtDeliveryReceiptNo.Text = dt.Rows[0][0].ToString();
+                        setCntrlToAfterSaveMode();
+                    }
+
+
+                    /*
+                     decimal totalPrcntDscnt, totalAmtDscnt, netTotal, grossTotal;
                     totalPrcntDscnt = Decimal.Parse(txtTotalPrcntDscnt.Text);
                     totalAmtDscnt = Decimal.Parse(txtTotalAmtDscnt.Text);
                     netTotal = Decimal.Parse(txtNetTotal.Text);
@@ -815,6 +911,8 @@ namespace Check_up.forms
                         txtDeliveryReceiptNo.Text = dt.Rows[0][0].ToString();
                         setCntrlToAfterSaveMode();
                     }
+                      
+                     */
                 }
             }
         }

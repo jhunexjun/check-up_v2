@@ -13,9 +13,11 @@ namespace Check_up.classes
 {
     public class InventoryTransfer
     {
-        private bool checkHeaders(Hashtable header)
+        MySqlCommand cmd = new MySqlCommand();
+
+        private bool checkHeadersForAdd(Hashtable header)
         {
-            // Note: it is this class that should create the docId, give the terminal id instead.
+            // Note: This class should create the docId, give the terminal id instead.
             if (!header.Contains("terminalId"))
             {
                 MessageBox.Show("Please indicate 'terminal id' key in the hash.");
@@ -90,7 +92,7 @@ namespace Check_up.classes
             return true;
         }
 
-        private bool checkRows(DataTable tableRows)
+        private bool checkRowsForAdd(DataTable tableRows)
         {
             // list down all passed columns.
             ArrayList passedColumns = new ArrayList(tableRows.Columns.Count);
@@ -502,7 +504,7 @@ namespace Check_up.classes
             return true;
         }
 
-        // this check and relationships of header and its rows data i.e. sum of rows is equal to the header.
+        // this checks the relationships of header and its rows data i.e. sum of rows is equal to the header's.
         private bool checkHeaderAndRows(Hashtable header, DataTable tableRows)
         {
             decimal total = 0; int rowsCount = tableRows.Rows.Count;
@@ -535,10 +537,10 @@ namespace Check_up.classes
         //this is where we add inventory transaction records.
         public bool addInventoryTransfer(Hashtable header, DataTable tableRows)
         {
-            if (!checkHeaders(header))
+            if (!checkHeadersForAdd(header))
                 return false;
 
-            if (!checkRows(tableRows))
+            if (!checkRowsForAdd(tableRows))
                 return false;
 
             int rowsCount = tableRows.Rows.Count;
@@ -551,6 +553,9 @@ namespace Check_up.classes
             if (!checkHeaderAndRows(header, tableRows))
                 return false;
 
+            DateTime dateTime = DateTime.Parse(header["postingDate"].ToString());
+            header["postingDate"] = dateTime.ToString("yyyy/MM/dd");
+
             string sql;
             sql = "START TRANSACTION;";
             sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='IT');";
@@ -558,7 +563,7 @@ namespace Check_up.classes
             sql += "INSERT INTO inventorytransfer(docId,frmWHouse,toWHouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,totalPrcntDscntRtl,totalAmtDscntRtl,netTotalRtl,grossTotalRtl,remarks1,remarks2,createdBy)";
             sql += " VALUES(@docId,@frmWHouse,@toWHouse,DATE_FORMAT(@postingDate, '%Y-%m-%d'),@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@totalPrcntDscntRtl,@totalAmtDscntRtl,@netTotalRtl,@grossTotalRtl,@remarks1,@remarks2,@createdBy);";
 
-            int i = 0;
+            int i;
             for (i = 0; i < rowsCount; i++)
             {
                 string sql_indx = "@indx" + i;
@@ -599,15 +604,14 @@ namespace Check_up.classes
                 sql += "SET @baseQty" + i + "=(case when " + sql_baseUoM + "='N' then " + sql_qtyPrPrchsUoM + "*" + sql_qty + " else " + sql_qty + " end);"; // ((varBaseUoM == "N") ? varQtyPrPrchsUoM * varQty : varQty);
 
                 sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode=" + sql_itemCode + ";";
-                sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + sql_itemCode + ", @toWHouse, @baseQty) ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+@baseQty;";
-                sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-@baseQty WHERE itemCode=" + sql_itemCode + " AND wHCode=@frmWHouse;";
+                sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + sql_itemCode + ", @toWHouse, @baseQty" + i + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+@baseQty" + i + ";";
+                sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-@baseQty" + i + " WHERE itemCode=" + sql_itemCode + " AND wHCode=@frmWHouse;";
             }
             sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IT';";
             sql += "COMMIT;";
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = vars.MySqlConnection;
                 cmd.CommandText = sql;
                 cmd.Prepare();
@@ -670,7 +674,52 @@ namespace Check_up.classes
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        private bool checkHeadersForUpdate(Hashtable header)
+        {
+            if (!header.Contains("remarks2"))
+            {
+                MessageBox.Show("No 'remarks2' in the hash.");
+                return false;
+            }
+
+            if (!header.Contains("updatedBy"))
+            {
+                MessageBox.Show("No 'updated by' in the hash.");
+                return false;
+            }
+
+            if (!header.Contains("docId"))
+            {
+                MessageBox.Show("No 'doc id' in the hash.");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool updateInventoryTransfer(Hashtable header) {
+            if (!checkHeadersForUpdate(header))
+                return false;
+
+            string sql = "UPDATE inventorytransfer SET remarks2=@remarks2,updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=@updatedBy WHERE docId=@docId";
+            cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            cmd.Prepare();
+            cmd.Parameters.AddWithValue("@docId", header["docId"]);
+            cmd.Parameters.AddWithValue("@remarks2", header["remarks2"]);
+            cmd.Parameters.AddWithValue("@updatedBy", header["updatedBy"]);
+
+            try 
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (MySqlException ex) {
+                MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }

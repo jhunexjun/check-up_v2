@@ -648,6 +648,8 @@ namespace Check_up.forms
 
         private void btnFind_Click(object sender, EventArgs e)
         {
+            Hashtable header = new Hashtable();
+
             if (btnFind.Text == "&Find")
             {
                 //sql = "SELECT docId,frmWHouse,toWHouse,DATE_FORMAT(postingDate, '%m/%d/%Y') postingDate,totalPrcntDscnt,totalAmtDscnt,ROUND(netTotal,2) netTotal,ROUND(grossTotal,2) grossTotal,remarks1,remarks2 FROM inventorytransfer WHERE ";
@@ -773,10 +775,12 @@ namespace Check_up.forms
             }
             else if (btnFind.Text == "&Update")
             {
-                db = new database();
-                sql = "UPDATE inventorytransfer SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + " WHERE docId='" + txtInventoryTransferNo.Text.Trim() + "'";
+                header.Add("remarks2", txtRemarks2.Text.Trim());
+                header.Add("docId", txtInventoryTransferNo.Text);
+                header.Add("updatedBy", vars.user_id);
 
-                if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
+                InventoryTransfer inventoryTransfer = new InventoryTransfer();
+                if (inventoryTransfer.updateInventoryTransfer(header))
                 {
                     MessageBox.Show(this, "Updating has been successful", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     btnFind.Text = "&OK";
@@ -789,7 +793,6 @@ namespace Check_up.forms
                     if (MessageBox.Show(this, "Are you sure you want to save this?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                         return;
 
-                    Hashtable header = new Hashtable();
                     header.Add("terminalId", vars.terminalId);
                     header.Add("frmWHouse", cboComboFrom.Text);
                     header.Add("toWHouse", cboComboTo.Text);
