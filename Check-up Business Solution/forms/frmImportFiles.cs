@@ -49,6 +49,13 @@ namespace Check_up.forms
             return s;
         }
 
+        private string transformDate4SQLNotNull(string s)
+        {
+            DateTime dateTime = DateTime.Parse(s);
+            s = dateTime.ToString("yyyy/MM/dd HH:mm:ss");
+            return s;
+        }
+
         private DataTable sortFiles(string[] filesFullPath)
         {
             DataTable filesList = new DataTable();
@@ -68,48 +75,50 @@ namespace Check_up.forms
                     row["No"] = 1;
                 if (filename.StartsWith("warehouse_"))
                     row["No"] = 2;
-                if (filename.StartsWith("itemmasterdata_"))
+                if (filename.StartsWith("businesspartner_"))
                     row["No"] = 3;
-                if (filename.StartsWith("pricelist_"))
+                if (filename.StartsWith("itemmasterdata_"))
                     row["No"] = 4;
-                if (filename.StartsWith("pricelisthistory_"))
+                if (filename.StartsWith("pricelist_"))
                     row["No"] = 5;
-                if (filename.StartsWith("barcode_"))
+                if (filename.StartsWith("pricelisthistory_"))
                     row["No"] = 6;
-                if (filename.StartsWith("barcodehistory_"))
+                if (filename.StartsWith("barcode_"))
                     row["No"] = 7;
-                if (filename.StartsWith("purchaseorder_"))
+                if (filename.StartsWith("barcodehistory_"))
                     row["No"] = 8;
-                if (filename.StartsWith("purchaseorder-item_"))
+                if (filename.StartsWith("purchaseorder_"))
                     row["No"] = 9;
-                if (filename.StartsWith("grpo_"))
+                if (filename.StartsWith("purchaseorder-item_"))
                     row["No"] = 10;
-                if (filename.StartsWith("grpo-item_"))
+                if (filename.StartsWith("grpo_"))
                     row["No"] = 11;
-                if (filename.StartsWith("inventorytransfer_"))
+                if (filename.StartsWith("grpo-item_"))
                     row["No"] = 12;
-                if (filename.StartsWith("inventorytransfer-item_"))
+                if (filename.StartsWith("inventorytransfer_"))
                     row["No"] = 13;
-                if (filename.StartsWith("goodsreturn_"))
+                if (filename.StartsWith("inventorytransfer-item_"))
                     row["No"] = 14;
-                if (filename.StartsWith("goodsreturn-item_"))
+                if (filename.StartsWith("goodsreturn_"))
                     row["No"] = 15;
-                if (filename.StartsWith("salesinvoice_"))
+                if (filename.StartsWith("goodsreturn-item_"))
                     row["No"] = 16;
-                if (filename.StartsWith("salesinvoice-item_"))
+                if (filename.StartsWith("salesinvoice_"))
                     row["No"] = 17;
-                if (filename.StartsWith("salesreturn_"))
+                if (filename.StartsWith("salesinvoice-item_"))
                     row["No"] = 18;
-                if (filename.StartsWith("salesreturn-item_"))
+                if (filename.StartsWith("salesreturn_"))
                     row["No"] = 19;
-                if (filename.StartsWith("deliveryreceipt_"))
+                if (filename.StartsWith("salesreturn-item_"))
                     row["No"] = 20;
-                if (filename.StartsWith("deliveryreceipt-item_"))
+                if (filename.StartsWith("deliveryreceipt_"))
                     row["No"] = 21;
-                if (filename.StartsWith("inventoryposting_"))
+                if (filename.StartsWith("deliveryreceipt-item_"))
                     row["No"] = 22;
-                if (filename.StartsWith("inventoryposting-item_"))
+                if (filename.StartsWith("inventoryposting_"))
                     row["No"] = 23;
+                if (filename.StartsWith("inventoryposting-item_"))
+                    row["No"] = 24;
 
                 row["Filename"] = filename;
                 row["FileFullPath"] = fileFullPath;
@@ -246,15 +255,14 @@ namespace Check_up.forms
                         updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());
                         updatedBy = transformString4SQL(dt.Rows[a]["updatedBy"].ToString());
 
-                        createdBy = "'admin'";
-                        if (dt.Rows[a]["createdBy"] != DBNull.Value)
-                            createdBy = "'" + dt.Rows[a]["createdBy"] + "'";
+                        // we just allow users.createdBy to be nullable.
+                        createdBy = transformString4SQL(dt.Rows[a]["createdBy"].ToString());
 
                         picLocation = transformString4SQL(dt.Rows[a]["picLocation"].ToString().Replace(@"\", @"\\"));
                         deactivated = transformString4SQL(dt.Rows[a]["deactivated"].ToString());
 
                         sql = "INSERT INTO users(username,password,fName,midName,lName,email,address,gender,lastLogIn,createDate,updateDate,updatedBy,createdBy,picLocation,deactivated,role,exported)";
-                        sql += " VALUES('" + username + "','" + password + "'," + fName + "," + midName + "," + lName + "," + email + "," + address + "," + gender + "," + lastLogIn + "," + createDate + "," + updateDate + "," + updatedBy + "," + createdBy + "," + picLocation + "," + deactivated + "," + role + ",1)";
+                        sql += " VALUES('" + username + "','" + password + "'," + fName + "," + midName + "," + lName + "," + email + "," + address + "," + gender + "," + lastLogIn + "," + createDate + "," + updateDate + "," + updatedBy + ",'" + createdBy + "'," + picLocation + "," + deactivated + "," + role + ",1)";
                         sql += " ON DUPLICATE KEY UPDATE user_id=LAST_INSERT_ID(user_id), password=VALUES(password),fName=VALUES(fName),midName=VALUES(midName),lName=VALUES(lName),email=VALUES(email),address=VALUES(address),gender=VALUES(gender),lastLogIn=VALUES(lastLogIn),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy)";
                         sql += ",picLocation=VALUES(picLocation),deactivated=VALUES(deactivated),role=VALUES(role)";
 
@@ -347,6 +355,79 @@ namespace Check_up.forms
                         cmd.Parameters.AddWithValue("@trans", trans);
 
                         if (cmd.ExecuteNonQuery() > 0)
+                            cntProcessed++;
+                    }
+                    if (cntProcessed == recordsCount)
+                    {
+                        recordImportedFiles(filename, fullPath);
+                        moveFile(ref i, ref filename);
+                    }
+                }
+
+                // let's import business partner
+                cntProcessed = 0;
+                if (tableName == "businesspartner")
+                {
+                    string BPType,code,BPName,address,tel1,tel2,fax,email,website,contactP,deactivated,remarks,createDate,createdBy,updateDate,updatedBy,trans,transmitted;
+
+                    recordsCount = dt.Rows.Count;
+                    for (a = 0; a < recordsCount; a++)
+                    {
+                        if (dt.Rows[a]["BPType"] == DBNull.Value || dt.Rows[a]["BPType"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "businesspartner.BPType " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            BPType = dt.Rows[a]["BPType"].ToString();
+
+                        if (dt.Rows[a]["code"] == DBNull.Value || dt.Rows[a]["code"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "businesspartner.code " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            code = dt.Rows[a]["code"].ToString();
+
+                        BPName = transformString4SQL(dt.Rows[a]["BPName"].ToString());
+                        address = transformString4SQL(dt.Rows[a]["address"].ToString());
+                        tel1 = transformString4SQL(dt.Rows[a]["tel1"].ToString());
+                        tel2 = transformString4SQL(dt.Rows[a]["tel2"].ToString());
+                        fax = transformString4SQL(dt.Rows[a]["fax"].ToString());
+                        email = transformString4SQL(dt.Rows[a]["email"].ToString());
+                        website = transformString4SQL(dt.Rows[a]["website"].ToString());
+                        contactP = transformString4SQL(dt.Rows[a]["contactP"].ToString());
+                        deactivated = transformString4SQL(dt.Rows[a]["deactivated"].ToString());
+                        remarks = transformString4SQL(dt.Rows[a]["remarks"].ToString());
+
+                        deactivated = transformString4SQL(dt.Rows[a]["deactivated"].ToString());
+                        createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "itemmasterdata.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
+
+                        updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());
+                        updatedBy = transformString4SQL(dt.Rows[a]["updatedBy"].ToString());
+                        trans = transformString4SQL(dt.Rows[a]["trans"].ToString());
+                        transmitted = transformString4SQL(dt.Rows[a]["transmitted"].ToString());
+
+                        sql = "INSERT INTO businesspartner(BPType,`code`,BPName,address,tel1,tel2,fax,email,website,contactP,deactivated,remarks,createDate,createdBy,updateDate,updatedBy,trans,exported,transmitted)";
+                        sql += " VALUES(" + BPType + ",'" + code + "'," + BPName + "," + address + "," + tel1 + "," + tel2 + "," + fax + "," + email + "," + website + "," + contactP + "," + deactivated + "," + remarks + "," + createDate + ",'" + createdBy + "'," + updateDate + "," + updatedBy + "," + trans + ", 1, 1)"; // because this is incoming, exported = 1. This is also assumed to be transmitted.
+                        sql += " ON DUPLICATE KEY UPDATE `code`=VALUES(`code`),BPType=VALUES(BPType),address=VALUES(address),tel1=VALUES(tel1),tel2=VALUES(tel2),fax=VALUES(fax),email=VALUES(email),website=VALUES(website),contactP=VALUES(contactP),deactivated=VALUES(deactivated),remarks=VALUES(remarks),createDate=VALUES(createDate),createdBy=VALUES(createdBy),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy),trans=VALUES(trans),exported=VALUES(exported),transmitted=VALUES(transmitted)";
+
+                        using (StreamWriter file = File.CreateText(@"c:\temp\sql.txt"))
+                        {
+                            file.Write(sql);
+                        }
+
+
+                        db = new database();
+                        if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                             cntProcessed++;
                     }
                     if (cntProcessed == recordsCount)
@@ -657,7 +738,8 @@ namespace Check_up.forms
                 cntProcessed = 0;
                 if (tableName == "purchaseorder")
                 {
-                    string docId,vendorCode,vendorName,postingDate,warehouse,remarks1,remarks2,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,createDate,createdBy,updateDate,updatedBy;
+                    string docId,vendorCode,vendorName,postingDate,warehouse,remarks1,remarks2,createDate,createdBy,updateDate,updatedBy;
+                    decimal totalPrcntDscnt, totalAmtDscnt, netTotal, grossTotal;
 
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
@@ -670,23 +752,60 @@ namespace Check_up.forms
                         else
                             docId = dt.Rows[a]["docId"].ToString();
 
-                        vendorCode = dt.Rows[a]["vendorCode"].ToString();
+                        if (dt.Rows[a]["vendorCode"] == DBNull.Value || dt.Rows[a]["vendorCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "purchaseorder.vendorCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            vendorCode = dt.Rows[a]["vendorCode"].ToString();
+
                         vendorName = transformString4SQL(dt.Rows[a]["vendorName"].ToString());
-                        postingDate = transformDate4SQL(dt.Rows[a]["postingDate"].ToString());
-                        warehouse = dt.Rows[a]["warehouse"].ToString();
+
+                        if (dt.Rows[a]["postingDate"] == DBNull.Value || dt.Rows[a]["postingDate"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "purchaseorder.postingDate " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            postingDate = transformDate4SQLNotNull(dt.Rows[a]["postingDate"].ToString());
+
+                        if (dt.Rows[a]["warehouse"] == DBNull.Value || dt.Rows[a]["warehouse"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "purchaseorder.warehouse " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            warehouse = dt.Rows[a]["warehouse"].ToString();
+
                         remarks1 = transformString4SQL(dt.Rows[a]["remarks1"].ToString());
                         remarks2 = transformString4SQL(dt.Rows[a]["remarks2"].ToString());
-                        totalPrcntDscnt = dt.Rows[a]["totalPrcntDscnt"].ToString();
-                        totalAmtDscnt = dt.Rows[a]["totalAmtDscnt"].ToString();
-                        netTotal = dt.Rows[a]["netTotal"].ToString();
-                        grossTotal = dt.Rows[a]["grossTotal"].ToString();
-                        createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
+                        totalPrcntDscnt = Convert.ToDecimal(dt.Rows[a]["totalPrcntDscnt"] ?? 0);
+                        totalAmtDscnt = Convert.ToDecimal(dt.Rows[a]["totalAmtDscnt"] ?? 0);
+                        netTotal = Convert.ToDecimal(dt.Rows[a]["netTotal"] ?? 0);
+                        grossTotal = Convert.ToDecimal(dt.Rows[a]["grossTotal"] ?? 0);
+
+                        if (dt.Rows[a]["createDate"] == DBNull.Value || dt.Rows[a]["createDate"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "purchaseorder.createDate " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createDate = transformDate4SQLNotNull(dt.Rows[a]["createDate"].ToString());
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "purchaseorder.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
+
                         updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());
                         updatedBy = transformString4SQL(dt.Rows[a]["updatedBy"].ToString());
 
                         sql = "INSERT INTO purchaseorder(docId,vendorCode,vendorName,postingDate,warehouse,remarks1,remarks2,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,createDate,createdBy,updateDate,updatedBy,exported)";
-                        sql += " VALUES('" + docId + "','" + vendorCode + "'," + vendorName + "," + postingDate + ",'" + warehouse + "'," + remarks1 + "," + remarks2 + "," + totalPrcntDscnt + "," + totalAmtDscnt + "," + netTotal + "," + grossTotal + "," + createDate + "," + createdBy + "," + updateDate + "," + updatedBy + ",1)";
+                        sql += " VALUES('" + docId + "','" + vendorCode + "'," + vendorName + ",'" + postingDate + "','" + warehouse + "'," + remarks1 + "," + remarks2 + "," + totalPrcntDscnt + "," + totalAmtDscnt + "," + netTotal + "," + grossTotal + ",'" + createDate + "','" + createdBy + "'," + updateDate + "," + updatedBy + ",1)";
                         sql += " ON DUPLICATE KEY UPDATE id=VALUES(id),remarks1=VALUES(remarks1),remarks2=VALUES(remarks2),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy)";
 
                         db = new database();

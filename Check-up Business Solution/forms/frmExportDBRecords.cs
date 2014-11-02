@@ -107,6 +107,36 @@ namespace Check_up.forms
                 insertIntoExportedFiles(filename, fullPath);
             }
 
+            //Let's export businesspartner records.
+            tableName = "businesspartner_"; //with underscore            
+            filename = tableName + timeStamp + ".json";
+            fullPath = Application.StartupPath + @"\json\Out\" + filename;
+
+            sql = "SELECT * from businesspartner WHERE exported IS NULL OR exported = 0 ORDER BY `code`";            
+            db = new database(); dt = new DataTable();
+            dt = db.select(sql, vars.MySqlConnection);
+            if (dt.Rows.Count > 0)
+            {
+                using (StreamWriter file = File.CreateText(fullPath))
+                {
+                    serializer = new JsonSerializer();
+                    serializer.Serialize(file, dt);
+                }
+                rowCount = dt.Rows.Count;
+                iDs_array = new ArrayList();
+                for (i = 0; i < rowCount; i++)
+                    iDs_array.Add(dt.Rows[i]["code"].ToString());
+
+                rowCount = iDs_array.Count; sql = "";
+                for (i = 0; i < rowCount; i++)
+                    sql += "UPDATE businesspartner SET exported=1 WHERE `code`='" + iDs_array[i] + "';";
+
+                db = new database(); dt = new DataTable();
+                db.executeNonQuery(sql, vars.MySqlConnection);
+
+                insertIntoExportedFiles(filename, fullPath);
+            }
+
             //Let's export itemmasterdata records.
             tableName = "itemmasterdata_"; //with underscore            
             filename = tableName + timeStamp + ".json";
