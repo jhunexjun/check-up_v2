@@ -30,7 +30,7 @@ namespace Check_upTests.forms
             ht.Add("ftp_username", "ftp_anonymous");
             ht.Add("ftp_password", "ftp_password");
             ht.Add("deactivated", "N");
-            ht.Add("createdBy", 0);
+            ht.Add("createdBy", "admin");
 
             Warehouse wh = new Warehouse();
             wh.addWarehouse(ht);
@@ -50,7 +50,7 @@ namespace Check_upTests.forms
             Assert.AreEqual(dt.Rows[0]["ftp_username"], "ftp_anonymous");
             Assert.AreEqual(dt.Rows[0]["ftp_password"], "ftp_password");
             Assert.AreEqual(dt.Rows[0]["deactivated"], "N");
-            Assert.AreEqual(dt.Rows[0]["createdBy"], 0);
+            Assert.AreEqual(dt.Rows[0]["createdBy"], "admin");
         }
 
         [TestMethod]

@@ -777,7 +777,7 @@ namespace Check_up.forms
             {
                 header.Add("remarks2", txtRemarks2.Text.Trim());
                 header.Add("docId", txtInventoryTransferNo.Text);
-                header.Add("updatedBy", vars.user_id);
+                header.Add("updatedBy", vars.username);
 
                 InventoryTransfer inventoryTransfer = new InventoryTransfer();
                 if (inventoryTransfer.updateInventoryTransfer(header))
@@ -796,7 +796,7 @@ namespace Check_up.forms
                     header.Add("terminalId", vars.terminalId);
                     header.Add("frmWHouse", cboComboFrom.Text);
                     header.Add("toWHouse", cboComboTo.Text);
-                    header.Add("createdBy", vars.user_id);
+                    header.Add("createdBy", vars.username);
 
                     DateTime dateTime = DateTime.Parse(txtPostingDate.Text.Trim());
                     header.Add("postingDate", dateTime.ToString("yyyy/MM/dd"));

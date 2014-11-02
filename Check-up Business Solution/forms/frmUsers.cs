@@ -215,7 +215,7 @@ namespace Check_up.forms
                     picLocation = picLocation.Replace(@"\", @"\\");
                     ht.Add("picLocation", picLocation);
                     ht.Add("role", convertRole.role(cboRole.Text));
-                    ht.Add("createdBy", vars.user_id);
+                    ht.Add("createdBy", vars.username);
 
                     if (changedPW)
                         ht.Add("changePassword", true);
@@ -254,7 +254,7 @@ namespace Check_up.forms
                     ht.Add("deactivated", c);
                     ht.Add("picLocation", picLocation);
                     ht.Add("role", convertRole.role(cboRole.Text));
-                    ht.Add("createdBy", vars.user_id);
+                    ht.Add("createdBy", vars.username);
 
                     Users user = new Users();
                     if (user.addUser(ht))

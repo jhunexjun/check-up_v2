@@ -37,7 +37,7 @@ namespace Check_upTests.forms
             ht.Add("contactPerson", "John");
             ht.Add("deactivated", "N");
             ht.Add("remarks", "Nothing.");
-            ht.Add("createdBy", 0);
+            ht.Add("createdBy", "admin");
 
             BusinessPartner bp = new BusinessPartner();
             bp.addBusinessPartner(ht);
@@ -61,13 +61,7 @@ namespace Check_upTests.forms
             Assert.AreEqual(dt.Rows[0]["contactP"], "John");
             Assert.AreEqual(dt.Rows[0]["deactivated"], "N");
             Assert.AreEqual(dt.Rows[0]["remarks"], "Nothing.");
-            Assert.AreEqual(dt.Rows[0]["createdBy"], 0);
-        }
-
-        [TestMethod]
-        public void updateBusinessPartner()
-        {
-
+            Assert.AreEqual(dt.Rows[0]["createdBy"], "admin");
         }
     }
 }

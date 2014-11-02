@@ -33,7 +33,7 @@ namespace Check_up.forms
         private void insertIntoExportedFiles(string filename, string fullPath)
         {
             fullPath = fullPath.Replace(@"\", @"\\");
-            sql = "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy) VALUES('Out','" + filename + "','" + fullPath + "'," + vars.user_id + ")";
+            sql = "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy) VALUES('Out','" + filename + "','" + fullPath + "','" + vars.username + "')";
             db = new database(); dt = new DataTable();
             db.executeNonQuery(sql, vars.MySqlConnection);
         }
@@ -75,7 +75,7 @@ namespace Check_up.forms
                     db.executeNonQuery(sql, vars.MySqlConnection);
                 }
 
-                insertIntoExportedFiles(filename, fullPath);                
+                insertIntoExportedFiles(filename, fullPath);
             }
 
             //Let's export warehouse records
@@ -243,7 +243,7 @@ namespace Check_up.forms
                 DataRow row;
 
                 column = barcode.Columns.Add("itemCode", typeof(String));
-                barcode.Columns.Add("barcode", typeof(Int16));
+                barcode.Columns.Add("barcode", typeof(String));
 
                 for (i = 0; i < rowCount; i++)
                 {
@@ -255,7 +255,7 @@ namespace Check_up.forms
 
                 rowCount = barcode.Rows.Count; sql = "";
                 for (i = 0; i < rowCount; i++)
-                    sql += "UPDATE barcode SET exported=1 WHERE itemCode='" + barcode.Rows[i]["itemCode"].ToString() + "' AND barcode=" + barcode.Rows[i]["priceListCode"].ToString() + ";";
+                    sql += "UPDATE barcode SET exported=1 WHERE itemCode='" + barcode.Rows[i]["itemCode"].ToString() + "' AND barcode='" + barcode.Rows[i]["barcode"].ToString() + "';";
 
                 db = new database(); dt = new DataTable();
                 db.executeNonQuery(sql, vars.MySqlConnection);
@@ -285,7 +285,7 @@ namespace Check_up.forms
                 DataRow row;
 
                 column = barcodehistory.Columns.Add("itemCode", typeof(String));
-                barcodehistory.Columns.Add("barcode", typeof(Int16));
+                barcodehistory.Columns.Add("barcode", typeof(String));
 
                 for (i = 0; i < rowCount; i++)
                 {
@@ -297,7 +297,7 @@ namespace Check_up.forms
 
                 rowCount = barcodehistory.Rows.Count; sql = "";
                 for (i = 0; i < rowCount; i++)
-                    sql += "UPDATE barcodehistory SET exported=1 WHERE itemCode='" + barcodehistory.Rows[i]["itemCode"].ToString() + "' AND barcode=" + barcodehistory.Rows[i]["priceListCode"].ToString() + ";";
+                    sql += "UPDATE barcodehistory SET exported=1 WHERE itemCode='" + barcodehistory.Rows[i]["itemCode"].ToString() + "' AND barcode='" + barcodehistory.Rows[i]["barcode"].ToString() + "';";
 
                 db = new database(); dt = new DataTable();
                 db.executeNonQuery(sql, vars.MySqlConnection);
@@ -896,7 +896,7 @@ namespace Check_up.forms
                 }
             }
 
-            MessageBox.Show(this, "Successfully exported files.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "Successfully exported files to " + Application.StartupPath + @"\json\Out\ directory." , "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         // items that will return true means it's a transactional tables.

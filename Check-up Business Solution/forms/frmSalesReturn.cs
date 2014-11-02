@@ -593,7 +593,7 @@ namespace Check_up.forms
                         return;
 
                     db = new database();
-                    sql = "UPDATE salesreturn SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + " WHERE docId='" + txtSalesReturnNo.Text.Trim() + "'";
+                    sql = "UPDATE salesreturn SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy='" + vars.username + "' WHERE docId='" + txtSalesReturnNo.Text.Trim() + "'";
                     if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                     {
                         MessageBox.Show(this, "Updating has been successful", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -614,7 +614,7 @@ namespace Check_up.forms
                     sql = "START TRANSACTION;";
                     sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
                     sql += "SET @postingDate=DATE_FORMAT('" + strDateTime + "', '%Y-%m-%d');";
-                    sql += "SET @user_id=" + vars.user_id + ";";
+                    sql += "SET @username='" + vars.username + "';";
                     sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='SR');";
                     sql += "SET @docId=CONCAT('" + vars.terminalId + "', @newId);";
                     sql += "INSERT INTO salesreturn(docId,customerCode,customerName,warehouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal";
@@ -628,7 +628,7 @@ namespace Check_up.forms
                         sql += ",'" + txtRemarks1.Text.Trim() + "'";
                     if (txtRemarks2.Text.Trim() != "")
                         sql += ",'" + txtRemarks2.Text.Trim() + "'";
-                    sql += ",@date,@user_id);";
+                    sql += ",@date,@username);";
                     sql += "UPDATE businesspartner SET trans='Y' WHERE code='" + txtCustomerCode.Text.Trim().Replace("'", "''") + "';";
 
                     rowCount = dgvItems.Rows.Count;

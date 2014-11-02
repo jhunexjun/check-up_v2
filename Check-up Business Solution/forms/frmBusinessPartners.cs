@@ -178,7 +178,7 @@ namespace Check_up.forms
                     string c = chkDeactivate.Checked == true ? "Y" : "N";
 
                     database db = new database();
-                    sql = "UPDATE businesspartner SET BPname='" + txtName.Text.Trim().Replace("'","''") + "',address='" + txtAddress.Text.Trim().Replace("'","''") + "',tel1='" + txtTel1.Text.Trim() + "',tel2='" + txtTel2.Text.Trim() + "',fax='" + txtFaxNo.Text.Trim() + "',email='" + txtEmail.Text.Trim() + "',website='" + txtWebsite.Text.Trim() + "',contactP='" + txtContactP.Text.Trim() + "',remarks='" + txtRemarks.Text.Trim().Replace("'","''") + "',deactivated='" + c + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + " WHERE code='" + txtBPCode.Text.Trim() + "'";
+                    sql = "UPDATE businesspartner SET BPname='" + txtName.Text.Trim().Replace("'","''") + "',address='" + txtAddress.Text.Trim().Replace("'","''") + "',tel1='" + txtTel1.Text.Trim() + "',tel2='" + txtTel2.Text.Trim() + "',fax='" + txtFaxNo.Text.Trim() + "',email='" + txtEmail.Text.Trim() + "',website='" + txtWebsite.Text.Trim() + "',contactP='" + txtContactP.Text.Trim() + "',remarks='" + txtRemarks.Text.Trim().Replace("'","''") + "',deactivated='" + c + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy='" + vars.username + "' WHERE code='" + txtBPCode.Text.Trim() + "'";
 
                     if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                     {
@@ -198,7 +198,7 @@ namespace Check_up.forms
                     c = (chkDeactivate.Checked == true) ? "Y" : "N";
                     type = BPCode(cboBPType.Text);
                     sql = "INSERT INTO businesspartner(code,BPType,BPname,address,tel1,tel2,fax,email,website,contactP,deactivated,remarks,createDate,createdBy) ";
-                    sql += "Values('" + txtBPCode.Text.Trim() + "'," + type + ",'" + txtName.Text.Trim().Replace("'","''") + "','" + txtAddress.Text.Trim().Replace("'","''") + "','" + txtTel1.Text.Trim() + "','" + txtTel2.Text.Trim() + "','" + txtFaxNo.Text.Trim() + "','" + txtEmail.Text.Trim() + "','" + txtWebsite.Text.Trim() + "','" + txtContactP.Text.Trim() + "','" + c + "','" + txtRemarks.Text.Trim().Replace("'","''") + "',DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')," + vars.user_id + ")";
+                    sql += "Values('" + txtBPCode.Text.Trim() + "'," + type + ",'" + txtName.Text.Trim().Replace("'","''") + "','" + txtAddress.Text.Trim().Replace("'","''") + "','" + txtTel1.Text.Trim() + "','" + txtTel2.Text.Trim() + "','" + txtFaxNo.Text.Trim() + "','" + txtEmail.Text.Trim() + "','" + txtWebsite.Text.Trim() + "','" + txtContactP.Text.Trim() + "','" + c + "','" + txtRemarks.Text.Trim().Replace("'","''") + "',DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),'" + vars.username + "')";
                     database db = new database();
                     if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                     {

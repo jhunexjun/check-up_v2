@@ -713,7 +713,7 @@ namespace Check_up.forms
             else if (btnFind.Text == "&Update")
             {
                 db = new database();
-                sql = "UPDATE grpo SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + " WHERE docId='" + txtDeliveryReceiptNo.Text.Trim() + "'";
+                sql = "UPDATE grpo SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy='" + vars.username + "' WHERE docId='" + txtDeliveryReceiptNo.Text.Trim() + "'";
 
                 if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                 {
@@ -741,7 +741,7 @@ namespace Check_up.forms
                     header.Add("grossTotal", txtGrossTotal.Text.Trim());
                     header.Add("remarks1", txtRemarks1.Text.Trim());
                     header.Add("remarks2", txtRemarks2.Text.Trim());
-                    header.Add("createdBy", vars.user_id);
+                    header.Add("createdBy", vars.username);
 
                     table = new DataTable();
                     table.Columns.Add("indx");

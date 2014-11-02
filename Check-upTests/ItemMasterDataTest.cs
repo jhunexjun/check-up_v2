@@ -29,7 +29,7 @@ namespace Check_upTests.forms
            Assert.IsTrue(functions.createDefaultRecordsForTheTests());
 
             vars.terminalId = "MAIN";
-            vars.user_id = 1;
+            vars.username = "admin";
 
             Hashtable items = new Hashtable();
             items.Add("vatable", "N");
@@ -40,7 +40,7 @@ namespace Check_upTests.forms
             items.Add("varWeightItm", "N");
             items.Add("minStock", 0); // zero means no minimum
             items.Add("maxStock", 0); // zero means no maximum
-            items.Add("createdBy", 0);
+            items.Add("createdBy", "admin1");
             items.Add("description", "Long Bike");
             items.Add("shortName", "Bike");
             items.Add("vendor", "V-MI2200");
@@ -81,7 +81,7 @@ namespace Check_upTests.forms
             Assert.AreEqual(Convert.ToDecimal(dt.Rows[0]["maxStock"]), 0m);
             Assert.AreEqual(dt.Rows[0]["deactivated"], "N");
             Assert.IsNotNull(dt.Rows[0]["createDate"]);
-            Assert.AreEqual(dt.Rows[0]["createdBy"], 1);
+            Assert.AreEqual(dt.Rows[0]["createdBy"], "admin");
             Assert.AreEqual(dt.Rows[0]["updateDate"].ToString(), "");
             Assert.AreEqual(dt.Rows[0]["updatedBy"].ToString(), "");
             Assert.AreEqual(dt.Rows[0]["trans"].ToString(), "");
@@ -102,8 +102,8 @@ namespace Check_upTests.forms
             Assert.IsTrue(dt_rows.Contains("1234567890"));
             Assert.IsNotNull(dt.Rows[0]["createDate"]);
             Assert.IsNotNull(dt.Rows[1]["createDate"]);
-            Assert.AreEqual(dt.Rows[0]["createdBy"], 1);
-            Assert.AreEqual(dt.Rows[1]["createdBy"], 1);
+            Assert.AreEqual(dt.Rows[0]["createdBy"], "admin");
+            Assert.AreEqual(dt.Rows[1]["createdBy"], "admin");
             Assert.AreEqual(dt.Rows[0]["exported"], DBNull.Value);
             Assert.AreEqual(dt.Rows[1]["exported"], DBNull.Value);
 

@@ -44,7 +44,7 @@ namespace Check_upTests
             ht.Add("BPType", 0);
             ht.Add("code", "s-7");
             ht.Add("BPName", "XYZ Enterprises");
-            ht.Add("createdBy", 0);
+            ht.Add("createdBy", "admin");
 
             BusinessPartner bp = new BusinessPartner();
             if ( ! bp.addBusinessPartner(ht))
@@ -55,7 +55,7 @@ namespace Check_upTests
             ht.Add("BPType", 0);
             ht.Add("code", "s-15");
             ht.Add("BPName", "ABC Corporation");
-            ht.Add("createdBy", 0);
+            ht.Add("createdBy", "admin");
 
             bp = new BusinessPartner();
             if (!bp.addBusinessPartner(ht))
@@ -77,7 +77,7 @@ namespace Check_upTests
             items.Add("varWeightItm", "N");
             items.Add("minStock", 0); // zero means no minimum
             items.Add("maxStock", 0); // zero means no maximum
-            items.Add("createdBy", vars.user_id);
+            items.Add("createdBy", vars.username);
             items.Add("description", "REAR SPROCKET  RS100 42T MOTOX");
             items.Add("vendor", "s-7");
             items.Add("deactivated", "N");
@@ -101,7 +101,7 @@ namespace Check_upTests
             items.Add("varWeightItm", "N");
             items.Add("minStock", 0); // zero means no minimum
             items.Add("maxStock", 0); // zero means no maximum
-            items.Add("createdBy", vars.user_id);
+            items.Add("createdBy", vars.username);
             items.Add("description", "CHANGE PEDAL XRM");
             items.Add("vendor", "s-7");
             items.Add("deactivated", "N");
@@ -125,7 +125,7 @@ namespace Check_upTests
             items.Add("varWeightItm", "N");
             items.Add("minStock", 0); // zero means no minimum
             items.Add("maxStock", 0); // zero means no maximum
-            items.Add("createdBy", vars.user_id);
+            items.Add("createdBy", vars.username);
             items.Add("description", "ALLEN BOLT");
             items.Add("vendor", "s-15");
             items.Add("deactivated", "N");
@@ -147,10 +147,10 @@ namespace Check_upTests
         {
             Assert.IsTrue(functions.createDefaultRecordsForTheTests());
 
-            // let's assume that we have logged in
-            vars.terminalId = "MAIN";   vars.user_id = 1;
+            // let's assume that we have logged in. Note this should comes first as this is being used in below functions.
+            vars.terminalId = "MAIN"; vars.username = "admin";
 
-            //add these pre-requisite records.
+            //add these pre-requisites records.
             Assert.IsTrue(addWarehouses());
             Assert.IsTrue(addBusinessPartners());
             Assert.IsTrue(registerItems());
@@ -193,7 +193,7 @@ namespace Check_upTests
             header.Add("terminalId", vars.terminalId);
             header.Add("frmWHouse", "MAIN");
             header.Add("toWHouse", "US-FL");
-            header.Add("createdBy", vars.user_id);
+            header.Add("createdBy", vars.username);
 
             DateTime dateTime = DateTime.Today;
             header.Add("postingDate", dateTime.ToString("yyyy/MM/dd"));
@@ -341,7 +341,7 @@ namespace Check_upTests
             Assert.IsTrue(functions.createDefaultRecordsForTheTests());
 
             // let's assume that we have logged in
-            vars.terminalId = "MAIN"; vars.user_id = 1;
+            vars.terminalId = "MAIN"; vars.username = "admin";
 
             //add these pre-requisite records.
             Assert.IsTrue(addWarehouses());
@@ -386,7 +386,7 @@ namespace Check_upTests
             header.Add("terminalId", vars.terminalId);
             header.Add("frmWHouse", "MAIN");
             header.Add("toWHouse", "US-FL");
-            header.Add("createdBy", vars.user_id);
+            header.Add("createdBy", vars.username);
 
             DateTime dateTime = DateTime.Today;
             header.Add("postingDate", dateTime.ToString("yyyy/MM/dd"));
@@ -513,7 +513,7 @@ namespace Check_upTests
             Assert.IsTrue(inventoryTransfer.addInventoryTransfer(header, table));
 
             header.Add("remarks2", "Remarks2 has been updated.");
-            header.Add("updatedBy", 1);
+            header.Add("updatedBy", "admin");
             header.Add("docId", "MAIN1");
 
             Assert.IsTrue(inventoryTransfer.updateInventoryTransfer(header));

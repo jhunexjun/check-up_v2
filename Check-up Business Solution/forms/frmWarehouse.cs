@@ -126,7 +126,7 @@ namespace Check_up.forms
                     string c = chkDeactivate.Checked == true ? "Y" : "N";
 
                     database db = new database();
-                    sql = "UPDATE warehouse SET code='" + txtWhCode.Text.Trim() + "',name='" + txtName.Text.Trim() + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + ",deactivated='" + c + "' WHERE id=" + id;
+                    sql = "UPDATE warehouse SET code='" + txtWhCode.Text.Trim() + "',name='" + txtName.Text.Trim() + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy='" + vars.username + "',deactivated='" + c + "' WHERE id=" + id;
 
                     if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                     {
@@ -145,7 +145,7 @@ namespace Check_up.forms
                     string c;
                     c = (chkDeactivate.Checked == true) ? "Y" : "N";
                     sql = "INSERT INTO warehouse(code,name,deactivated,createDate,createdBy) ";
-                    sql += "Values('" + txtWhCode.Text.Trim() + "','" + txtName.Text.Trim().Replace("'","''") + "','" + c + "',DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')," + vars.user_id + ")";
+                    sql += "Values('" + txtWhCode.Text.Trim() + "','" + txtName.Text.Trim().Replace("'","''") + "','" + c + "',DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),'" + vars.username + "')";
                     database db = new database();
                     if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                     {

@@ -38,7 +38,7 @@ namespace Check_up.classes
                 ht["deactivated"] = "null";
 
             if (!ht.Contains("createdBy"))
-                ht["createdBy"] = "null";
+                ht["createdBy"] = "admin"; //this is cannot be null
 
             return ht;
         }
@@ -60,7 +60,7 @@ namespace Check_up.classes
             ht = formatParams(ht);
 
             string sql = "insert into warehouse(code,`name`,branchType,ftp_url,ftp_username,ftp_password,deactivated,createDate,createdBy)";
-                    sql += " values('{0}', {1}, '{2}', {3}, {4}, {5}, {6}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'), {7})";
+                    sql += " values('{0}', {1}, '{2}', {3}, {4}, {5}, {6}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'), '{7}')";
                     sql = String.Format(sql, ht["code"], ht["name"], ht["branchType"], ht["ftp_url"], ht["ftp_username"], ht["ftp_password"], ht["deactivated"], ht["createdBy"]);
 
             MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);

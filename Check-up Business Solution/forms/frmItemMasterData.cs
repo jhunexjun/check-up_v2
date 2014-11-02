@@ -268,10 +268,10 @@ namespace Check_up.forms
                     db = new database();
                     sql = "START TRANSACTION;";
                     sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
-                    sql += "SET @user_id=" + vars.user_id + ";";
+                    sql += "SET @username='" + vars.username + "';";
                     sql += "SET @varWeightItm='" + varWeightItem + "';";
                     sql += "SET @vendor=(SELECT code FROM businesspartner WHERE code='" + txtVendor.Text.Trim() + "' AND BPType=0 AND deactivated='N');";
-                    sql += "UPDATE itemmasterdata SET itemCode='" + txtItemCode.Text.Trim() + "',description='" + txtDescription.Text.Trim().Replace("'", "''") + "',shortName='" + txtShortName.Text.Trim().Replace("'", "''") + "',vatable='" + v + "',varWeightItm='" + varWeightItem + "',deactivated='" + deactivate + "',updateDate=@date,updatedBy=@user_id";
+                    sql += "UPDATE itemmasterdata SET itemCode='" + txtItemCode.Text.Trim() + "',description='" + txtDescription.Text.Trim().Replace("'", "''") + "',shortName='" + txtShortName.Text.Trim().Replace("'", "''") + "',vatable='" + v + "',varWeightItm='" + varWeightItem + "',deactivated='" + deactivate + "',updateDate=@date,updatedBy=@username";
                     if (txtRemarks.Text.Trim() != "")
                         sql += ",remarks='" + txtRemarks.Text.Trim().Replace("'", "''") + "'";
                     if (trans == false)
@@ -287,7 +287,7 @@ namespace Check_up.forms
                     {
                         if (htNewBarcode[i].ToString() != htBarcodeFromDB[i].ToString())
                         {
-                            sql += "INSERT INTO barcodehistory(itemCode,barcode,cp_createDate,cp_createdBy,createDate,createdBy) SELECT itemCode,barcode,createDate,createdBy,@date,@user_id FROM barcode WHERE itemCode='" + txtItemCode.Text.Trim() + "' AND barcode='" + htBarcodeFromDB[i].ToString() + "';";
+                            sql += "INSERT INTO barcodehistory(itemCode,barcode,cp_createDate,cp_createdBy,createDate,createdBy) SELECT itemCode,barcode,createDate,createdBy,@date,@username FROM barcode WHERE itemCode='" + txtItemCode.Text.Trim() + "' AND barcode='" + htBarcodeFromDB[i].ToString() + "';";
                             sql += "UPDATE barcode SET barcode='" + htNewBarcode[i].ToString() + "' WHERE itemCode='" + txtItemCode.Text.Trim() + "' AND barcode='" + htBarcodeFromDB[i].ToString() + "';";
                         }
                     }
@@ -301,7 +301,7 @@ namespace Check_up.forms
                     {
                         if (Convert.ToDecimal(htNewPrice[i]) != Convert.ToDecimal(htPriceFromDB[i]))
                         {
-                            sql += "INSERT INTO pricelisthistory(itemCode,priceListCode,netPrice,cp_createDate,cp_createdBy,createDate,createdBy) SELECT itemCode,priceListCode,netPrice,createDate,createdBy,@date,@user_id FROM pricelist WHERE itemCode='" + txtItemCode.Text.Trim() + "' AND priceListCode=" + i + ";";
+                            sql += "INSERT INTO pricelisthistory(itemCode,priceListCode,netPrice,cp_createDate,cp_createdBy,createDate,createdBy) SELECT itemCode,priceListCode,netPrice,createDate,createdBy,@date,@username FROM pricelist WHERE itemCode='" + txtItemCode.Text.Trim() + "' AND priceListCode=" + i + ";";
                             sql += "UPDATE pricelist SET netPrice=" + Convert.ToDecimal(htNewPrice[i]) + " WHERE itemCode='" + txtItemCode.Text.Trim() + "' AND priceListCode=" + i + ";";
                         }
                     }
@@ -341,7 +341,7 @@ namespace Check_up.forms
                     items.Add("varWeightItm", chkVarWeightItm.Checked == true ? "Y" : "N");
                     items.Add("minStock", txtMinStock.Text.Trim()); // zero means no minimum
                     items.Add("maxStock", txtMaxStock.Text.Trim()); // zero means no maximum
-                    items.Add("createdBy", vars.user_id);
+                    items.Add("createdBy", vars.username);
                     items.Add("description", txtDescription.Text.Trim());
                     items.Add("shortName", txtShortName.Text.Trim());
                     items.Add("vendor", txtVendor.Text.Trim());

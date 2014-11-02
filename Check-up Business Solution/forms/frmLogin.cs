@@ -75,7 +75,7 @@ namespace Check_up.forms
                 {
                     database query = new database();
                     string sql = "SET @username='" + txtUsername.Text.Trim() + "';";
-                    sql += "SELECT user_id,password,deactivated,role FROM users where username=@username;";
+                    sql += "SELECT username,password,deactivated,role FROM users where username=@username;";
                     DataTable dt = new DataTable();
                     dt = query.select(sql, vars.MySqlConnection);
                     
@@ -106,11 +106,11 @@ namespace Check_up.forms
                         }
 
                         vars.username = txtUsername.Text.Trim();
-                        sql = "UPDATE users SET lastLogIn = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s') WHERE user_id = " + dt.Rows[0][0];
+                        sql = "UPDATE users SET lastLogIn = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s') WHERE username = '" + dt.Rows[0][0] + "'";
                         query.executeNonQuery(sql, vars.MySqlConnection);
                         vars.loggedOn = true;
-                        vars.user_id = Convert.ToInt16(dt.Rows[0]["user_id"]);
                         vars.role = Convert.ToInt16(dt.Rows[0]["role"]);
+                        vars.username = dt.Rows[0]["username"].ToString();
 
                         sql = "SELECT terminalId FROM terminal LIMIT 1";
                         dt = new DataTable();

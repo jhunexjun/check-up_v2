@@ -29,7 +29,7 @@ namespace Check_upTests
             Assert.IsNotNull(ht);
             Assert.IsTrue(functions.dropAndCreateDatabase(ht));
             
-            // we have to select db againt because it was dropped above.
+            // we have to select db against because it was dropped above.
             vars.MySqlConnection.ChangeDatabase(ht["database"].ToString());
 
             //we want to make sure we don't drop live database.
@@ -47,7 +47,7 @@ namespace Check_upTests
             string c;
 
             Hashtable ht = new Hashtable();
-            ht.Add("username", "admin1");
+            ht.Add("username", "admin");
             ht.Add("password", hash);
             ht.Add("fName", "John");
             ht.Add("midName", "Dee");
@@ -56,11 +56,11 @@ namespace Check_upTests
             ht.Add("address", "Philippines");
             ht.Add("gender", "M");
 
-            c = (true) ? "Y" : "N";
+            c = (false) ? "Y" : "N";
             ht.Add("deactivated", c);
             ht.Add("picLocation", @"c:\piclocation\pic.img");
             ht.Add("role", convertRole.role("Superuser"));
-            ht.Add("createdBy", 0);
+            ht.Add("createdBy", "0");
 
             Users user = new Users();
             Assert.IsTrue(user.addUser(ht));
@@ -70,7 +70,7 @@ namespace Check_upTests
             MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             da.Fill(dt);
-            Assert.AreEqual(dt.Rows[0]["username"], "admin1");
+            Assert.AreEqual(dt.Rows[0]["username"], "admin");
             Assert.AreEqual(dt.Rows[0]["password"], hash);
             Assert.AreEqual(dt.Rows[0]["fName"], "John");
             Assert.AreEqual(dt.Rows[0]["midName"], "Dee");
@@ -78,10 +78,10 @@ namespace Check_upTests
             Assert.AreEqual(dt.Rows[0]["email"], "john_dee_joe@gmail.com");
             Assert.AreEqual(dt.Rows[0]["address"], "Philippines");
             Assert.AreEqual(dt.Rows[0]["gender"], "M");
-            Assert.AreEqual(dt.Rows[0]["deactivated"], c);
+            Assert.AreEqual(dt.Rows[0]["deactivated"], "N");
             Assert.AreEqual(dt.Rows[0]["picLocation"], @"c:\piclocation\pic.img");
             Assert.AreEqual(dt.Rows[0]["role"], 0);
-            Assert.AreEqual(dt.Rows[0]["createdBy"], 0);
+            Assert.AreEqual(dt.Rows[0]["createdBy"], "0");  // this is a default user so it's zero
         }
 
         [TestMethod()]
@@ -94,7 +94,7 @@ namespace Check_upTests
             string hash = BCrypt.HashPassword(pw, salt);
 
             Hashtable ht = new Hashtable();
-            ht.Add("username", "admin1");
+            ht.Add("username", "admin");
             ht.Add("password", hash);
             ht.Add("fName", "John2");
             ht.Add("midName", "Dee2");
@@ -107,7 +107,7 @@ namespace Check_upTests
             ht.Add("deactivated", c);
             ht.Add("picLocation", @"c:\piclocation\pic2.img");
             ht.Add("role", convertRole.role("User"));
-            ht.Add("updatedBy", 0);
+            ht.Add("updatedBy", "admin");
 
             Check_up.classes.Users user = new Users();
             Assert.IsTrue(user.updateUser(ht));
@@ -118,7 +118,7 @@ namespace Check_upTests
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             da.Fill(dt);
 
-            Assert.AreEqual(dt.Rows[0]["username"], "admin1");
+            Assert.AreEqual(dt.Rows[0]["username"], "admin");
             Assert.AreEqual(dt.Rows[0]["fName"], "John2");
         }
     }

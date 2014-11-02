@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using MySql.Data.MySqlClient;
-using Check_up;
-using Check_up.classes;
 using System.Data;
 using System.Windows.Forms;
+using Check_up.classes;
 
 namespace Check_up.classes
 {
-    class DeliveryReceipt
+    public class DeliveryReceipt
     {
         MySqlCommand cmd = new MySqlCommand();
 
@@ -64,12 +63,99 @@ namespace Check_up.classes
 
         private bool checkRowsForAdd(DataTable tableRows)
         {
+            // list down all passed columns.
+            ArrayList passedColumns = new ArrayList(tableRows.Columns.Count);
+            foreach(DataColumn col in tableRows.Columns)
+                passedColumns.Add(col.ColumnName);
+                            
+            // these are the important columns that should exist in the passed columns.
+            ArrayList importantColumns = new ArrayList();
+            importantColumns.Add("docId");
+            importantColumns.Add("indx");
+            importantColumns.Add("itemCode");
+            importantColumns.Add("description");            
+            importantColumns.Add("warehouseRow");
+            importantColumns.Add("vatable");
+            importantColumns.Add("realBsNetPrchsPrc");
+            importantColumns.Add("realBsGrossPrchsPrc");
+            importantColumns.Add("realNetPrchsPrc");
+            importantColumns.Add("realGrossPrchsPrc");          
+            importantColumns.Add("qty");
+            importantColumns.Add("baseUoM");
+            importantColumns.Add("qtyPrPrchsUoM");            
+            importantColumns.Add("prcntDscnt");
+            importantColumns.Add("amtDscnt");
+            importantColumns.Add("netPrchsPrc");
+            importantColumns.Add("grossPrchsPrc");
+            importantColumns.Add("rowNetTotal");
+            importantColumns.Add("rowGrossTotal");            
+
+            // now let's compare the two
+            foreach(string col in importantColumns) {
+                if (!passedColumns.Contains(col))
+                {
+                    MessageBox.Show("Column '" + col + "' was not passed.");
+                    return false;
+                }
+            }
+
+            // let's check other criterias
+            foreach (DataRow row in tableRows.Rows)
+            {
+                if (row["indx"].ToString() == "")
+                {
+                    MessageBox.Show("Row Index cannot be empty.");
+                    return false;
+                }
+
+                int result;
+                if (!int.TryParse(row["indx"].ToString(), out result))
+                {
+                    MessageBox.Show("Row index must be numeric.");
+                    return false;
+                }
+            }
+
             return true;
         }
 
-        // this checks the relationships of header and its rows data i.e. sum of rows is equal to the header's.
+        // this checks the relationships of header and its rows data i.e. sum of rows are equal to the header's.
         private bool checkHeadersAndRowsForAdd(Hashtable header, DataTable tableRows)
         {
+            decimal total = 0; int rowsCount = tableRows.Rows.Count;
+            for (int i = 0; i < rowsCount; i++)
+                total += Decimal.Parse(tableRows.Rows[i]["rowGrossTotal"].ToString());
+
+            if (total != Decimal.Parse(header["grossTotal"].ToString()))
+            {
+                MessageBox.Show("Price discrepancy on Gross Total.");
+                return false;
+            }
+
+            total = 0;
+            for (int i = 0; i < rowsCount; i++)
+                total += Decimal.Parse(tableRows.Rows[i]["prcntDscnt"].ToString());
+
+            total /= 2;
+
+            if (total != Decimal.Parse(header["totalPrcntDscnt"].ToString()))
+            {
+                MessageBox.Show("Price discrepancy on totalPrcntDscnt.");
+                return false;
+            }
+
+            total = 0;
+            for (int i = 0; i < rowsCount; i++)
+                total += Decimal.Parse(tableRows.Rows[i]["rowNetTotal"].ToString());
+
+            if (total != Decimal.Parse(header["netTotal"].ToString()))
+            {
+                MessageBox.Show("Price discrepancy on Net Total.");
+                return false;
+            }
+
+            //continue here
+
             return true;
         }
 

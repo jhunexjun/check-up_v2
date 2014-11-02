@@ -833,7 +833,7 @@ namespace Check_up.forms
             else if (btnFind.Text == "&Update")
             {
                 db = new database();
-                sql = "UPDATE purchaseorder SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + " WHERE docId='" + txtPONo.Text.Trim() + "'";
+                sql = "UPDATE purchaseorder SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy='" + vars.username + "' WHERE docId='" + txtPONo.Text.Trim() + "'";
 
                 if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                 {
@@ -861,7 +861,7 @@ namespace Check_up.forms
                     sql += "SET @vendorCode='" + txtVendorCode.Text.Trim().Replace("'", "''") + "';";
                     sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
                     sql += "SET @postingDate=DATE_FORMAT('" + strDateTime + "', '%Y-%m-%d');";
-                    sql += "SET @user_id=" + vars.user_id + ";";
+                    sql += "SET @username='" + vars.username + "';";
                     sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='PO');";
                     sql += "SET @docId=CONCAT('" + vars.terminalId + "', @newId);";
                     sql += "SET @totalPrcntDscnt=" + totalPrcntDscnt + ";";
@@ -879,7 +879,7 @@ namespace Check_up.forms
                         sql += ",'" + txtRemarks1.Text.Trim() + "'";
                     if (txtRemarks2.Text.Trim() != "")
                         sql += ",'" + txtRemarks2.Text.Trim() + "'";
-                    sql += ",@date,@user_id);";
+                    sql += ",@date,@username);";
                     sql += "UPDATE businesspartner SET trans='Y' WHERE code='" + txtVendorCode.Text.Trim().Replace("'", "''") + "';";
 
                     rowCount = dgvItems.Rows.Count;

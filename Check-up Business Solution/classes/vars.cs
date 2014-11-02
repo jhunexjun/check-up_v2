@@ -12,8 +12,8 @@ namespace Check_up
 
         //set initial values
         public static bool loggedOn = false;
-        public static int user_id = 0;
-        public static string username = "";
+        // public static int user_id = 0;
+        public static string username = null;
         public static int role;
         public static string terminalId = "";
 

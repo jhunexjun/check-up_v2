@@ -85,7 +85,7 @@ namespace Check_up.classes
                 ht["remarks"] = "null";
 
             if (!ht.Contains("createdBy"))
-                ht["createdBy"] = 0; // assume the superuser created this
+                ht["createdBy"] = "admin"; // assume the superuser created this
 
             return ht;
         }
@@ -108,7 +108,7 @@ namespace Check_up.classes
                 return false;
 
             string sql = "insert into businesspartner(BPType,`code`,BPName,address,tel1,tel2,fax,email,website,contactP,deactivated,remarks,createDate,createdBy)";
-            sql += " values({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'), {12})";
+            sql += " values({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'), '{12}')";
             sql = String.Format(sql, ht["BPType"], ht["code"], ht["BPName"], ht["address"], ht["tel1"], ht["tel2"], ht["fax"], ht["email"], ht["website"], ht["contactPerson"], ht["deactivated"], ht["remarks"], ht["createdBy"]);
 
             MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);

@@ -57,9 +57,12 @@ namespace Check_up.classes
             if (!ht.Contains("role"))
                 ht["role"] = 0;
 
-            // default created by to 0 if not set
+            // default created by to 0 if not set. This should be not null. 0 means the primary/default username
             if (!ht.Contains("createdBy"))
-                ht["createdBy"] = 0;
+                ht["createdBy"] = "0";
+
+            if (ht.Contains("updatedBy"))
+                ht["updatedBy"] = "'" + ht["updatedBy"] + "'";
 
             return ht;
         }
@@ -69,7 +72,7 @@ namespace Check_up.classes
             ht = formatParams(ht);
 
             string sql = "insert into users(username,password,fName,midName,lName,email,address,gender,createDate,deactivated,picLocation,role,createdBy)";
-            sql += "values('{0}','{1}',{2},{3},{4},{5},{6},{7}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),{8},{9},{10},{11})";
+            sql += "values('{0}','{1}',{2},{3},{4},{5},{6},{7}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),{8},{9},{10},'{11}')";
             sql = String.Format(sql, ht["username"], ht["password"], ht["fName"], ht["midName"], ht["lName"], ht["email"], ht["address"], ht["gender"], ht["deactivated"], ht["picLocation"], ht["role"], ht["createdBy"]);
 
             MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
@@ -81,13 +84,13 @@ namespace Check_up.classes
 
         public bool updateUser(Hashtable ht)
         {
-            ht = formatParams(ht);
-
             if (!ht.Contains("updatedBy"))
             {
                 MessageBox.Show("Please indicate 'updated by' in the hash.");
                 return false;
             }
+
+            ht = formatParams(ht);
 
             int x = 10;
             string sql = "update users SET fName={0},midName={1},lName={2},email={3},address={4},gender={5},updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),picLocation={6},deactivated={7},role={8}, updatedBy={9}";

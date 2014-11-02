@@ -372,7 +372,7 @@ namespace Check_up.forms
             else if (btnFind.Text == "&Update")
             {
                 db = new database();
-                sql = "UPDATE grpo SET remarks1='" + txtRemarks1.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + " WHERE docId='" + txtInvPostingNo.Text.Trim() + "'";
+                sql = "UPDATE grpo SET remarks1='" + txtRemarks1.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy='" + vars.username + "' WHERE docId='" + txtInvPostingNo.Text.Trim() + "'";
 
                 if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                 {
@@ -406,7 +406,7 @@ namespace Check_up.forms
                     sql = "START TRANSACTION;";
                     sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
                     sql += "SET @postingDate=DATE_FORMAT('" + strPostingDate + "', '%Y-%m-%d');";
-                    sql += "SET @user_id=" + vars.user_id + ";";
+                    sql += "SET @username='" + vars.username + "';";
                     sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='IP');";
                     sql += "SET @docId=CONCAT('" + vars.terminalId + "', @newId);";
                     sql += "SET @countDateTime=DATE_FORMAT('" + strCountDateTime + "', '%Y-%m-%d %H:%i');";
@@ -418,7 +418,7 @@ namespace Check_up.forms
                     sql += " VALUES(@docId,@postingDate,@countDateTime,@warehouse";
                     if (txtRemarks1.Text.Trim() != "")
                         sql += ",'" + txtRemarks1.Text.Trim() + "'";
-                    sql += ",@date,@user_id);";
+                    sql += ",@date,@username);";
 
                     rowCount = dgvItems.Rows.Count;
 

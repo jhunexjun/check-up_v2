@@ -98,7 +98,6 @@ namespace Check_up.forms
 
                     vars.loggedOn = false;
                     vars.role = 0;
-                    vars.user_id = 0;
                     vars.username = "";
 
                     frmLogin.MdiParent = this;

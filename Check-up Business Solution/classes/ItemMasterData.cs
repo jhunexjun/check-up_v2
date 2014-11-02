@@ -139,7 +139,7 @@ namespace Check_up.classes
 
             string sql = "START TRANSACTION;";
             sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
-            sql += "SET @user_id=" + vars.user_id + ";";
+            sql += "SET @username='" + vars.username + "';";
             sql += "SET @varWeightItm=" + itemMasterData["varWeightItm"] + ";";
             sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='IMD');";
             sql += "SET @itemCode=CONCAT('" + vars.terminalId + "', 'ITM', @newId);";
@@ -147,20 +147,20 @@ namespace Check_up.classes
                 sql += "SET @vendor=(SELECT code FROM businesspartner WHERE code=" + itemMasterData["vendor"] + " AND BPType=0 AND deactivated='N');";
 
             sql += "INSERT INTO itemmasterdata(itemCode,description,shortName,vatable,vendor,deactivated,qtyPrPrchsUoM,qtyPrSaleUoM,prchsUoM,saleUoM,varWeightItm,remarks,minStock,maxStock,createdBy)";
-            sql += " VALUES(@itemCode," + itemMasterData["description"] + "," + itemMasterData["shortName"] + "," + itemMasterData["vatable"] + "," + itemMasterData["vendor"] + "," + itemMasterData["deactivated"] + "," + itemMasterData["qtyPrPrchsUoM"] + "," + itemMasterData["qtyPrSaleUoM"] + "," + itemMasterData["prchsUoM"] + "," + itemMasterData["saleUoM"] + "," + itemMasterData["varWeightItm"] + "," + itemMasterData["remarks"] + "," + itemMasterData["minStock"] + "," + itemMasterData["maxStock"] + ",@user_id);";
+            sql += " VALUES(@itemCode," + itemMasterData["description"] + "," + itemMasterData["shortName"] + "," + itemMasterData["vatable"] + "," + itemMasterData["vendor"] + "," + itemMasterData["deactivated"] + "," + itemMasterData["qtyPrPrchsUoM"] + "," + itemMasterData["qtyPrSaleUoM"] + "," + itemMasterData["prchsUoM"] + "," + itemMasterData["saleUoM"] + "," + itemMasterData["varWeightItm"] + "," + itemMasterData["remarks"] + "," + itemMasterData["minStock"] + "," + itemMasterData["maxStock"] + ",@username);";
             
             int priceListCode; double thePrice;
             foreach (DictionaryEntry item in prices)
             {
                 priceListCode = (int)item.Key;
                 thePrice = Convert.ToDouble(prices[item.Key]);
-                sql += "INSERT INTO pricelist(itemCode,priceListCode,netPrice,createdBy) VALUES(@itemCode," + priceListCode + "," + thePrice + "," + vars.user_id + ");";
+                sql += "INSERT INTO pricelist(itemCode,priceListCode,netPrice,createdBy) VALUES(@itemCode," + priceListCode + "," + thePrice + ", @username);";
             }
 
             // int rowCount = barcodes.Count;
             if (barcodes != null)
                 foreach( string barcode in barcodes)
-                    sql += "INSERT INTO barcode(itemCode,barcode,createDate,createdBy) VALUES(@itemCode,'" + barcode + "',@date,@user_id);";
+                    sql += "INSERT INTO barcode(itemCode,barcode,createDate,createdBy) VALUES(@itemCode,'" + barcode + "',@date,@username);";
 
             sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='IMD';";
             sql += " COMMIT;";

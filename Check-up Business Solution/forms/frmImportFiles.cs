@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text.RegularExpressions;
+using MySql.Data.MySqlClient;
 
 namespace Check_up.forms
 {
@@ -18,6 +19,8 @@ namespace Check_up.forms
         int position;
         database db; DataTable dt;
 
+        MySqlCommand cmd;
+
         public frmImportFiles()
         {
             InitializeComponent();
@@ -26,7 +29,7 @@ namespace Check_up.forms
         private string transformString4SQL(string s)
         {
             if (s == "")
-                s = "NULL";
+                s = "null";
             else
                 s = "'" + s.Replace("'", "''") + "'";
 
@@ -39,8 +42,7 @@ namespace Check_up.forms
                 s = "null";
             else
             {
-                DateTime dateTime;
-                dateTime = DateTime.Parse(s);
+                DateTime dateTime = DateTime.Parse(s);
                 s = "'" + dateTime.ToString("yyyy/MM/dd HH:mm:ss") + "'";
             }
 
@@ -123,7 +125,15 @@ namespace Check_up.forms
 
         private void frmImportFiles_Load(object sender, EventArgs e)
         {
-            string[] files = Directory.GetFiles(Application.StartupPath + @"\json\In\", "*.json", SearchOption.TopDirectoryOnly);
+            string[] files;
+            try
+            {
+                files = Directory.GetFiles(Application.StartupPath + @"\json\In\", "*.json", SearchOption.TopDirectoryOnly);
+            }
+            catch
+            {
+                return;
+            }
 
             DataTable dt = sortFiles(files);
 
@@ -154,7 +164,7 @@ namespace Check_up.forms
         private void recordImportedFiles(string filename, string filePath)
         {
             fullPath = fullPath.Replace(@"\", @"\\");
-            sql = "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy) VALUES('In','" + filename + "','" + fullPath + "'," + vars.user_id + ")";
+            sql = "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy) VALUES('In','" + filename + "','" + fullPath + "','" + vars.username + "')";
             db = new database(); dt = new DataTable();
             db.executeNonQuery(sql, vars.MySqlConnection);
         }
@@ -179,7 +189,7 @@ namespace Check_up.forms
                     Int16 n = Convert.ToInt16(match.Groups[1].Value);
                     filename = filename + "(" + (n + 1) + ")";
                 }
-                else
+                else //error here. we still have to check if filename of index 2 etc exists.
                     filename = filename + "(2)";
 
                 filename = filename + ".json";
@@ -187,13 +197,14 @@ namespace Check_up.forms
             }
         }
 
+        /* we should not allow to continue importing when constrainsts fail. */
         private void btnImport_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(this, "Import the files on the list now?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.No)
                 return;
 
-            string tableName;
+            string tableName, defaultError = "cannot be empty string or null.";
             int recordsCount = 0, a, cntProcessed;
 
             for (int i = 0; i < listView1.Items.Count; i++)
@@ -223,31 +234,27 @@ namespace Check_up.forms
                     {
                         username = dt.Rows[a]["username"].ToString();
                         password = dt.Rows[a]["password"].ToString();
-                        fName = dt.Rows[a]["fName"].ToString();
-                        midName = dt.Rows[a]["midName"].ToString();
-                        lName = dt.Rows[a]["lName"].ToString();
-                        email = dt.Rows[a]["email"].ToString();
-                        address = dt.Rows[a]["address"].ToString();
-                        gender = dt.Rows[a]["gender"].ToString();
 
-                        // DateTime dateTime;
-                        lastLogIn = transformDate4SQL(dt.Rows[a]["lastLogIn"].ToString());                        
-                        createDate = dt.Rows[a]["createDate"].ToString();
+                        fName = transformString4SQL(dt.Rows[a]["fName"].ToString());
+                        midName = transformString4SQL(dt.Rows[a]["midName"].ToString());
+                        lName = transformString4SQL(dt.Rows[a]["lName"].ToString());
+                        email = transformString4SQL(dt.Rows[a]["email"].ToString());
+                        address = transformString4SQL(dt.Rows[a]["address"].ToString());
+                        gender = transformString4SQL(dt.Rows[a]["gender"].ToString());
+                        lastLogIn = transformDate4SQL(dt.Rows[a]["lastLogIn"].ToString());
+                        createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
                         updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());
+                        updatedBy = transformString4SQL(dt.Rows[a]["updatedBy"].ToString());
 
-                        updatedBy = dt.Rows[a]["updatedBy"].ToString();
-                        if (updatedBy == "")
-                            updatedBy = "null";
+                        createdBy = "'admin'";
+                        if (dt.Rows[a]["createdBy"] != DBNull.Value)
+                            createdBy = "'" + dt.Rows[a]["createdBy"] + "'";
 
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
-                        if (createdBy == "")
-                            createdBy = "null";
-
-                        picLocation = dt.Rows[a]["picLocation"].ToString().Replace(@"\", @"\\");
-                        deactivated = dt.Rows[a]["deactivated"].ToString();
+                        picLocation = transformString4SQL(dt.Rows[a]["picLocation"].ToString().Replace(@"\", @"\\"));
+                        deactivated = transformString4SQL(dt.Rows[a]["deactivated"].ToString());
 
                         sql = "INSERT INTO users(username,password,fName,midName,lName,email,address,gender,lastLogIn,createDate,updateDate,updatedBy,createdBy,picLocation,deactivated,role,exported)";
-                        sql += " VALUES('" + username + "','" + password + "','" + fName + "','" + midName + "','" + lName + "','" + email + "','" + address + "','" + gender + "'," + lastLogIn + "," + createDate + "," + updateDate + "," + updatedBy + "," + createdBy + ",'" + picLocation + "','" + deactivated + "'," + role + ",1)";
+                        sql += " VALUES('" + username + "','" + password + "'," + fName + "," + midName + "," + lName + "," + email + "," + address + "," + gender + "," + lastLogIn + "," + createDate + "," + updateDate + "," + updatedBy + "," + createdBy + "," + picLocation + "," + deactivated + "," + role + ",1)";
                         sql += " ON DUPLICATE KEY UPDATE user_id=LAST_INSERT_ID(user_id), password=VALUES(password),fName=VALUES(fName),midName=VALUES(midName),lName=VALUES(lName),email=VALUES(email),address=VALUES(address),gender=VALUES(gender),lastLogIn=VALUES(lastLogIn),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy)";
                         sql += ",picLocation=VALUES(picLocation),deactivated=VALUES(deactivated),role=VALUES(role)";
 
@@ -267,7 +274,7 @@ namespace Check_up.forms
 
                 if (tableName == "warehouse")
                 {
-                    string code, name, branchType, ftp_url, ftp_username, ftp_password, deactivated, createDate, createdBy, updateDate, updatedBy, trans;
+                    string code, name, branchType, ftp_url, ftp_username, ftp_password, deactivated, createDate, updateDate, createdBy, updatedBy, trans;
 
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
@@ -276,38 +283,70 @@ namespace Check_up.forms
                         name = dt.Rows[a]["name"].ToString();
                         branchType = dt.Rows[a]["branchType"].ToString();
 
+                        ftp_url = null;
+                        if (dt.Rows[a]["ftp_url"] != DBNull.Value)
                         ftp_url = dt.Rows[a]["ftp_url"].ToString();
-                        if (ftp_url == "")
-                            ftp_url = "null";
 
-                        ftp_username = dt.Rows[a]["ftp_username"].ToString();
-                        if (ftp_username == "")
-                            ftp_username = "null";
+                        ftp_username = null;
+                        if (dt.Rows[a]["ftp_username"] != DBNull.Value)
+                            ftp_username = dt.Rows[a]["ftp_username"].ToString();
 
-                        ftp_password = dt.Rows[a]["ftp_password"].ToString();
-                        if (ftp_password == "")
-                            ftp_password = "null";
+                        ftp_password = null;
+                        if (dt.Rows[a]["ftp_password"] != DBNull.Value)
+                            ftp_password = dt.Rows[a]["ftp_password"].ToString();
 
                         deactivated = dt.Rows[a]["deactivated"].ToString();
 
-                        DateTime dateTime = DateTime.Parse(dt.Rows[a]["createDate"].ToString());
-                        createDate = dateTime.ToString("yyyy/MM/dd HH:mm:ss");
+                        DateTime dateTime;
+                        createDate = null;
+                        if (dt.Rows[a]["createDate"] != DBNull.Value)
+                        {
+                            dateTime = DateTime.Parse(dt.Rows[a]["createDate"].ToString());
+                            createDate = dateTime.ToString("yyyy/MM/dd HH:mm:ss");
+                        }
 
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
-                        updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());                        
+                        updateDate = null;
+                        if (dt.Rows[a]["updateDate"] != DBNull.Value)
+                        {
+                            dateTime = DateTime.Parse(dt.Rows[a]["updateDate"].ToString());
+                            updateDate = dateTime.ToString("yyyy/MM/dd HH:mm:ss");
+                        }
 
-                        updatedBy = dt.Rows[a]["updatedBy"].ToString();
-                        if (updatedBy == "")
-                            updatedBy = "null";
+                        if (dt.Rows[a]["createdBy"] != DBNull.Value)
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
+                        else
+                            createdBy = "admin";
 
-                        trans = transformString4SQL(dt.Rows[a]["trans"].ToString());
+                        if (dt.Rows[a]["updatedBy"] != DBNull.Value)
+                            updatedBy = dt.Rows[a]["updatedBy"].ToString();
+                        else
+                            updatedBy = null;
 
-                        sql = "INSERT INTO warehouse(code,name,branchType,ftp_url,ftp_username,ftp_password,deactivated,createDate,createdBy,updateDate,updatedBy,trans)";
-                        sql += " VALUES('" + code + "','" + name + "','" + branchType + "','" + ftp_url + "','" + ftp_username + "','" + ftp_password + "','" + deactivated + "','" + createDate + "'," + createdBy + "," + updateDate + "," + updatedBy + "," + trans + ")";
+                        if (dt.Rows[a]["trans"] != DBNull.Value)
+                            trans = dt.Rows[a]["trans"].ToString();
+                        else
+                            trans = null;
+
+                        sql = "INSERT INTO warehouse(`code`,`name`,branchType,ftp_url,ftp_username,ftp_password,deactivated,createDate,createdBy,updateDate,updatedBy,trans)";
+                        sql += " VALUES(@code, @name, @branchType, @ftp_url, @ftp_username, @ftp_password, @deactivated, @createDate, @createdBy, @updateDate, @updatedBy, @trans)";
                         sql += " ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id),name=VALUES(name),branchType=VALUES(branchType),ftp_url=VALUES(ftp_url),ftp_username=VALUES(ftp_username),ftp_password=VALUES(ftp_password),deactivated=VALUES(deactivated),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy),trans=VALUES(trans)";
 
-                        db = new database();
-                        if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
+                        cmd = new MySqlCommand(sql, vars.MySqlConnection);
+                        cmd.Prepare();
+                        cmd.Parameters.AddWithValue("@code", code);
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.Parameters.AddWithValue("@branchType", branchType);
+                        cmd.Parameters.AddWithValue("@ftp_url", ftp_url);
+                        cmd.Parameters.AddWithValue("@ftp_username", ftp_username);
+                        cmd.Parameters.AddWithValue("@ftp_password", ftp_password);
+                        cmd.Parameters.AddWithValue("@deactivated", deactivated);
+                        cmd.Parameters.AddWithValue("@createDate", createDate);
+                        cmd.Parameters.AddWithValue("@createdBy", createdBy);
+                        cmd.Parameters.AddWithValue("@updateDate", updateDate);
+                        cmd.Parameters.AddWithValue("@updatedBy", updatedBy);
+                        cmd.Parameters.AddWithValue("@trans", trans);
+
+                        if (cmd.ExecuteNonQuery() > 0)
                             cntProcessed++;
                     }
                     if (cntProcessed == recordsCount)
@@ -327,10 +366,20 @@ namespace Check_up.forms
                     for (a = 0; a < recordsCount; a++)
                     {
                         itemCode = dt.Rows[a]["itemCode"].ToString();
+
                         description = transformString4SQL(dt.Rows[a]["description"].ToString());
                         shortName = transformString4SQL(dt.Rows[a]["shortName"].ToString());
-                        vatable = dt.Rows[a]["vatable"].ToString();
+
+                        if (dt.Rows[a]["vatable"] == DBNull.Value || dt.Rows[a]["vatable"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "itemmasterdata.vatable " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            vatable = dt.Rows[a]["vatable"].ToString();
+
                         vendor = transformString4SQL(dt.Rows[a]["vendor"].ToString());
+
                         qtyPrPrchsUoM = dt.Rows[a]["qtyPrPrchsUoM"].ToString();
                         qtyPrSaleUoM = dt.Rows[a]["qtyPrSaleUoM"].ToString();
                         prchsUoM = dt.Rows[a]["prchsUoM"].ToString();
@@ -341,13 +390,21 @@ namespace Check_up.forms
                         maxStock = dt.Rows[a]["maxStock"].ToString();
                         deactivated = transformString4SQL(dt.Rows[a]["deactivated"].ToString());
                         createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "itemmasterdata.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
+
                         updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());
                         updatedBy = transformString4SQL(dt.Rows[a]["updatedBy"].ToString());
                         trans = transformString4SQL(dt.Rows[a]["trans"].ToString());
 
                         sql = "INSERT INTO itemmasterdata(itemCode,description,shortName,vatable,vendor,qtyPrPrchsUoM,qtyPrSaleUoM,prchsUoM,saleUoM,varWeightItm,remarks,minStock,maxStock,deactivated,createDate,createdBy,updateDate,updatedBy,trans,exported)";
-                        sql += " VALUES('" + itemCode + "'," + description + "," + shortName + ",'" + vatable + "'," + vendor + "," + qtyPrPrchsUoM + "," + qtyPrSaleUoM + ",'" + prchsUoM + "','" + saleUoM + "','" + varWeightItm + "'," + remarks + "," + minStock + "," + maxStock + "," + deactivated + "," + createDate + "," + createdBy + "," + updateDate + "," + updatedBy + "," + trans + ",1)";
+                        sql += " VALUES('" + itemCode + "'," + description + "," + shortName + ",'" + vatable + "'," + vendor + "," + qtyPrPrchsUoM + "," + qtyPrSaleUoM + ",'" + prchsUoM + "','" + saleUoM + "','" + varWeightItm + "'," + remarks + "," + minStock + "," + maxStock + "," + deactivated + "," + createDate + ",'" + createdBy + "'," + updateDate + "," + updatedBy + "," + trans + ",1)";
                         sql += " ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id),description=VALUES(description),shortName=VALUES(shortName),vatable=VALUES(vatable),vendor=VALUES(vendor),varWeightItm=VALUES(varWeightItm),remarks=VALUES(remarks),minStock=VALUES(minStock),maxStock=VALUES(maxStock),deactivated=VALUES(deactivated),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy),trans=VALUES(trans)";
                         
                         db = new database();
@@ -370,14 +427,42 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        itemCode = dt.Rows[a]["itemCode"].ToString();
-                        priceListCode = dt.Rows[a]["priceListCode"].ToString();
-                        netPrice = dt.Rows[a]["netPrice"].ToString();
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["itemCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelist.itemCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
+                        if (dt.Rows[a]["priceListCode"] == DBNull.Value || dt.Rows[a]["priceListCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelist.priceListCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            priceListCode = dt.Rows[a]["priceListCode"].ToString();
+
+                        if (dt.Rows[a]["netPrice"] == DBNull.Value || dt.Rows[a]["netPrice"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelist.netPrice " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            netPrice = dt.Rows[a]["netPrice"].ToString();
+
                         createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
-                        createdBy = dt.Rows[a]["createdBy"].ToString();                        
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelist.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();                        
 
                         sql = "INSERT INTO pricelist(itemCode,priceListCode,netPrice,createDate,createdBy,exported)";
-                        sql += " VALUES('" + itemCode + "'," + priceListCode + "," + netPrice + "," + createDate + "," + createdBy + ",1)";
+                        sql += " VALUES('" + itemCode + "'," + priceListCode + "," + netPrice + "," + createDate + ",'" + createdBy + "',1)";
                         sql += " ON DUPLICATE KEY UPDATE netPrice=VALUES(netPrice)";
 
                         db = new database();
@@ -400,16 +485,52 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        itemCode = dt.Rows[a]["itemCode"].ToString();
-                        priceListCode = dt.Rows[a]["priceListCode"].ToString();
-                        netPrice = dt.Rows[a]["netPrice"].ToString();
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["itemCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelisthistory.itemCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
+                        if (dt.Rows[a]["priceListCode"] == DBNull.Value || dt.Rows[a]["priceListCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelisthistory.priceListCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            priceListCode = dt.Rows[a]["priceListCode"].ToString();
+
+                        if (dt.Rows[a]["netPrice"] == DBNull.Value || dt.Rows[a]["netPrice"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelisthistory.netPrice " + defaultError, "Error", MessageBoxButtons.OK , MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            netPrice = dt.Rows[a]["netPrice"].ToString();
+
                         cp_createDate = transformDate4SQL(dt.Rows[a]["cp_createDate"].ToString());
-                        cp_createdBy = dt.Rows[a]["cp_createdBy"].ToString();
+
+                        if (dt.Rows[a]["cp_createdBy"] == DBNull.Value || dt.Rows[a]["cp_createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelisthistory.cp_createdBy " + defaultError, "Error",  MessageBoxButtons.OK , MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            cp_createdBy = dt.Rows[a]["cp_createdBy"].ToString();
+
                         createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "pricelisthistory.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
 
                         sql = "INSERT INTO pricelisthistory(itemCode,priceListCode,netPrice,cp_createDate,cp_createdBy,createDate,createdBy,exported)";
-                        sql += " VALUES('" + itemCode + "'," + priceListCode + "," + netPrice + "," + cp_createDate + "," + cp_createdBy + "," + createDate + "," + createdBy + ",1)";
+                        sql += " VALUES('" + itemCode + "'," + priceListCode + "," + netPrice + "," + cp_createDate + ",'" + cp_createdBy + "'," + createDate + ",'" + createdBy + "',1)";
                         sql += " ON DUPLICATE KEY UPDATE netPrice=VALUES(netPrice)";
 
                         db = new database();
@@ -431,13 +552,34 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        itemCode = dt.Rows[a]["itemCode"].ToString();
-                        barcode = dt.Rows[a]["barcode"].ToString();
-                        createDate = dt.Rows[a]["createDate"].ToString();
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["itemCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "barcode.itemCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
+                        if (dt.Rows[a]["barcode"] == DBNull.Value || dt.Rows[a]["barcode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "barcode.barcode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            barcode = dt.Rows[a]["barcode"].ToString();
+
+                        createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "barcode.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
 
                         sql = "INSERT INTO barcode(itemCode,barcode,createDate,createdBy,exported)";
-                        sql += " VALUES('" + itemCode + "','" + barcode + "','" + createDate + "'," + createdBy + ",1)";
+                        sql += " VALUES('" + itemCode + "','" + barcode + "'," + createDate + ",'" + createdBy + "',1)";
                         sql += " ON DUPLICATE KEY UPDATE barcode=VALUES(barcode)";
 
                         db = new database();
@@ -460,15 +602,44 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        itemCode = dt.Rows[a]["itemCode"].ToString();
-                        barcode = dt.Rows[a]["barcode"].ToString();
-                        cp_createDate = dt.Rows[a]["cp_createDate"].ToString();
-                        cp_createdBy = dt.Rows[a]["cp_createdBy"].ToString();
-                        createDate = dt.Rows[a]["createDate"].ToString();
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["itemCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "barcodehistory.itemCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
+                        if (dt.Rows[a]["barcode"] == DBNull.Value || dt.Rows[a]["barcode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "barcodehistory.barcode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            barcode = dt.Rows[a]["barcode"].ToString();
+
+                        cp_createDate = transformDate4SQL(dt.Rows[a]["cp_createDate"].ToString());
+
+                        if (dt.Rows[a]["cp_createdBy"] == DBNull.Value || dt.Rows[a]["cp_createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "barcodehistory.cp_createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            cp_createdBy = dt.Rows[a]["cp_createdBy"].ToString();
+
+                        createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "barcodehistory.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
 
                         sql = "INSERT INTO barcodehistory(itemCode,barcode,cp_createDate,cp_createdBy,createDate,createdBy,exported)";
-                        sql += " VALUES('" + itemCode + "','" + barcode + "','" + cp_createDate + "'," + cp_createdBy + ",'" + createDate + "'," + createdBy + ",1)";
+                        sql += " VALUES('" + itemCode + "','" + barcode + "'," + cp_createDate + ",'" + cp_createdBy + "'," + createDate + ",'" + createdBy + "',1)";
                         sql += " ON DUPLICATE KEY UPDATE barcode=VALUES(barcode)";
 
                         db = new database();
@@ -491,7 +662,14 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        docId = dt.Rows[a]["docId"].ToString();
+                        if (dt.Rows[a]["docId"] == DBNull.Value || dt.Rows[a]["docId"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "purchaseorder.docId " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            docId = dt.Rows[a]["docId"].ToString();
+
                         vendorCode = dt.Rows[a]["vendorCode"].ToString();
                         vendorName = transformString4SQL(dt.Rows[a]["vendorName"].ToString());
                         postingDate = transformDate4SQL(dt.Rows[a]["postingDate"].ToString());

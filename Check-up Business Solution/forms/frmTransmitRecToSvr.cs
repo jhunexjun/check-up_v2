@@ -88,8 +88,8 @@ namespace Check_up.forms
                             sql = "START TRANSACTION;";
                             sql += "SET @filename='" + currentFileName + "';";
                             sql += "SET @exportedFileId = (SELECT id FROM export_importfiles WHERE filename=@filename LIMIT 1);";
-                            sql += "INSERT INTO transmittedfiles(exportedFilesId,warehouse,createdBy) VALUES(@exportedFileId,'" + warehouse + "'," + vars.user_id + ");";
-                            sql += "UPDATE export_importfiles SET transmittedBy=" + vars.user_id + " WHERE id=@exportedFileId;";
+                            sql += "INSERT INTO transmittedfiles(exportedFilesId,warehouse,createdBy) VALUES(@exportedFileId,'" + warehouse + "','" + vars.username + "');";
+                            sql += "UPDATE export_importfiles SET transmittedBy='" + vars.username + "' WHERE id=@exportedFileId;";
                             sql += "COMMIT;";
 
                             database db2 = new database(); DataTable dt2 = new DataTable();

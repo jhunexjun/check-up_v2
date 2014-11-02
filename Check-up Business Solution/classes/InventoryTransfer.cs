@@ -504,7 +504,7 @@ namespace Check_up.classes
             return true;
         }
 
-        // this checks the relationships of header and its rows data i.e. sum of rows is equal to the header's.
+        // this checks the relationships of header and its rows data i.e. sum of rows are equal to the header's.
         private bool checkHeaderAndRows(Hashtable header, DataTable tableRows)
         {
             decimal total = 0; int rowsCount = tableRows.Rows.Count;

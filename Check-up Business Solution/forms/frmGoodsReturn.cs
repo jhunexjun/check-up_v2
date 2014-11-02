@@ -525,7 +525,7 @@ namespace Check_up.forms
             else if (btnFind.Text == "&Update")
             {
                 db = new database();
-                sql = "UPDATE goodsreturn SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy=" + vars.user_id + " WHERE docId='" + txtGoodsReturnNo.Text.Trim() + "'";
+                sql = "UPDATE goodsreturn SET remarks2='" + txtRemarks2.Text.Trim().Replace("'", "''") + "',updateDate=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),updatedBy='" + vars.username + "' WHERE docId='" + txtGoodsReturnNo.Text.Trim() + "'";
 
                 if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                 {
@@ -552,7 +552,7 @@ namespace Check_up.forms
                     sql = "START TRANSACTION;";
                     sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
                     sql += "SET @postingDate=DATE_FORMAT('" + strDateTime + "', '%Y-%m-%d');";
-                    sql += "SET @user_id=" + vars.user_id + ";";
+                    sql += "SET @user_id='" + vars.username + "';";
                     sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='GR');";
                     sql += "SET @docId=CONCAT('" + vars.terminalId + "', @newId);";
                     sql += "SET @totalPrcntDscnt=" + totalPrcntDscnt + ";";
