@@ -210,9 +210,16 @@ namespace Check_up.forms
                  2. We always set exported = 1 as we assume data are coming from other branches. */
         private void btnImport_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(this, "Import the files on the list now?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            // we want to refresh first the list before trying to import.
+            listView1.Items.Clear();
+            frmImportFiles_Load(sender, e);
+
+            DialogResult result = MessageBox.Show(this, "Import the files on the list now? Please wait until it finished importing to avoid inventory problems.", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.No)
                 return;
+
+            btnImport.Enabled = false;
+            btnCancel.Enabled = false;
 
             string tableName, defaultError = "cannot be empty string or null.";
             int recordsCount = 0, a, cntProcessed;
@@ -226,10 +233,18 @@ namespace Check_up.forms
                 position = filename.IndexOf("_");
                 tableName = filename.Substring(0, position);
 
-                using (StreamReader file = File.OpenText(fullPath))
+                try
                 {
-                    JsonSerializer serializer = new JsonSerializer();
-                    dt = (DataTable)serializer.Deserialize(file, typeof(DataTable));
+                    using (StreamReader file = File.OpenText(fullPath))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        dt = (DataTable)serializer.Deserialize(file, typeof(DataTable));
+                    }
+                }
+                catch (IOException ioException)
+                {
+                    MessageBox.Show(this, ioException.ToString(), "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
                 // Note
@@ -1410,27 +1425,161 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        docId = dt.Rows[a]["docId"].ToString();
-                        indx = dt.Rows[a]["indx"].ToString();
-                        vendorCode = dt.Rows[a]["vendorCode"].ToString();
+                        if (dt.Rows[a]["docId"] == DBNull.Value || dt.Rows[a]["docId"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.docId " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            docId = dt.Rows[a]["docId"].ToString();
+
+                        if (dt.Rows[a]["indx"] == DBNull.Value || dt.Rows[a]["indx"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.indx " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            indx = dt.Rows[a]["indx"].ToString();
+
+                        if (dt.Rows[a]["vendorCode"] == DBNull.Value || dt.Rows[a]["vendorCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.vendorCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            vendorCode = dt.Rows[a]["vendorCode"].ToString();
+
                         vendorName = transformString4SQL(dt.Rows[a]["vendorName"].ToString());
-                        itemCode = dt.Rows[a]["itemCode"].ToString();
+
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["itemCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.itemCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
                         description = transformString4SQL(dt.Rows[a]["description"].ToString());
-                        warehouse = dt.Rows[a]["warehouse"].ToString();
-                        vatable = dt.Rows[a]["vatable"].ToString();
-                        realBsNetPrchsPrc = dt.Rows[a]["realBsNetPrchsPrc"].ToString();
-                        realBsGrossPrchsPrc = dt.Rows[a]["realBsGrossPrchsPrc"].ToString();
-                        realNetPrchsPrc = dt.Rows[a]["realNetPrchsPrc"].ToString();
-                        realGrossPrchsPrc = dt.Rows[a]["realGrossPrchsPrc"].ToString();
-                        qty = dt.Rows[a]["qty"].ToString();
-                        baseUoM = dt.Rows[a]["baseUoM"].ToString();
-                        qtyPrPrchsUoM = dt.Rows[a]["qtyPrPrchsUoM"].ToString();
-                        prcntDscnt = dt.Rows[a]["prcntDscnt"].ToString();
-                        amtDscnt = dt.Rows[a]["amtDscnt"].ToString();
-                        netPrchsPrc = dt.Rows[a]["netPrchsPrc"].ToString();
-                        grossPrchsPrc = dt.Rows[a]["grossPrchsPrc"].ToString();
-                        rowNetTotal = dt.Rows[a]["rowNetTotal"].ToString();
-                        rowGrossTotal = dt.Rows[a]["rowGrossTotal"].ToString();
+
+                        if (dt.Rows[a]["warehouse"] == DBNull.Value || dt.Rows[a]["warehouse"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.warehouse " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            warehouse = dt.Rows[a]["warehouse"].ToString();
+
+                        if (dt.Rows[a]["vatable"] == DBNull.Value || dt.Rows[a]["vatable"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.vatable " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            vatable = dt.Rows[a]["vatable"].ToString();
+
+                        if (dt.Rows[a]["realBsNetPrchsPrc"] == DBNull.Value || dt.Rows[a]["realBsNetPrchsPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.realBsNetPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            realBsNetPrchsPrc = dt.Rows[a]["realBsNetPrchsPrc"].ToString();
+
+                        if (dt.Rows[a]["realBsGrossPrchsPrc"] == DBNull.Value || dt.Rows[a]["realBsGrossPrchsPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.realBsGrossPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            realBsGrossPrchsPrc = dt.Rows[a]["realBsGrossPrchsPrc"].ToString();
+
+                        if (dt.Rows[a]["realNetPrchsPrc"] == DBNull.Value || dt.Rows[a]["realNetPrchsPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.realNetPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            realNetPrchsPrc = dt.Rows[a]["realNetPrchsPrc"].ToString();
+
+                        if (dt.Rows[a]["realGrossPrchsPrc"] == DBNull.Value || dt.Rows[a]["realGrossPrchsPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.realGrossPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            realGrossPrchsPrc = dt.Rows[a]["realGrossPrchsPrc"].ToString();
+
+                        if (dt.Rows[a]["qty"] == DBNull.Value || dt.Rows[a]["qty"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.qty " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            qty = dt.Rows[a]["qty"].ToString();
+
+                        if (dt.Rows[a]["baseUoM"] == DBNull.Value || dt.Rows[a]["baseUoM"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.baseUoM " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            baseUoM = dt.Rows[a]["baseUoM"].ToString();
+
+                        if (dt.Rows[a]["qtyPrPrchsUoM"] == DBNull.Value || dt.Rows[a]["qtyPrPrchsUoM"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.qtyPrPrchsUoM " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            qtyPrPrchsUoM = dt.Rows[a]["qtyPrPrchsUoM"].ToString();
+
+                        if (dt.Rows[a]["prcntDscnt"] == DBNull.Value || dt.Rows[a]["prcntDscnt"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.prcntDscnt " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            prcntDscnt = dt.Rows[a]["prcntDscnt"].ToString();
+
+                        if (dt.Rows[a]["amtDscnt"] == DBNull.Value || dt.Rows[a]["amtDscnt"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.amtDscnt " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            amtDscnt = dt.Rows[a]["amtDscnt"].ToString();
+
+                        if (dt.Rows[a]["netPrchsPrc"] == DBNull.Value || dt.Rows[a]["netPrchsPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.netPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            netPrchsPrc = dt.Rows[a]["netPrchsPrc"].ToString();
+
+                        if (dt.Rows[a]["grossPrchsPrc"] == DBNull.Value || dt.Rows[a]["grossPrchsPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.grossPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            grossPrchsPrc = dt.Rows[a]["grossPrchsPrc"].ToString();
+
+                        if (dt.Rows[a]["rowNetTotal"] == DBNull.Value || dt.Rows[a]["rowNetTotal"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.rowNetTotal " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            rowNetTotal = dt.Rows[a]["rowNetTotal"].ToString();
+
+                        if (dt.Rows[a]["rowGrossTotal"] == DBNull.Value || dt.Rows[a]["rowGrossTotal"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "deliveryreceipt_item.rowGrossTotal " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            rowGrossTotal = dt.Rows[a]["rowGrossTotal"].ToString();
 
                         sql = "INSERT IGNORE INTO deliveryreceipt_item(docId,indx,vendorCode,vendorName,itemCode,description,warehouse,vatable,realBsNetPrchsPrc,realBsGrossPrchsPrc,realNetPrchsPrc,realGrossPrchsPrc,qty,baseUoM,qtyPrPrchsUoM,prcntDscnt,amtDscnt,netPrchsPrc,grossPrchsPrc,rowNetTotal,rowGrossTotal,exported)";
                         sql += " VALUES('" + docId + "'," + indx + ", '" + vendorCode + "'," + vendorName + ",'" + itemCode + "'," + description + ",'" + warehouse + "','" + vatable + "'," + realBsNetPrchsPrc + "," + realBsGrossPrchsPrc + "," + realNetPrchsPrc + "," + realGrossPrchsPrc + "," + qty + ",'" + baseUoM + "'," + qtyPrPrchsUoM + "," + prcntDscnt + "," + amtDscnt + "," + netPrchsPrc + "," + grossPrchsPrc + "," + rowNetTotal + "," + rowGrossTotal + ",1)";
@@ -1460,18 +1609,61 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        docId = dt.Rows[a]["docId"].ToString();
-                        postingDate = transformDate4SQL(dt.Rows[a]["postingDate"].ToString());
-                        countDateTime = transformDate4SQL(dt.Rows[a]["countDateTime"].ToString());
-                        warehouse = dt.Rows[a]["warehouse"].ToString();                        
+                        if (dt.Rows[a]["docId"] == DBNull.Value || dt.Rows[a]["docId"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting.docId " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            docId = dt.Rows[a]["docId"].ToString();
+
+                        if (dt.Rows[a]["postingDate"] == DBNull.Value || dt.Rows[a]["postingDate"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting.docId " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            postingDate = transformDate4SQLNotNull(dt.Rows[a]["postingDate"].ToString());
+
+                        if (dt.Rows[a]["countDateTime"] == DBNull.Value || dt.Rows[a]["countDateTime"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting.countDateTime " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            countDateTime = transformDate4SQLNotNull(dt.Rows[a]["countDateTime"].ToString());
+
+                        if (dt.Rows[a]["warehouse"] == DBNull.Value || dt.Rows[a]["warehouse"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting.warehouse " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            warehouse = dt.Rows[a]["warehouse"].ToString();
+
                         remarks1 = transformString4SQL(dt.Rows[a]["remarks1"].ToString());
-                        createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
+
+                        if (dt.Rows[a]["createDate"] == DBNull.Value || dt.Rows[a]["createDate"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting.createDate " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createDate = transformDate4SQLNotNull(dt.Rows[a]["createDate"].ToString());
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting.createDate " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
+
                         updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());
                         updatedBy = transformString4SQL(dt.Rows[a]["updatedBy"].ToString());
 
                         sql = "INSERT INTO inventoryposting(docId,postingDate,countDateTime,warehouse,remarks1,createDate,createdBy,updateDate,updatedBy,exported)";
-                        sql += " VALUES('" + docId + "'," + postingDate + "," + countDateTime + ",'" + warehouse + "'," + remarks1 + "," + createDate + "," + createdBy + "," + updateDate + "," + updatedBy + ",1)";
+                        sql += " VALUES('" + docId + "','" + postingDate + "','" + countDateTime + "','" + warehouse + "'," + remarks1 + ",'" + createDate + "','" + createdBy + "'," + updateDate + "," + updatedBy + ",1)";
                         sql += " ON DUPLICATE KEY UPDATE id=VALUES(id),remarks1=VALUES(remarks1),remarks2=VALUES(remarks2),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy)";
 
                         db = new database();
@@ -1494,16 +1686,79 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        docId = dt.Rows[a]["docId"].ToString();
-                        indx = dt.Rows[a]["indx"].ToString();
-                        itemCode = dt.Rows[a]["itemCode"].ToString();
+                        if (dt.Rows[a]["docId"] == DBNull.Value || dt.Rows[a]["docId"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.docId " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            docId = dt.Rows[a]["docId"].ToString();
+
+                        if (dt.Rows[a]["indx"] == DBNull.Value || dt.Rows[a]["indx"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.indx " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            indx = dt.Rows[a]["indx"].ToString();
+
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["indx"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.indx " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
                         description = transformString4SQL(dt.Rows[a]["description"].ToString());
-                        vatable = dt.Rows[a]["vatable"].ToString();
-                        currentQty = dt.Rows[a]["currentQty"].ToString();
-                        countedQty = dt.Rows[a]["countedQty"].ToString();
-                        varianceQty = dt.Rows[a]["varianceQty"].ToString();
-                        prchsPrc = dt.Rows[a]["prchsPrc"].ToString();
-                        retailPrc = dt.Rows[a]["retailPrc"].ToString();
+
+                        if (dt.Rows[a]["vatable"] == DBNull.Value || dt.Rows[a]["vatable"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.vatable " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            vatable = dt.Rows[a]["vatable"].ToString();
+
+                        if (dt.Rows[a]["currentQty"] == DBNull.Value || dt.Rows[a]["currentQty"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.currentQty " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            currentQty = dt.Rows[a]["currentQty"].ToString();
+
+                        if (dt.Rows[a]["countedQty"] == DBNull.Value || dt.Rows[a]["countedQty"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.countedQty " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            countedQty = dt.Rows[a]["countedQty"].ToString();
+
+                        if (dt.Rows[a]["varianceQty"] == DBNull.Value || dt.Rows[a]["varianceQty"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.varianceQty " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            varianceQty = dt.Rows[a]["varianceQty"].ToString();
+
+                        if (dt.Rows[a]["prchsPrc"] == DBNull.Value || dt.Rows[a]["prchsPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.prchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            prchsPrc = dt.Rows[a]["prchsPrc"].ToString();
+
+                        if (dt.Rows[a]["retailPrc"] == DBNull.Value || dt.Rows[a]["retailPrc"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventoryposting_item.retailPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            retailPrc = dt.Rows[a]["retailPrc"].ToString();
 
                         sql = "INSERT IGNORE INTO inventoryposting_item(docId,indx,itemCode,description,vatable,currentQty,countedQty,varianceQty,prchsPrc,retailPrc,exported)";
                         sql += " VALUES('" + docId + "'," + indx + ",'" + itemCode + "'," + description + ",'" + vatable + "'," + currentQty + "," + countedQty + "," + varianceQty + "," + prchsPrc + "," + retailPrc + ",1)";
@@ -1517,7 +1772,7 @@ namespace Check_up.forms
                             if (Int32.Parse(varianceQty) >= 0)
                                 sql += sql + "+" + varianceQty;
                             else
-                                sql += sql + varianceQty;
+                                sql += sql + "-" + varianceQty;
                             
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
@@ -1539,23 +1794,94 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        docId = dt.Rows[a]["docId"].ToString();
-                        frmWHouse = dt.Rows[a]["frmWHouse"].ToString();
-                        toWHouse = dt.Rows[a]["toWHouse"].ToString();
-                        postingDate = transformDate4SQL(dt.Rows[a]["postingDate"].ToString());
+                        if (dt.Rows[a]["docId"] == DBNull.Value || dt.Rows[a]["docId"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.docId " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            docId = dt.Rows[a]["docId"].ToString();
+
+                        if (dt.Rows[a]["frmWHouse"] == DBNull.Value || dt.Rows[a]["frmWHouse"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.frmWHouse " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            frmWHouse = dt.Rows[a]["frmWHouse"].ToString();
+
+                        if (dt.Rows[a]["toWHouse"] == DBNull.Value || dt.Rows[a]["toWHouse"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.toWHouse " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            toWHouse = dt.Rows[a]["toWHouse"].ToString();
+
+                        if (dt.Rows[a]["postingDate"] == DBNull.Value || dt.Rows[a]["postingDate"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.postingDate " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            postingDate = transformDate4SQLNotNull(dt.Rows[a]["postingDate"].ToString());
+
                         remarks1 = transformString4SQL(dt.Rows[a]["remarks1"].ToString());
                         remarks2 = transformString4SQL(dt.Rows[a]["remarks2"].ToString());
-                        totalPrcntDscnt = dt.Rows[a]["totalPrcntDscnt"].ToString();
-                        totalAmtDscnt = dt.Rows[a]["totalAmtDscnt"].ToString();
-                        netTotal = dt.Rows[a]["netTotal"].ToString();
-                        grossTotal = dt.Rows[a]["grossTotal"].ToString();
-                        createDate = transformDate4SQL(dt.Rows[a]["createDate"].ToString());
-                        createdBy = dt.Rows[a]["createdBy"].ToString();
+
+                        if (dt.Rows[a]["totalPrcntDscnt"] == DBNull.Value || dt.Rows[a]["totalPrcntDscnt"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.totalPrcntDscnt " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            totalPrcntDscnt = dt.Rows[a]["totalPrcntDscnt"].ToString();
+
+                        if (dt.Rows[a]["totalAmtDscnt"] == DBNull.Value || dt.Rows[a]["totalAmtDscnt"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.totalAmtDscnt " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            totalAmtDscnt = dt.Rows[a]["totalAmtDscnt"].ToString();
+
+                        if (dt.Rows[a]["netTotal"] == DBNull.Value || dt.Rows[a]["netTotal"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.netTotal " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            netTotal = dt.Rows[a]["netTotal"].ToString();
+
+                        if (dt.Rows[a]["grossTotal"] == DBNull.Value || dt.Rows[a]["grossTotal"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.grossTotal " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            grossTotal = dt.Rows[a]["grossTotal"].ToString();
+
+                        if (dt.Rows[a]["createDate"] == DBNull.Value || dt.Rows[a]["createDate"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.createDate " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createDate = transformDate4SQLNotNull(dt.Rows[a]["createDate"].ToString());
+
+                        if (dt.Rows[a]["createdBy"] == DBNull.Value || dt.Rows[a]["createdBy"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.createdBy " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            createdBy = dt.Rows[a]["createdBy"].ToString();
+
                         updateDate = transformDate4SQL(dt.Rows[a]["updateDate"].ToString());
                         updatedBy = transformString4SQL(dt.Rows[a]["updatedBy"].ToString());
 
                         sql = "INSERT INTO inventorytransfer(docId,frmWHouse,toWHouse,postingDate,remarks1,remarks2,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,createDate,createdBy,updateDate,updatedBy,exported)";
-                        sql += " VALUES('" + docId + "','" + frmWHouse + "','" + toWHouse + "'," + postingDate + "," + remarks1 + "," + remarks2 + "," + totalPrcntDscnt + "," + totalAmtDscnt + "," + netTotal + "," + grossTotal + "," + createDate + "," + createdBy + "," + updateDate + "," + updatedBy + ",1)";
+                        sql += " VALUES('" + docId + "','" + frmWHouse + "','" + toWHouse + "','" + postingDate + "'," + remarks1 + "," + remarks2 + "," + totalPrcntDscnt + "," + totalAmtDscnt + "," + netTotal + "," + grossTotal + ",'" + createDate + "','" + createdBy + "'," + updateDate + "," + updatedBy + ",1)";
                         sql += " ON DUPLICATE KEY UPDATE id=VALUES(id),remarks1=VALUES(remarks1),remarks2=VALUES(remarks2),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy)";
 
                         db = new database();
@@ -1578,11 +1904,40 @@ namespace Check_up.forms
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
                     {
-                        docId = dt.Rows[a]["docId"].ToString();
-                        indx = dt.Rows[a]["indx"].ToString();
-                        itemCode = dt.Rows[a]["itemCode"].ToString();
+                        if (dt.Rows[a]["docId"] == DBNull.Value || dt.Rows[a]["docId"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.docId " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            docId = dt.Rows[a]["docId"].ToString();
+
+                        if (dt.Rows[a]["indx"] == DBNull.Value || dt.Rows[a]["indx"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.indx " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            indx = dt.Rows[a]["indx"].ToString();
+
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["itemCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.itemCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
                         description = transformString4SQL(dt.Rows[a]["description"].ToString());
-                        vatable = dt.Rows[a]["vatable"].ToString();
+
+                        if (dt.Rows[a]["vatable"] == DBNull.Value || dt.Rows[a]["vatable"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "inventorytransfer.vatable " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            vatable = dt.Rows[a]["vatable"].ToString();
+
                         realBsNetPrchsPrc = dt.Rows[a]["realBsNetPrchsPrc"].ToString();
                         realBsGrossPrchsPrc = dt.Rows[a]["realBsGrossPrchsPrc"].ToString();
                         realNetPrchsPrc = dt.Rows[a]["realNetPrchsPrc"].ToString();
@@ -1890,6 +2245,10 @@ namespace Check_up.forms
 
             if (listView1.Items.Count < 1)
                 btnImport.Enabled = false;
+            else
+                btnImport.Enabled = true;
+
+            btnCancel.Enabled = true;
         }
     }
 }

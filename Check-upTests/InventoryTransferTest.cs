@@ -16,7 +16,7 @@ namespace Check_upTests
         {
             userTests user = new userTests();
             user.setUp();
-            user.addUser();
+            user.testAddUser();
         }
 
         private bool addWarehouses()
@@ -143,7 +143,7 @@ namespace Check_upTests
         }
 
         [TestMethod]
-        public void addInventoryTransfer()
+        public void testAddInventoryTransfer()
         {
             Assert.IsTrue(functions.createDefaultRecordsForTheTests());
 
@@ -336,7 +336,7 @@ namespace Check_upTests
         }
 
         [TestMethod]
-        public void updateInventoryTransfer()
+        public void testUpdateInventoryTransfer()
         {
             Assert.IsTrue(functions.createDefaultRecordsForTheTests());
 

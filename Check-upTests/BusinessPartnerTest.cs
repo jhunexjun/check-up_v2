@@ -16,11 +16,11 @@ namespace Check_upTests.forms
         {
             userTests user = new userTests();
             user.setUp();
-            user.addUser();
+            user.testAddUser();
         }
 
         [TestMethod]
-        public void addBusinessPartner()
+        public void testAddBusinessPartner()
         {
             Hashtable ht = new Hashtable();
             

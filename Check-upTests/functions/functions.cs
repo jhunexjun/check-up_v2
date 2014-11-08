@@ -55,7 +55,7 @@ namespace Check_upTests
             }
         }
 
-        //we need to make sure that a fresh new copy of database is used.
+        //we need to make sure that a fresh new copy of database schema is used.
         public static bool dropAndCreateDatabase(Hashtable ht)
         {
             string connectionString = "SERVER=" + ht["datasource"] + ";DATABASE=" + ht["database"] + ";UID=" + ht["username"] + ";PASSWORD=" + ht["password"] + ";Allow User Variables=True";
@@ -117,6 +117,33 @@ namespace Check_upTests
             sql += " ,('IP', 'Inventory Posting', 0);";
             
             // 1 records has already been added by class Users
+            //sql += "insert into users(username,`password`)";
+            //sql += " values('admin', '$2a$10$5gcpxMRDi2wKdZkwaZ.G/uwJeFpPLw6RVnIKCy48haolWoVvqiKJy');";
+
+            MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            if (cmd.ExecuteNonQuery() > 0)
+                return true;
+            else
+                return false;
+        }
+
+        //this is similar as createDefaultRecordsForTheTests() but for imports coming to branch.
+        public static bool createDefaultRecordsForTheTestsForBranch()
+        {
+            string sql = "insert into warehouse(code,`name`,branchType) values('MAIN', 'Main branch', 'Main')";
+            sql += ",('BRANCH1', 'Branch One', 'Branch');";
+            sql += "insert into terminal values('BRANCH1', 'BRANCH1', '192.168.0.101', 'BRANCH1', 'Branch');";
+            sql += "insert into documents(documentCode,documentName,lastNo) values('PO', 'Purchase Order', 0)";
+            sql += " ,('SI', 'Sales Invoice', 0)";
+            sql += " ,('GRPO', 'Goods Receipt PO', 0)";
+            sql += " ,('IMD', 'Item Master Data', 0)";
+            sql += " ,('SR', 'Sales Return', 0)";
+            sql += " ,('GR', 'Goods Return', 0)";
+            sql += " ,('IT', 'Inventory Transfer', 0)";
+            sql += " ,('DR', 'Delivery Receipt', 0)";
+            sql += " ,('IP', 'Inventory Posting', 0);";
+
+            // 1 records has already been added by [TestInitialize]
             //sql += "insert into users(username,`password`)";
             //sql += " values('admin', '$2a$10$5gcpxMRDi2wKdZkwaZ.G/uwJeFpPLw6RVnIKCy48haolWoVvqiKJy');";
 

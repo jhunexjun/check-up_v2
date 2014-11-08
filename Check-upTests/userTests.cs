@@ -39,7 +39,7 @@ namespace Check_upTests
         }
 
         [TestMethod()]
-        public void addUser()
+        public void testAddUser()
         {
             string pw = "password" + vars.staticSalt;
             string salt = BCrypt.GenerateSalt();
@@ -85,9 +85,9 @@ namespace Check_upTests
         }
 
         [TestMethod()]
-        public void updateUser()
+        public void testUpdateUser()
         {
-            addUser();
+            testAddUser();
 
             string pw = "password1" + vars.staticSalt;
             string salt = BCrypt.GenerateSalt();

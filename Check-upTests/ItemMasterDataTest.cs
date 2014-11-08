@@ -20,11 +20,11 @@ namespace Check_upTests.forms
         {
             userTests user = new userTests();
             user.setUp();
-            user.addUser();
+            user.testAddUser();
         }
 
         [TestMethod]
-        public void addItem()
+        public void testAddItem()
         {
            Assert.IsTrue(functions.createDefaultRecordsForTheTests());
 
@@ -143,7 +143,7 @@ namespace Check_upTests.forms
         }
 
         [TestMethod]
-        public void updateItem()
+        public void testUpdateItem()
         {
 
         }

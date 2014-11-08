@@ -16,7 +16,7 @@ namespace Check_upTests.forms
         {
             userTests user = new userTests();
             user.setUp();
-            user.addUser();
+            user.testAddUser();
         }
 
         [TestMethod]
