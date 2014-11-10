@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using Check_up.classes;
+using MySql.Data.MySqlClient;
 
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.ReportSource;
@@ -23,6 +24,8 @@ namespace Check_up.forms
         private frmDialog frmDialogForm;
         private frmCrystalReportViewer crystalReportViewerForm;
         string sql; int i, rowCount;
+
+        MySqlCommand cmd; MySqlDataAdapter da;
 
         Hashtable header;
 
@@ -522,26 +525,30 @@ namespace Check_up.forms
 
         private void frmDeliveryReceipt_Load(object sender, EventArgs e)
         {
-            // if it's a main warehouse, they're allowed to create AR Invoice for different branches
+            // if it's the main warehouse, they're allowed to create AR Invoice for different branches
             sql = "SELECT branchType FROM terminal";
-            db = new database();
+            cmd = new MySqlCommand(sql, vars.MySqlConnection);
             dt = new DataTable();
-            dt = db.select(sql, vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+
             if (dt.Rows[0][0].ToString() == "Main")
-                sql = "SELECT code FROM warehouse WHERE deactivated='N'";
+                sql = "SELECT `code` FROM warehouse WHERE deactivated='N'";
             else
                 sql = "SELECT whCode AS code FROM terminal A JOIN warehouse B ON A.whCode=B.code WHERE deactivated='N'";
 
-            db = new database(); dt = new DataTable();
-            dt = db.select(sql, vars.MySqlConnection);
+            cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            dt = new DataTable();
+            da.Fill(dt);
             foreach (DataRow row in dt.Rows)
                 cboWarehouse.Items.Add(row["code"]);
 
             // row warehouse. This is hidden for the meantime.
             sql = "SELECT whCode FROM terminal A JOIN warehouse B ON A.whCode=B.code WHERE deactivated='N'";
-            db = new database();
-            dt = new DataTable();
-            dt = db.select(sql, vars.MySqlConnection);
+            cmd = new MySqlCommand(sql, vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
             foreach (DataRow row in dt.Rows)
                 warehouse.Items.Add(row["whCode"]);
         }

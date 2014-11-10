@@ -58,7 +58,7 @@ namespace Check_upTests
         //we need to make sure that a fresh new copy of database schema is used.
         public static bool dropAndCreateDatabase(Hashtable ht)
         {
-            string connectionString = "SERVER=" + ht["datasource"] + ";DATABASE=" + ht["database"] + ";UID=" + ht["username"] + ";PASSWORD=" + ht["password"] + ";Allow User Variables=True";
+            string connectionString = "SERVER=" + ht["datasource"] + ";UID=" + ht["username"] + ";PASSWORD=" + ht["password"] + ";Allow User Variables=True";
             vars.MySqlConnection = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
 
             try
@@ -78,14 +78,13 @@ namespace Check_upTests
             }
         }
 
-        //this recreate database.
+        //this recreates database.
         public static bool reloadDatabase() {
             string query;
             string path = @"C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\databases\0schema.sql";
 
-            using (StreamReader sr = new StreamReader(path)) {
+            using (StreamReader sr = new StreamReader(path))
                 query = sr.ReadToEnd();
-            }
 
             try
             {
@@ -104,7 +103,7 @@ namespace Check_upTests
         //before the system is used, default values are inserted into the db just like default login
         public static bool createDefaultRecordsForTheTests()
         {
-            string sql = "insert into warehouse(code,`name`,branchType) values('MAIN', 'Main branch', 'Main');";
+            string sql = "insert into warehouse(code,`name`,branchType, deactivated, createdBy) values('MAIN', 'Main branch', 'Main', 'N', 'admin');";
             sql += "insert into terminal values('MAIN', 'MAIN', '192.168.0.100', 'MAIN', 'Main');";
             sql += "insert into documents(documentCode,documentName,lastNo) values('PO', 'Purchase Order', 0)";
             sql += " ,('SI', 'Sales Invoice', 0)";
@@ -130,8 +129,8 @@ namespace Check_upTests
         //this is similar as createDefaultRecordsForTheTests() but for imports coming to branch.
         public static bool createDefaultRecordsForTheTestsForBranch()
         {
-            string sql = "insert into warehouse(code,`name`,branchType) values('MAIN', 'Main branch', 'Main')";
-            sql += ",('BRANCH1', 'Branch One', 'Branch');";
+            string sql = "insert into warehouse(code,`name`,branchType,deactivated,createdBy) values('MAIN', 'Main branch', 'Main', 'N', 'admin')";
+            sql += ",('BRANCH1','Branch One','Branch','N','admin');";
             sql += "insert into terminal values('BRANCH1', 'BRANCH1', '192.168.0.101', 'BRANCH1', 'Branch');";
             sql += "insert into documents(documentCode,documentName,lastNo) values('PO', 'Purchase Order', 0)";
             sql += " ,('SI', 'Sales Invoice', 0)";

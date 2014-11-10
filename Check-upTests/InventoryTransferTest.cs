@@ -27,6 +27,8 @@ namespace Check_upTests
             ht.Add("code", "US-FL");
             ht.Add("name", "US Florida Warehouse");
             ht.Add("branchType", "Branch");
+            ht.Add("createdBy", vars.username);
+            ht.Add("deactivated", vars.username);
             Warehouse wh = new Warehouse();
             if (wh.addWarehouse(ht))
                 return true;

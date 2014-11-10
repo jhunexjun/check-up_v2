@@ -52,11 +52,5 @@ namespace Check_upTests.forms
             Assert.AreEqual(dt.Rows[0]["deactivated"], "N");
             Assert.AreEqual(dt.Rows[0]["createdBy"], "admin");
         }
-
-        [TestMethod]
-        public void updateWarehouse()
-        {
-
-        }
     }
 }

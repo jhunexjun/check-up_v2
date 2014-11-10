@@ -29,7 +29,7 @@ namespace Check_upTests
             Assert.IsNotNull(ht);
             Assert.IsTrue(functions.dropAndCreateDatabase(ht));
             
-            // we have to select db against because it was dropped above.
+            // we have to select db again because it was dropped above.
             vars.MySqlConnection.ChangeDatabase(ht["database"].ToString());
 
             //we want to make sure we don't drop live database.

@@ -37,29 +37,43 @@ namespace Check_up.classes
             else
                 ht["deactivated"] = "null";
 
-            if (!ht.Contains("createdBy"))
-                ht["createdBy"] = "admin"; //this is cannot be null
-
             return ht;
         }
 
-        public bool addWarehouse(Hashtable ht)
+        private bool checkPassedData(Hashtable ht)
         {
             if (!ht.Contains("code"))
             {
                 MessageBox.Show("Please indicate code in the hash.");
                 return false;
             }
-
             if (!ht.Contains("branchType"))
             {
                 MessageBox.Show("Please indicate branch type in the hash.");
                 return false;
             }
+            if (!ht.Contains("createdBy"))
+            {
+                MessageBox.Show("Please indicate 'created by' in the hash.");
+                return false;
+            }
+            if (!ht.Contains("deactivated"))
+            {
+                MessageBox.Show("Please indicate 'deactivated' in the hash.");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool addWarehouse(Hashtable ht)
+        {
+            if (!checkPassedData(ht))
+                return false;
 
             ht = formatParams(ht);
 
-            string sql = "insert into warehouse(code,`name`,branchType,ftp_url,ftp_username,ftp_password,deactivated,createDate,createdBy)";
+            string sql = "insert into warehouse(`code`,`name`,branchType,ftp_url,ftp_username,ftp_password,deactivated,createDate,createdBy)";
                     sql += " values('{0}', {1}, '{2}', {3}, {4}, {5}, {6}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'), '{7}')";
                     sql = String.Format(sql, ht["code"], ht["name"], ht["branchType"], ht["ftp_url"], ht["ftp_username"], ht["ftp_password"], ht["deactivated"], ht["createdBy"]);
 
