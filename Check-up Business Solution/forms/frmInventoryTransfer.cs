@@ -900,7 +900,7 @@ namespace Check_up.forms
                     }
                     catch (ExecutionEngineException ex)
                     {
-                        MessageBox.Show(this, ex.ToString());
+                        MessageBox.Show(this, ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 

@@ -146,15 +146,15 @@ namespace Check_up.classes
             if (itemMasterData.Contains("vendor"))
                 sql += "SET @vendor=(SELECT code FROM businesspartner WHERE code=" + itemMasterData["vendor"] + " AND BPType=0 AND deactivated='N');";
 
-            sql += "INSERT INTO itemmasterdata(itemCode,description,shortName,vatable,vendor,deactivated,qtyPrPrchsUoM,qtyPrSaleUoM,prchsUoM,saleUoM,varWeightItm,remarks,minStock,maxStock,createdBy)";
-            sql += " VALUES(@itemCode," + itemMasterData["description"] + "," + itemMasterData["shortName"] + "," + itemMasterData["vatable"] + "," + itemMasterData["vendor"] + "," + itemMasterData["deactivated"] + "," + itemMasterData["qtyPrPrchsUoM"] + "," + itemMasterData["qtyPrSaleUoM"] + "," + itemMasterData["prchsUoM"] + "," + itemMasterData["saleUoM"] + "," + itemMasterData["varWeightItm"] + "," + itemMasterData["remarks"] + "," + itemMasterData["minStock"] + "," + itemMasterData["maxStock"] + ",@username);";
+            sql += "INSERT INTO itemmasterdata(itemCode,description,shortName,vatable,vendor,deactivated,qtyPrPrchsUoM,qtyPrSaleUoM,prchsUoM,saleUoM,varWeightItm,remarks,minStock,maxStock,createdBy,createDate)";
+            sql += " VALUES(@itemCode," + itemMasterData["description"] + "," + itemMasterData["shortName"] + "," + itemMasterData["vatable"] + "," + itemMasterData["vendor"] + "," + itemMasterData["deactivated"] + "," + itemMasterData["qtyPrPrchsUoM"] + "," + itemMasterData["qtyPrSaleUoM"] + "," + itemMasterData["prchsUoM"] + "," + itemMasterData["saleUoM"] + "," + itemMasterData["varWeightItm"] + "," + itemMasterData["remarks"] + "," + itemMasterData["minStock"] + "," + itemMasterData["maxStock"] + ",@username,@date);";
             
             int priceListCode; double thePrice;
             foreach (DictionaryEntry item in prices)
             {
                 priceListCode = (int)item.Key;
                 thePrice = Convert.ToDouble(prices[item.Key]);
-                sql += "INSERT INTO pricelist(itemCode,priceListCode,netPrice,createdBy) VALUES(@itemCode," + priceListCode + "," + thePrice + ", @username);";
+                sql += "INSERT INTO pricelist(itemCode,priceListCode,netPrice,createdBy,createDate) VALUES(@itemCode," + priceListCode + "," + thePrice + ", @username,@date);";
             }
 
             // int rowCount = barcodes.Count;

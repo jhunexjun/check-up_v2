@@ -33,7 +33,8 @@ namespace Check_up.forms
         private void insertIntoExportedFiles(string filename, string fullPath)
         {
             fullPath = fullPath.Replace(@"\", @"\\");
-            sql = "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy) VALUES('Out','" + filename + "','" + fullPath + "','" + vars.username + "')";
+            sql = "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
+            sql += "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy,createDate) VALUES('Out','" + filename + "','" + fullPath + "','" + vars.username + "',@date);";
             db = new database(); dt = new DataTable();
             db.executeNonQuery(sql, vars.MySqlConnection);
         }

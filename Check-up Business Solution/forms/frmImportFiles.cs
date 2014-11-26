@@ -173,7 +173,7 @@ namespace Check_up.forms
         private void recordImportedFiles(string filename, string filePath)
         {
             fullPath = fullPath.Replace(@"\", @"\\");
-            sql = "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy) VALUES('In','" + filename + "','" + fullPath + "','" + vars.username + "')";
+            sql = "INSERT INTO export_importfiles(traffic,filename,filepath,createdBy, createDate) VALUES('In','" + filename + "','" + fullPath + "','" + vars.username + "', DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'))";
             db = new database(); dt = new DataTable();
             db.executeNonQuery(sql, vars.MySqlConnection);
         }
@@ -3068,7 +3068,7 @@ namespace Check_up.forms
             if (listView1.Items.Count < 1)
             {
                 btnImport.Enabled = false;
-                MessageBox.Show(this, "All records have been successful imported to " + Application.StartupPath + @"\json\Processed\");
+                MessageBox.Show(this, "All records have been successfully imported to " + Application.StartupPath + @"\json\Processed\", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 btnImport.Enabled = true;

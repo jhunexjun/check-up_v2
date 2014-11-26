@@ -106,7 +106,7 @@ namespace Check_upTests
         [TestMethod]
         public void testAddDeliveryReceipt()
         {
-            Assert.IsTrue(functions.createDefaultRecordsForTheTests());
+            Assert.IsTrue(functions.createInitialRecordsForTheTests());
 
             // let's assume that we have logged in
             vars.terminalId = "MAIN"; vars.username = "admin";
@@ -282,7 +282,7 @@ namespace Check_upTests
         [TestMethod]
         public void testAddDeliveryReceiptForBranch()
         {
-            Assert.IsTrue(functions.createDefaultRecordsForTheTestsForBranch());
+            Assert.IsTrue(functions.createInitialRecordsForTheTestsForBranch());
 
             // let's assume that we have logged in
             vars.terminalId = "BRANCH1"; vars.username = "admin";

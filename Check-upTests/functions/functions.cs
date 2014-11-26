@@ -101,7 +101,7 @@ namespace Check_upTests
         }
 
         //before the system is used, default values are inserted into the db just like default login
-        public static bool createDefaultRecordsForTheTests()
+        public static bool createInitialRecordsForTheTests()
         {
             string sql = "insert into warehouse(code,`name`,branchType, deactivated, createdBy) values('MAIN', 'Main branch', 'Main', 'N', 'admin');";
             sql += "insert into terminal values('MAIN', 'MAIN', '192.168.0.100', 'MAIN', 'Main');";
@@ -114,10 +114,6 @@ namespace Check_upTests
             sql += " ,('IT', 'Inventory Transfer', 0)";
             sql += " ,('DR', 'Delivery Receipt', 0)";
             sql += " ,('IP', 'Inventory Posting', 0);";
-            
-            // 1 records has already been added by class Users
-            //sql += "insert into users(username,`password`)";
-            //sql += " values('admin', '$2a$10$5gcpxMRDi2wKdZkwaZ.G/uwJeFpPLw6RVnIKCy48haolWoVvqiKJy');";
 
             MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
             if (cmd.ExecuteNonQuery() > 0)
@@ -127,7 +123,7 @@ namespace Check_upTests
         }
 
         //this is similar as createDefaultRecordsForTheTests() but for imports coming to branch.
-        public static bool createDefaultRecordsForTheTestsForBranch()
+        public static bool createInitialRecordsForTheTestsForBranch()
         {
             string sql = "insert into warehouse(code,`name`,branchType,deactivated,createdBy) values('MAIN', 'Main branch', 'Main', 'N', 'admin')";
             sql += ",('BRANCH1','Branch One','Branch','N','admin');";

@@ -19,42 +19,42 @@ namespace Check_up.classes
             // Note: This class should create the docId, give the terminal id instead.
             if (!header.Contains("terminalId"))
             {
-                MessageBox.Show("Please indicate 'terminal id' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'terminal id' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             if (!header.Contains("warehouse"))
             {
-                MessageBox.Show("Please indicate 'warehouse' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'warehouse' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             if (!header.Contains("postingDate"))
             {
-                MessageBox.Show("Please indicate 'Posting Date' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Posting Date' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             if (!header.Contains("totalPrcntDscnt"))
             {
-                MessageBox.Show("Please indicate 'Total Percent Discount' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Total Percent Discount' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             if (!header.Contains("totalAmtDscnt"))
             {
-                MessageBox.Show("Please indicate 'Total amount discount' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Total amount discount' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             if (!header.Contains("netTotal"))
             {
-                MessageBox.Show("Please indicate 'net Total' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'net Total' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             if (!header.Contains("grossTotal"))
             {
-                MessageBox.Show("Please indicate 'Gross Total' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Gross Total' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             if (!header.Contains("createdBy"))
             {
-                MessageBox.Show("Please indicate 'created by' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'created by' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             
@@ -70,31 +70,30 @@ namespace Check_up.classes
                             
             // these are the important columns that should exist in the passed columns.
             ArrayList importantColumns = new ArrayList();
-            importantColumns.Add("docId");
             importantColumns.Add("indx");
             importantColumns.Add("itemCode");
-            importantColumns.Add("description");            
+            importantColumns.Add("description");
             importantColumns.Add("warehouseRow");
             importantColumns.Add("vatable");
             importantColumns.Add("realBsNetPrchsPrc");
             importantColumns.Add("realBsGrossPrchsPrc");
             importantColumns.Add("realNetPrchsPrc");
-            importantColumns.Add("realGrossPrchsPrc");          
+            importantColumns.Add("realGrossPrchsPrc");
             importantColumns.Add("qty");
             importantColumns.Add("baseUoM");
-            importantColumns.Add("qtyPrPrchsUoM");            
+            importantColumns.Add("qtyPrPrchsUoM");
             importantColumns.Add("prcntDscnt");
             importantColumns.Add("amtDscnt");
             importantColumns.Add("netPrchsPrc");
             importantColumns.Add("grossPrchsPrc");
             importantColumns.Add("rowNetTotal");
-            importantColumns.Add("rowGrossTotal");            
+            importantColumns.Add("rowGrossTotal");
 
             // now let's compare the two
             foreach(string col in importantColumns) {
                 if (!passedColumns.Contains(col))
                 {
-                    MessageBox.Show("Column '" + col + "' was not passed.");
+                    MessageBox.Show(Form.ActiveForm, "Column '" + col + "' was not passed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
             }
@@ -104,14 +103,14 @@ namespace Check_up.classes
             {
                 if (row["indx"].ToString() == "")
                 {
-                    MessageBox.Show("Row Index cannot be empty.");
+                    MessageBox.Show(Form.ActiveForm, "Row Index cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
 
                 int result;
                 if (!int.TryParse(row["indx"].ToString(), out result))
                 {
-                    MessageBox.Show("Row index must be numeric.");
+                    MessageBox.Show(Form.ActiveForm, "Row index must be numeric.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
             }
@@ -128,7 +127,7 @@ namespace Check_up.classes
 
             if (total != Decimal.Parse(header["grossTotal"].ToString()))
             {
-                MessageBox.Show("Price discrepancy on Gross Total.");
+                MessageBox.Show(Form.ActiveForm, "Price discrepancy on Gross Total.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
@@ -140,7 +139,7 @@ namespace Check_up.classes
 
             if (total != Decimal.Parse(header["totalPrcntDscnt"].ToString()))
             {
-                MessageBox.Show("Price discrepancy on totalPrcntDscnt.");
+                MessageBox.Show(Form.ActiveForm, "Price discrepancy on totalPrcntDscnt.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
@@ -150,13 +149,24 @@ namespace Check_up.classes
 
             if (total != Decimal.Parse(header["netTotal"].ToString()))
             {
-                MessageBox.Show("Price discrepancy on Net Total.");
+                MessageBox.Show(Form.ActiveForm, "Price discrepancy on Net Total.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
             //continue here
 
             return true;
+        }
+
+        private Hashtable formatHeaders(Hashtable header)
+        {
+            if (!header.Contains("remarks1"))
+                header["remarks1"] = null;
+
+            if (!header.Contains("remarks2"))
+                header["remarks2"] = null;
+
+            return header;
         }
 
         public bool addDeliveryReceipt(Hashtable header, DataTable tableRows)
@@ -170,12 +180,14 @@ namespace Check_up.classes
             int rowsCount = tableRows.Rows.Count;
             if (rowsCount < 1)
             {
-                MessageBox.Show("No data to record.");
+                MessageBox.Show(Form.ActiveForm, "No data to record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
             if (!checkHeadersAndRowsForAdd(header, tableRows))
                 return false;
+
+            header = formatHeaders(header);
 
             DateTime dateTime = DateTime.Parse(header["postingDate"].ToString());
             header["postingDate"] = dateTime.ToString("yyyy/MM/dd");
@@ -184,8 +196,8 @@ namespace Check_up.classes
             sql = "START TRANSACTION;";
             sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='DR');";
             sql += "SET @docId=CONCAT(@terminalId, @newId);";
-            sql += "INSERT INTO deliveryreceipt(docId,warehouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,remarks1,remarks2,createdBy)";
-            sql += " VALUES(@docId,@warehouse,@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@remarks1,@remarks2,@createdBy);";
+            sql += "INSERT INTO deliveryreceipt(docId,warehouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,remarks1,remarks2,createdBy,createDate)";
+            sql += " VALUES(@docId,@warehouse,@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@remarks1,@remarks2,@createdBy,DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'));";
 
             int i;
             for (i = 0; i < rowsCount; i++)
@@ -231,10 +243,10 @@ namespace Check_up.classes
                 cmd.Parameters.AddWithValue("@terminalId", header["terminalId"]);
                 cmd.Parameters.AddWithValue("@warehouse", header["warehouse"]);
                 cmd.Parameters.AddWithValue("@postingDate", header["postingDate"]);
-                cmd.Parameters.AddWithValue("@totalPrcntDscnt", header["totalPrcntDscnt"]);
-                cmd.Parameters.AddWithValue("@totalAmtDscnt", header["totalAmtDscnt"]);
-                cmd.Parameters.AddWithValue("@netTotal", header["netTotal"]);
-                cmd.Parameters.AddWithValue("@grossTotal", header["grossTotal"]);
+                cmd.Parameters.AddWithValue("@totalPrcntDscnt", Decimal.Parse(header["totalPrcntDscnt"].ToString()));
+                cmd.Parameters.AddWithValue("@totalAmtDscnt", Decimal.Parse(header["totalAmtDscnt"].ToString()));
+                cmd.Parameters.AddWithValue("@netTotal", Decimal.Parse(header["netTotal"].ToString()));
+                cmd.Parameters.AddWithValue("@grossTotal", Decimal.Parse(header["grossTotal"].ToString()));
                 cmd.Parameters.AddWithValue("@remarks1", header["remarks1"]);
                 cmd.Parameters.AddWithValue("@remarks2", header["remarks2"]);
                 cmd.Parameters.AddWithValue("@createdBy", header["createdBy"]);
@@ -272,7 +284,7 @@ namespace Check_up.classes
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(Form.ActiveForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }

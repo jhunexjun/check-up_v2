@@ -30,19 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGRPO));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblitemsCount = new System.Windows.Forms.Label();
             this.linkVendorCode = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
@@ -105,7 +105,7 @@
             // 
             this.lblitemsCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblitemsCount.AutoSize = true;
-            this.lblitemsCount.Location = new System.Drawing.Point(24, 367);
+            this.lblitemsCount.Location = new System.Drawing.Point(24, 376);
             this.lblitemsCount.Name = "lblitemsCount";
             this.lblitemsCount.Size = new System.Drawing.Size(13, 13);
             this.lblitemsCount.TabIndex = 104;
@@ -115,7 +115,7 @@
             // 
             this.linkVendorCode.AutoSize = true;
             this.linkVendorCode.Enabled = false;
-            this.linkVendorCode.Location = new System.Drawing.Point(96, 31);
+            this.linkVendorCode.Location = new System.Drawing.Point(98, 20);
             this.linkVendorCode.Name = "linkVendorCode";
             this.linkVendorCode.Size = new System.Drawing.Size(19, 13);
             this.linkVendorCode.TabIndex = 2;
@@ -129,7 +129,7 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.label5.ForeColor = System.Drawing.Color.Blue;
-            this.label5.Location = new System.Drawing.Point(722, 435);
+            this.label5.Location = new System.Drawing.Point(763, 435);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 95;
@@ -138,7 +138,7 @@
             // txtRemarks2
             // 
             this.txtRemarks2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtRemarks2.Location = new System.Drawing.Point(88, 449);
+            this.txtRemarks2.Location = new System.Drawing.Point(84, 454);
             this.txtRemarks2.MaxLength = 500;
             this.txtRemarks2.Multiline = true;
             this.txtRemarks2.Name = "txtRemarks2";
@@ -149,7 +149,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 452);
+            this.label4.Location = new System.Drawing.Point(20, 454);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 94;
@@ -159,7 +159,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(24, 397);
+            this.label10.Location = new System.Drawing.Point(20, 399);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(58, 13);
             this.label10.TabIndex = 93;
@@ -168,7 +168,7 @@
             // txtRemarks1
             // 
             this.txtRemarks1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtRemarks1.Location = new System.Drawing.Point(88, 394);
+            this.txtRemarks1.Location = new System.Drawing.Point(84, 399);
             this.txtRemarks1.MaxLength = 500;
             this.txtRemarks1.Multiline = true;
             this.txtRemarks1.Name = "txtRemarks1";
@@ -178,7 +178,7 @@
             // txtPostingDate
             // 
             this.txtPostingDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPostingDate.Location = new System.Drawing.Point(859, 51);
+            this.txtPostingDate.Location = new System.Drawing.Point(901, 40);
             this.txtPostingDate.Name = "txtPostingDate";
             this.txtPostingDate.Size = new System.Drawing.Size(67, 20);
             this.txtPostingDate.TabIndex = 1;
@@ -187,7 +187,7 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(773, 54);
+            this.label9.Location = new System.Drawing.Point(815, 43);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(68, 13);
             this.label9.TabIndex = 103;
@@ -198,7 +198,7 @@
             this.txtTotalAmtDscnt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTotalAmtDscnt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.txtTotalAmtDscnt.ForeColor = System.Drawing.Color.Blue;
-            this.txtTotalAmtDscnt.Location = new System.Drawing.Point(827, 410);
+            this.txtTotalAmtDscnt.Location = new System.Drawing.Point(868, 410);
             this.txtTotalAmtDscnt.Name = "txtTotalAmtDscnt";
             this.txtTotalAmtDscnt.ReadOnly = true;
             this.txtTotalAmtDscnt.Size = new System.Drawing.Size(100, 20);
@@ -212,7 +212,7 @@
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.label7.ForeColor = System.Drawing.Color.Blue;
-            this.label7.Location = new System.Drawing.Point(722, 413);
+            this.label7.Location = new System.Drawing.Point(763, 413);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(97, 13);
             this.label7.TabIndex = 101;
@@ -223,7 +223,7 @@
             this.txtTotalPrcntDscnt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTotalPrcntDscnt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.txtTotalPrcntDscnt.ForeColor = System.Drawing.Color.Blue;
-            this.txtTotalPrcntDscnt.Location = new System.Drawing.Point(827, 387);
+            this.txtTotalPrcntDscnt.Location = new System.Drawing.Point(868, 387);
             this.txtTotalPrcntDscnt.Name = "txtTotalPrcntDscnt";
             this.txtTotalPrcntDscnt.ReadOnly = true;
             this.txtTotalPrcntDscnt.Size = new System.Drawing.Size(100, 20);
@@ -237,7 +237,7 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.label8.ForeColor = System.Drawing.Color.Blue;
-            this.label8.Location = new System.Drawing.Point(722, 390);
+            this.label8.Location = new System.Drawing.Point(763, 390);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(87, 13);
             this.label8.TabIndex = 100;
@@ -248,7 +248,7 @@
             this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrint.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnPrint.Enabled = false;
-            this.btnPrint.Location = new System.Drawing.Point(867, 508);
+            this.btnPrint.Location = new System.Drawing.Point(908, 508);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 16;
@@ -260,7 +260,7 @@
             // 
             this.linkVendorName.AutoSize = true;
             this.linkVendorName.Enabled = false;
-            this.linkVendorName.Location = new System.Drawing.Point(96, 56);
+            this.linkVendorName.Location = new System.Drawing.Point(98, 45);
             this.linkVendorName.Name = "linkVendorName";
             this.linkVendorName.Size = new System.Drawing.Size(19, 13);
             this.linkVendorName.TabIndex = 4;
@@ -273,7 +273,7 @@
             this.txtGrossTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtGrossTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.txtGrossTotal.ForeColor = System.Drawing.Color.Blue;
-            this.txtGrossTotal.Location = new System.Drawing.Point(827, 455);
+            this.txtGrossTotal.Location = new System.Drawing.Point(868, 455);
             this.txtGrossTotal.Name = "txtGrossTotal";
             this.txtGrossTotal.ReadOnly = true;
             this.txtGrossTotal.Size = new System.Drawing.Size(100, 20);
@@ -286,7 +286,7 @@
             this.txtNetTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNetTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.txtNetTotal.ForeColor = System.Drawing.Color.Blue;
-            this.txtNetTotal.Location = new System.Drawing.Point(827, 432);
+            this.txtNetTotal.Location = new System.Drawing.Point(868, 432);
             this.txtNetTotal.Name = "txtNetTotal";
             this.txtNetTotal.ReadOnly = true;
             this.txtNetTotal.Size = new System.Drawing.Size(100, 20);
@@ -300,7 +300,7 @@
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.label6.ForeColor = System.Drawing.Color.Blue;
-            this.label6.Location = new System.Drawing.Point(722, 458);
+            this.label6.Location = new System.Drawing.Point(763, 458);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 96;
@@ -309,14 +309,14 @@
             // txtGRPONo
             // 
             this.txtGRPONo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtGRPONo.Location = new System.Drawing.Point(859, 28);
+            this.txtGRPONo.Location = new System.Drawing.Point(901, 17);
             this.txtGRPONo.Name = "txtGRPONo";
             this.txtGRPONo.Size = new System.Drawing.Size(81, 20);
             this.txtGRPONo.TabIndex = 0;
             // 
             // txtVendorName
             // 
-            this.txtVendorName.Location = new System.Drawing.Point(122, 51);
+            this.txtVendorName.Location = new System.Drawing.Point(123, 40);
             this.txtVendorName.Name = "txtVendorName";
             this.txtVendorName.Size = new System.Drawing.Size(302, 20);
             this.txtVendorName.TabIndex = 5;
@@ -333,7 +333,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(773, 33);
+            this.label2.Location = new System.Drawing.Point(815, 22);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(78, 13);
             this.label2.TabIndex = 91;
@@ -342,7 +342,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 56);
+            this.label3.Location = new System.Drawing.Point(19, 45);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 13);
             this.label3.TabIndex = 92;
@@ -351,7 +351,7 @@
             // btnFind
             // 
             this.btnFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFind.Location = new System.Drawing.Point(705, 508);
+            this.btnFind.Location = new System.Drawing.Point(746, 508);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(75, 23);
             this.btnFind.TabIndex = 14;
@@ -361,7 +361,7 @@
             // 
             // txtVendorCode
             // 
-            this.txtVendorCode.Location = new System.Drawing.Point(122, 28);
+            this.txtVendorCode.Location = new System.Drawing.Point(124, 17);
             this.txtVendorCode.Name = "txtVendorCode";
             this.txtVendorCode.Size = new System.Drawing.Size(100, 20);
             this.txtVendorCode.TabIndex = 3;
@@ -378,7 +378,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(786, 508);
+            this.btnCancel.Location = new System.Drawing.Point(827, 508);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 15;
@@ -390,9 +390,9 @@
             // 
             this.dgvItems.AllowUserToAddRows = false;
             this.dgvItems.AllowUserToResizeRows = false;
-            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvItems.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -414,10 +414,10 @@
             this.rowNetTotal,
             this.rowGrossTotal});
             this.dgvItems.ContextMenuStrip = this.contextMenuStrip2;
-            this.dgvItems.Location = new System.Drawing.Point(20, 104);
+            this.dgvItems.Location = new System.Drawing.Point(20, 93);
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.RowHeadersVisible = false;
-            this.dgvItems.Size = new System.Drawing.Size(921, 260);
+            this.dgvItems.Size = new System.Drawing.Size(962, 280);
             this.dgvItems.TabIndex = 7;
             // 
             // itemCode
@@ -435,8 +435,8 @@
             // 
             // vatable
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.vatable.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.vatable.DefaultCellStyle = dataGridViewCellStyle40;
             this.vatable.HeaderText = "Vatable";
             this.vatable.MaxInputLength = 1;
             this.vatable.Name = "vatable";
@@ -452,10 +452,10 @@
             // 
             // Qty
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N6";
-            dataGridViewCellStyle2.NullValue = "0.00";
-            this.Qty.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle41.Format = "N6";
+            dataGridViewCellStyle41.NullValue = "0.00";
+            this.Qty.DefaultCellStyle = dataGridViewCellStyle41;
             this.Qty.HeaderText = "Qty";
             this.Qty.Name = "Qty";
             this.Qty.Width = 48;
@@ -471,8 +471,8 @@
             // 
             // qtyPrPrchsUoM
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.qtyPrPrchsUoM.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle42.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.qtyPrPrchsUoM.DefaultCellStyle = dataGridViewCellStyle42;
             this.qtyPrPrchsUoM.HeaderText = "Qty/Prchs UoM";
             this.qtyPrPrchsUoM.Name = "qtyPrPrchsUoM";
             this.qtyPrPrchsUoM.ReadOnly = true;
@@ -480,11 +480,11 @@
             // 
             // realBsNetPrchsPrc
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle4.Format = "N6";
-            dataGridViewCellStyle4.NullValue = "0.00";
-            this.realBsNetPrchsPrc.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle43.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle43.Format = "N6";
+            dataGridViewCellStyle43.NullValue = "0.00";
+            this.realBsNetPrchsPrc.DefaultCellStyle = dataGridViewCellStyle43;
             this.realBsNetPrchsPrc.HeaderText = "Real Bsc Net Pur.Price";
             this.realBsNetPrchsPrc.Name = "realBsNetPrchsPrc";
             this.realBsNetPrchsPrc.ReadOnly = true;
@@ -492,11 +492,11 @@
             // 
             // realBsGrossPrchsPrc
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle5.Format = "N6";
-            dataGridViewCellStyle5.NullValue = "0.00";
-            this.realBsGrossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle44.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle44.Format = "N6";
+            dataGridViewCellStyle44.NullValue = "0.00";
+            this.realBsGrossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle44;
             this.realBsGrossPrchsPrc.HeaderText = "Real Bsc Gross Prchs Price";
             this.realBsGrossPrchsPrc.Name = "realBsGrossPrchsPrc";
             this.realBsGrossPrchsPrc.ReadOnly = true;
@@ -504,11 +504,11 @@
             // 
             // realNetPrchsPrc
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle6.Format = "N6";
-            dataGridViewCellStyle6.NullValue = "0.00";
-            this.realNetPrchsPrc.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle45.Format = "N6";
+            dataGridViewCellStyle45.NullValue = "0.00";
+            this.realNetPrchsPrc.DefaultCellStyle = dataGridViewCellStyle45;
             this.realNetPrchsPrc.HeaderText = "Real Net Prchs Price";
             this.realNetPrchsPrc.Name = "realNetPrchsPrc";
             this.realNetPrchsPrc.ReadOnly = true;
@@ -516,11 +516,11 @@
             // 
             // realGrossPrchsPrc
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle7.Format = "N6";
-            dataGridViewCellStyle7.NullValue = "0.00";
-            this.realGrossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle46.Format = "N6";
+            dataGridViewCellStyle46.NullValue = "0.00";
+            this.realGrossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle46;
             this.realGrossPrchsPrc.HeaderText = "Real Gross Prchs Price";
             this.realGrossPrchsPrc.Name = "realGrossPrchsPrc";
             this.realGrossPrchsPrc.ReadOnly = true;
@@ -528,11 +528,11 @@
             // 
             // netPrchsPrc
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle8.Format = "N6";
-            dataGridViewCellStyle8.NullValue = "0.00";
-            this.netPrchsPrc.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle47.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle47.Format = "N6";
+            dataGridViewCellStyle47.NullValue = "0.00";
+            this.netPrchsPrc.DefaultCellStyle = dataGridViewCellStyle47;
             this.netPrchsPrc.HeaderText = "Net Pur.Price";
             this.netPrchsPrc.Name = "netPrchsPrc";
             this.netPrchsPrc.ReadOnly = true;
@@ -540,11 +540,11 @@
             // 
             // grossPrchsPrc
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle9.Format = "N6";
-            dataGridViewCellStyle9.NullValue = "0.00";
-            this.grossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle48.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle48.Format = "N6";
+            dataGridViewCellStyle48.NullValue = "0.00";
+            this.grossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle48;
             this.grossPrchsPrc.HeaderText = "Gross Pur.Price";
             this.grossPrchsPrc.Name = "grossPrchsPrc";
             this.grossPrchsPrc.ReadOnly = true;
@@ -552,31 +552,31 @@
             // 
             // prcntDscnt
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "N6";
-            dataGridViewCellStyle10.NullValue = "0.00";
-            this.prcntDscnt.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle49.Format = "N6";
+            dataGridViewCellStyle49.NullValue = "0.00";
+            this.prcntDscnt.DefaultCellStyle = dataGridViewCellStyle49;
             this.prcntDscnt.HeaderText = "Discount %";
             this.prcntDscnt.Name = "prcntDscnt";
             this.prcntDscnt.Width = 79;
             // 
             // amtDscnt
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "N6";
-            dataGridViewCellStyle11.NullValue = "0.00";
-            this.amtDscnt.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle50.Format = "N6";
+            dataGridViewCellStyle50.NullValue = "0.00";
+            this.amtDscnt.DefaultCellStyle = dataGridViewCellStyle50;
             this.amtDscnt.HeaderText = "Amt Dscnt";
             this.amtDscnt.Name = "amtDscnt";
             this.amtDscnt.Width = 75;
             // 
             // rowNetTotal
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle12.Format = "N6";
-            dataGridViewCellStyle12.NullValue = "0.00";
-            this.rowNetTotal.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle51.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle51.Format = "N6";
+            dataGridViewCellStyle51.NullValue = "0.00";
+            this.rowNetTotal.DefaultCellStyle = dataGridViewCellStyle51;
             this.rowNetTotal.HeaderText = "Row Net Total";
             this.rowNetTotal.Name = "rowNetTotal";
             this.rowNetTotal.ReadOnly = true;
@@ -584,11 +584,11 @@
             // 
             // rowGrossTotal
             // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle13.Format = "N6";
-            dataGridViewCellStyle13.NullValue = "0.00";
-            this.rowGrossTotal.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle52.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle52.Format = "N6";
+            dataGridViewCellStyle52.NullValue = "0.00";
+            this.rowGrossTotal.DefaultCellStyle = dataGridViewCellStyle52;
             this.rowGrossTotal.HeaderText = "Row Gross Total";
             this.rowGrossTotal.Name = "rowGrossTotal";
             this.rowGrossTotal.ReadOnly = true;
@@ -613,7 +613,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 31);
+            this.label1.Location = new System.Drawing.Point(20, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 90;
@@ -631,7 +631,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(17, 80);
+            this.label11.Location = new System.Drawing.Point(20, 69);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(62, 13);
             this.label11.TabIndex = 135;
@@ -641,7 +641,7 @@
             // 
             this.cboWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboWarehouse.FormattingEnabled = true;
-            this.cboWarehouse.Location = new System.Drawing.Point(123, 77);
+            this.cboWarehouse.Location = new System.Drawing.Point(123, 66);
             this.cboWarehouse.Name = "cboWarehouse";
             this.cboWarehouse.Size = new System.Drawing.Size(121, 21);
             this.cboWarehouse.TabIndex = 6;
@@ -650,7 +650,7 @@
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.label12.Location = new System.Drawing.Point(706, 376);
+            this.label12.Location = new System.Drawing.Point(747, 376);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(236, 112);
             this.label12.TabIndex = 139;
@@ -658,7 +658,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(927, 51);
+            this.dateTimePicker1.Location = new System.Drawing.Point(969, 40);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(13, 20);
             this.dateTimePicker1.TabIndex = 140;
@@ -671,7 +671,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(960, 544);
+            this.ClientSize = new System.Drawing.Size(1001, 544);
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label11);

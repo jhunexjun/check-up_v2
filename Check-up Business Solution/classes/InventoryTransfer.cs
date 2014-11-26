@@ -20,79 +20,79 @@ namespace Check_up.classes
             // Note: This class should create the docId, give the terminal id instead.
             if (!header.Contains("terminalId"))
             {
-                MessageBox.Show("Please indicate 'terminal id' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'terminal id' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("frmWHouse"))
             {
-                MessageBox.Show("Please indicate 'from warehouse' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'from warehouse' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("toWHouse"))
             {
-                MessageBox.Show("Please indicate 'to warehouse' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'to warehouse' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("postingDate"))
             {
-                MessageBox.Show("Please indicate 'Posting Date' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Posting Date' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("totalPrcntDscnt"))
             {
-                MessageBox.Show("Please indicate 'Total Percent Discount' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Total Percent Discount' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("totalAmtDscnt"))
             {
-                MessageBox.Show("Please indicate 'Total amount discount' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Total amount discount' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("netTotal"))
             {
-                MessageBox.Show("Please indicate 'net Total' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'net Total' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("grossTotal"))
             {
-                MessageBox.Show("Please indicate 'Gross Total' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Gross Total' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("totalPrcntDscntRtl"))
             {
-                MessageBox.Show("Please indicate 'Total Percent Retail Discount' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Total Percent Retail Discount' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("totalAmtDscntRtl"))
             {
-                MessageBox.Show("Please indicate 'Total amount retail discount' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'Total amount retail discount' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("netTotalRtl"))
             {
-                MessageBox.Show("Please indicate 'net retail total' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'net retail total' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("grossTotalRtl"))
             {
-                MessageBox.Show("Please indicate 'gross retail total' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'gross retail total' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!header.Contains("createdBy"))
             {
-                MessageBox.Show("Please indicate 'created by' key in the hash.");
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'created by' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (String.Compare(header["frmWHouse"].ToString(), header["toWHouse"].ToString()) == 0)
             {
-                MessageBox.Show("From and to warehouse should not be the same.");
+                MessageBox.Show(Form.ActiveForm, "From and to warehouse should not be the same.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             return true;
         }
 
-        private bool checkRowsForAdd(DataTable tableRows)
+        private bool checkRowsForAdd(Hashtable header, DataTable tableRows)
         {
             // list down all passed columns.
             ArrayList passedColumns = new ArrayList(tableRows.Columns.Count);
@@ -101,7 +101,6 @@ namespace Check_up.classes
                             
             // these are the important columns that should exist in the passed columns.
             ArrayList importantColumns = new ArrayList();
-            importantColumns.Add("docId");
             importantColumns.Add("indx");
             importantColumns.Add("itemCode");
             importantColumns.Add("description");
@@ -135,7 +134,7 @@ namespace Check_up.classes
             foreach(string col in importantColumns) {
                 if (!passedColumns.Contains(col))
                 {
-                    MessageBox.Show("Column '" + col + "' was not passed.");
+                    MessageBox.Show(Form.ActiveForm, "Column '" + col + "' was not passed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
             }
@@ -145,95 +144,95 @@ namespace Check_up.classes
             {
                 if (row["indx"].ToString() == "")
                 {
-                    MessageBox.Show("Row Index cannot be empty.");
+                    MessageBox.Show(Form.ActiveForm, "Row Index cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
 
                 int result;
                 if (!int.TryParse(row["indx"].ToString(), out result))
                 {
-                    MessageBox.Show("Row index must be numeric.");
+                    MessageBox.Show(Form.ActiveForm, "Row index must be numeric.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
 
                 if (row["itemCode"].ToString() == "")
                 {
-                    MessageBox.Show("Row item code cannot be empty.");
+                    MessageBox.Show(Form.ActiveForm, "Row item code cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
 
                 string[] vatable = {"Y", "N"};
                 if (!vatable.Contains(row["vatable"].ToString()))
                 {
-                    MessageBox.Show("Vatable should only either be Y or N.");
+                    MessageBox.Show(Form.ActiveForm, "Vatable should only either be Y or N.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
 
                 decimal value;
                 if (!Decimal.TryParse(row["realBsNetPrchsPrc"].ToString(), out value))
                 {
-                    MessageBox.Show("realBsNetPrchsPrc is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realBsNetPrchsPrc is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
                 else
                     if (Decimal.Parse(row["realBsNetPrchsPrc"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realBsNetPrchsPrc'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realBsNetPrchsPrc'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
                     }
 
                 if (!Decimal.TryParse(row["realBsGrossPrchsPrc"].ToString(), out value))
                 {
-                    MessageBox.Show("realBsGrossPrchsPrc is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realBsGrossPrchsPrc is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["realBsGrossPrchsPrc"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realBsGrossPrchsPrc'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realBsGrossPrchsPrc'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["realNetPrchsPrc"].ToString(), out value))
                 {
-                    MessageBox.Show("realNetPrchsPrc is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realNetPrchsPrc is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["realNetPrchsPrc"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realNetPrchsPrc'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realNetPrchsPrc'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["realGrossPrchsPrc"].ToString(), out value))
                 {
-                    MessageBox.Show("realGrossPrchsPrc is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realGrossPrchsPrc is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["realGrossPrchsPrc"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realGrossPrchsPrc'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realGrossPrchsPrc'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["qty"].ToString(), out value))
                 {
-                    MessageBox.Show("realNetPrchsPrc is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realNetPrchsPrc is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["qty"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'qty'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'qty'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -241,34 +240,34 @@ namespace Check_up.classes
                 string[] baseUoM = { "Y", "N" };
                 if (!vatable.Contains(row["baseUoM"].ToString()))
                 {
-                    MessageBox.Show("baseUoM should only either be Y or N.");
+                    MessageBox.Show(Form.ActiveForm, "baseUoM should only either be Y or N.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
                 if (!Decimal.TryParse(row["qtyPrPrchsUoM"].ToString(), out value))
                 {
-                    MessageBox.Show("qtyPrPrchsUoM is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "qtyPrPrchsUoM is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["qtyPrPrchsUoM"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'qtyPrPrchsUoM'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'qtyPrPrchsUoM'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["prcntDscnt"].ToString(), out value))
                 {
-                    MessageBox.Show("prcntDscnt is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "prcntDscnt is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["prcntDscnt"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'prcntDscnt'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'prcntDscnt'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
 
@@ -276,28 +275,28 @@ namespace Check_up.classes
 
                 if (!Decimal.TryParse(row["amtDscnt"].ToString(), out value))
                 {
-                    MessageBox.Show("amtDscnt is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "amtDscnt is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["amtDscnt"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'amtDscnt'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'amtDscnt'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["netPrchsPrc"].ToString(), out value))
                 {
-                    MessageBox.Show("netPrchsPrc is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "netPrchsPrc is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["netPrchsPrc"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'netPrchsPrc'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'netPrchsPrc'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -305,200 +304,262 @@ namespace Check_up.classes
 
                 if (!Decimal.TryParse(row["grossPrchsPrc"].ToString(), out value))
                 {
-                    MessageBox.Show("grossPrchsPrc is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "grossPrchsPrc is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["grossPrchsPrc"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'grossPrchsPrc'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'grossPrchsPrc'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["rowNetTotal"].ToString(), out value))
                 {
-                    MessageBox.Show("rowNetTotal is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "rowNetTotal is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["rowNetTotal"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'rowNetTotal'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'rowNetTotal'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["rowGrossTotal"].ToString(), out value))
                 {
-                    MessageBox.Show("rowGrossTotal is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "rowGrossTotal is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["rowGrossTotal"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'rowGrossTotal'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'rowGrossTotal'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["qtyPrRtlUoM"].ToString(), out value))
                 {
-                    MessageBox.Show("qtyPrRtlUoM is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "qtyPrRtlUoM is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["qtyPrRtlUoM"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'qtyPrRtlUoM'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'qtyPrRtlUoM'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["realBsNetPrcRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("realBsNetPrcRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realBsNetPrcRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["realBsNetPrcRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realBsNetPrcRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realBsNetPrcRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["realBsGrossPrcRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("realBsGrossPrcRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realBsGrossPrcRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["realBsGrossPrcRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realBsGrossPrcRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realBsGrossPrcRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["realNetPrcRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("realNetPrcRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realNetPrcRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["realNetPrcRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realNetPrcRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realNetPrcRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["realGrossPrcRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("realGrossPrcRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "realGrossPrcRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["realGrossPrcRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'realGrossPrcRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'realGrossPrcRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["netPrcRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("netPrcRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "netPrcRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["netPrcRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'netPrcRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'netPrcRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["grossPrcRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("grossPrcRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "grossPrcRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["grossPrcRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'grossPrcRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'grossPrcRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["prcntDscntRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("prcntDscntRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "prcntDscntRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["prcntDscntRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'prcntDscntRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'prcntDscntRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["amtDscntRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("amtDscntRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "amtDscntRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["amtDscntRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'amtDscntRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'amtDscntRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["rowNetTotalRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("rowNetTotalRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "rowNetTotalRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["rowNetTotalRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'rowNetTotalRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'rowNetTotalRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
 
                 if (!Decimal.TryParse(row["rowGrossTotalRtl"].ToString(), out value))
                 {
-                    MessageBox.Show("rowGrossTotalRtl is not in decimal value.");
+                    MessageBox.Show(Form.ActiveForm, "rowGrossTotalRtl is not in decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
                 {
                     if (Decimal.Parse(row["rowGrossTotalRtl"].ToString()) < 0m)
                     {
-                        MessageBox.Show("We do not allow negative value for 'rowGrossTotalRtl'.");
+                        MessageBox.Show(Form.ActiveForm, "We do not allow negative value for 'rowGrossTotalRtl'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
             } //end for foreach (DataRow row in tableRows.Rows)
+
+            // We do not allow no inventory or greater than the inventory
+            int rowCount = tableRows.Rows.Count, i;
+            string varBaseUoM, sql, itemcode;
+
+            MySqlCommand cmd; MySqlDataAdapter da; DataTable dt;
+
+            decimal varBaseQty, varQty, qtyPrRtlUoM;
+            for (i = 0; i < rowCount; i++)
+            {
+                itemcode = fx.null2EmptyStr(tableRows.Rows[i]["itemCode"]);
+                if (itemcode != "")
+                {
+                    varQty = Decimal.Parse(tableRows.Rows[i]["Qty"].ToString());
+                    varBaseUoM = tableRows.Rows[i]["baseUoM"].ToString();
+                    qtyPrRtlUoM = Decimal.Parse(tableRows.Rows[i]["qtyPrRtlUoM"].ToString());
+                    varBaseQty = varQty * ((varBaseUoM == "N") ? qtyPrRtlUoM : 1);
+
+                    sql = "SELECT inStock FROM item_warehouse WHERE itemCode = '" + tableRows.Rows[i]["itemCode"].ToString() + "' AND whCode = '" + header["frmWHouse"].ToString() + "'";
+                    cmd = new MySqlCommand(sql, vars.MySqlConnection);
+                    da = new MySqlDataAdapter(cmd);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        if (Decimal.Parse(dt.Rows[0]["inStock"].ToString()) < varBaseQty)
+                        {
+                            MessageBox.Show(Form.ActiveForm, "Insufficient inventory for item " + tableRows.Rows[i]["itemCode"].ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(Form.ActiveForm, "Insufficient inventory for item " + tableRows.Rows[i]["itemCode"].ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return false;
+                    }                    
+                }
+            }
+
+            //check item master data properties
+            rowCount = rowCount - 1;
+            for (i = 0; i < rowCount; i++)
+            {
+                itemcode = fx.null2EmptyStr(tableRows.Rows[i]["itemCode"]);
+                sql = "SELECT deactivated FROM itemmasterdata WHERE itemCode='" + itemcode + "'";
+                cmd = new MySqlCommand(sql, vars.MySqlConnection);
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt = new DataTable());
+                if (dt.Rows.Count > 0)
+                {
+                    if (dt.Rows[0]["deactivated"].ToString() == "Y")
+                    {
+                        MessageBox.Show(Form.ActiveForm, "Item code " + itemcode + " is deactivated. Cannot proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); ;
+                        return false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(Form.ActiveForm, "Item code " + itemcode + " is not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                    return false;
+                }
+            }
 
             // if everything passed on check, returns true;
             return true;
@@ -507,25 +568,35 @@ namespace Check_up.classes
         // this checks the relationships of header and its rows data i.e. sum of rows are equal to the header's.
         private bool checkHeaderAndRows(Hashtable header, DataTable tableRows)
         {
-            decimal total = 0; int rowsCount = tableRows.Rows.Count;
-            for (int i = 0; i < rowsCount; i++)
+            decimal total = 0; int rowsCount = tableRows.Rows.Count, i;
+            for (i = 0; i < rowsCount; i++)
                 total += Decimal.Parse(tableRows.Rows[i]["rowGrossTotalRtl"].ToString());
 
             if (total != Decimal.Parse(header["grossTotalRtl"].ToString()))
             {
-                MessageBox.Show("Price discrepancy on grossTotalRtl.");
+                MessageBox.Show(Form.ActiveForm, "Price discrepancy on gross Total Retail.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             total = 0;
-            for (int i = 0; i < rowsCount; i++)
+            for (i = 0; i < rowsCount; i++)
+                total += Decimal.Parse(tableRows.Rows[i]["rowNetTotalRtl"].ToString());
+
+            if (total != Decimal.Parse(header["netTotalRtl"].ToString()))
+            {
+                MessageBox.Show(Form.ActiveForm, "Price discrepancy on Net Total Retail.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+                total = 0;
+            for (i = 0; i < rowsCount; i++)
                 total += Decimal.Parse(tableRows.Rows[i]["prcntDscnt"].ToString());
 
             total /= 2;
 
             if (total != Decimal.Parse(header["totalPrcntDscnt"].ToString()))
             {
-                MessageBox.Show("Price discrepancy on totalPrcntDscnt.");
+                MessageBox.Show(Form.ActiveForm, "Price discrepancy on total Percent Discount.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -540,13 +611,13 @@ namespace Check_up.classes
             if (!checkHeadersForAdd(header))
                 return false;
 
-            if (!checkRowsForAdd(tableRows))
+            if (!checkRowsForAdd(header, tableRows))
                 return false;
 
             int rowsCount = tableRows.Rows.Count;
             if (rowsCount < 1)
             {
-                MessageBox.Show("No data to record.");
+                MessageBox.Show(Form.ActiveForm, "No data to record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -560,8 +631,8 @@ namespace Check_up.classes
             sql = "START TRANSACTION;";
             sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='IT');";
             sql += "SET @docId=CONCAT(@terminalId, @newId);";
-            sql += "INSERT INTO inventorytransfer(docId,frmWHouse,toWHouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,totalPrcntDscntRtl,totalAmtDscntRtl,netTotalRtl,grossTotalRtl,remarks1,remarks2,createdBy)";
-            sql += " VALUES(@docId,@frmWHouse,@toWHouse,DATE_FORMAT(@postingDate, '%Y-%m-%d'),@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@totalPrcntDscntRtl,@totalAmtDscntRtl,@netTotalRtl,@grossTotalRtl,@remarks1,@remarks2,@createdBy);";
+            sql += "INSERT INTO inventorytransfer(docId,frmWHouse,toWHouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,totalPrcntDscntRtl,totalAmtDscntRtl,netTotalRtl,grossTotalRtl,remarks1,remarks2,createdBy,createDate)";
+            sql += " VALUES(@docId,@frmWHouse,@toWHouse,DATE_FORMAT(@postingDate, '%Y-%m-%d'),@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@totalPrcntDscntRtl,@totalAmtDscntRtl,@netTotalRtl,@grossTotalRtl,@remarks1,@remarks2,@createdBy,DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'));";
 
             int i;
             for (i = 0; i < rowsCount; i++)
@@ -624,14 +695,14 @@ namespace Check_up.classes
                 cmd.Parameters.AddWithValue("@terminalId", header["terminalId"]);
                 cmd.Parameters.AddWithValue("@remarks1", header["remarks1"]);
                 cmd.Parameters.AddWithValue("@remarks2", header["remarks2"]);
-                cmd.Parameters.AddWithValue("@totalPrcntDscnt", header["totalPrcntDscnt"]);
-                cmd.Parameters.AddWithValue("@totalAmtDscnt", header["totalAmtDscnt"]);
-                cmd.Parameters.AddWithValue("@netTotal", header["netTotal"]);
-                cmd.Parameters.AddWithValue("@grossTotal", header["grossTotal"]);
-                cmd.Parameters.AddWithValue("@totalPrcntDscntRtl", header["totalPrcntDscntRtl"]);
-                cmd.Parameters.AddWithValue("@totalAmtDscntRtl", header["totalAmtDscntRtl"]);
-                cmd.Parameters.AddWithValue("@netTotalRtl", header["netTotalRtl"]);
-                cmd.Parameters.AddWithValue("@grossTotalRtl", header["grossTotalRtl"]);
+                cmd.Parameters.AddWithValue("@totalPrcntDscnt", Decimal.Parse(header["totalPrcntDscnt"].ToString()));
+                cmd.Parameters.AddWithValue("@totalAmtDscnt", Decimal.Parse(header["totalAmtDscnt"].ToString()));
+                cmd.Parameters.AddWithValue("@netTotal", Decimal.Parse(header["netTotal"].ToString()));
+                cmd.Parameters.AddWithValue("@grossTotal", Decimal.Parse(header["grossTotal"].ToString()));
+                cmd.Parameters.AddWithValue("@totalPrcntDscntRtl", Decimal.Parse(header["totalPrcntDscntRtl"].ToString()));
+                cmd.Parameters.AddWithValue("@totalAmtDscntRtl", Decimal.Parse(header["totalAmtDscntRtl"].ToString()));
+                cmd.Parameters.AddWithValue("@netTotalRtl", Decimal.Parse(header["netTotalRtl"].ToString()));
+                cmd.Parameters.AddWithValue("@grossTotalRtl", Decimal.Parse(header["grossTotalRtl"].ToString()));
 
                 // rows
                 for (i = 0; i < rowsCount; i++)
@@ -683,19 +754,19 @@ namespace Check_up.classes
         {
             if (!header.Contains("remarks2"))
             {
-                MessageBox.Show("No 'remarks2' in the hash.");
+                MessageBox.Show(Form.ActiveForm, "No 'remarks2' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             if (!header.Contains("updatedBy"))
             {
-                MessageBox.Show("No 'updated by' in the hash.");
+                MessageBox.Show(Form.ActiveForm, "No 'updated by' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             if (!header.Contains("docId"))
             {
-                MessageBox.Show("No 'doc id' in the hash.");
+                MessageBox.Show(Form.ActiveForm, "No 'doc id' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
