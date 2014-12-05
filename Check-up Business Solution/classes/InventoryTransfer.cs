@@ -592,7 +592,7 @@ namespace Check_up.classes
             for (i = 0; i < rowsCount; i++)
                 total += Decimal.Parse(tableRows.Rows[i]["prcntDscnt"].ToString());
 
-            total /= 2;
+            total /= rowsCount;
 
             if (total != Decimal.Parse(header["totalPrcntDscnt"].ToString()))
             {
@@ -602,6 +602,29 @@ namespace Check_up.classes
 
             //continue here
             
+            return true;
+        }
+
+        private bool checkHeadersForUpdate(Hashtable header)
+        {
+            if (!header.Contains("remarks2"))
+            {
+                MessageBox.Show(Form.ActiveForm, "No 'remarks2' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!header.Contains("updatedBy"))
+            {
+                MessageBox.Show(Form.ActiveForm, "No 'updated by' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!header.Contains("docId"))
+            {
+                MessageBox.Show(Form.ActiveForm, "No 'doc id' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
             return true;
         }
 
@@ -749,30 +772,7 @@ namespace Check_up.classes
                 return false;
             }
         }
-
-        private bool checkHeadersForUpdate(Hashtable header)
-        {
-            if (!header.Contains("remarks2"))
-            {
-                MessageBox.Show(Form.ActiveForm, "No 'remarks2' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!header.Contains("updatedBy"))
-            {
-                MessageBox.Show(Form.ActiveForm, "No 'updated by' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!header.Contains("docId"))
-            {
-                MessageBox.Show(Form.ActiveForm, "No 'doc id' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            return true;
-        }
-
+            
         public bool updateInventoryTransfer(Hashtable header) {
             if (!checkHeadersForUpdate(header))
                 return false;

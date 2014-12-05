@@ -62,12 +62,7 @@ namespace Check_up.classes
         }
 
         private bool checkRowsForAdd(DataTable tableRows)
-        {
-            // list down all passed columns.
-            ArrayList passedColumns = new ArrayList(tableRows.Columns.Count);
-            foreach(DataColumn col in tableRows.Columns)
-                passedColumns.Add(col.ColumnName);
-                            
+        {                            
             // these are the important columns that should exist in the passed columns.
             ArrayList importantColumns = new ArrayList();
             importantColumns.Add("indx");
@@ -91,7 +86,7 @@ namespace Check_up.classes
 
             // now let's compare the two
             foreach(string col in importantColumns) {
-                if (!passedColumns.Contains(col))
+                if (!tableRows.Columns.Contains(col))
                 {
                     MessageBox.Show(Form.ActiveForm, "Column '" + col + "' was not passed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
@@ -135,7 +130,7 @@ namespace Check_up.classes
             for (int i = 0; i < rowsCount; i++)
                 total += Decimal.Parse(tableRows.Rows[i]["prcntDscnt"].ToString());
 
-            total /= 2;
+            total /= rowsCount;
 
             if (total != Decimal.Parse(header["totalPrcntDscnt"].ToString()))
             {
@@ -276,8 +271,7 @@ namespace Check_up.classes
                     cmd.Parameters.AddWithValue("@rowGrossTotal" + i, tableRows.Rows[i]["rowGrossTotal"]);
                 }
 
-                int result = cmd.ExecuteNonQuery();
-                if (result > 1)
+                if (cmd.ExecuteNonQuery() > 1)
                     return true;
                 else
                     return false;

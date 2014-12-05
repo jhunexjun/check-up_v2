@@ -32,31 +32,32 @@
             "Users"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Warehouse"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Item Master Data"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Business Partner");
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Price Lists"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            "Item Master Data"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
             System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Price Lists History"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            "Price Lists"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
             System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Barcodes"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            "Price Lists History"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
             System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Barcodes History"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            "Barcodes"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
             System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Purchase Orders"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            "Barcodes History"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
             System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Purchase Orders"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "Goods Receipt PO\'s"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Inventory Transfer");
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Goods Returns"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Inventory Transfer");
             System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Sales Invoices"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            "Goods Returns"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
             System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Sales Invoices"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "Sales Returns"}, -1, System.Drawing.Color.Black, System.Drawing.Color.Empty, null);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Delivery Receipt");
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Inventory Posting");
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Delivery Receipt");
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Inventory Posting");
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,8 +65,8 @@
             // 
             // listView1
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.CheckBoxes = true;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
@@ -80,7 +81,6 @@
             listViewItem2.Tag = "DefaultRecords";
             listViewItem3.Checked = true;
             listViewItem3.StateImageIndex = 1;
-            listViewItem3.Tag = "DefaultRecords";
             listViewItem4.Checked = true;
             listViewItem4.StateImageIndex = 1;
             listViewItem4.Tag = "DefaultRecords";
@@ -95,6 +95,7 @@
             listViewItem7.Tag = "DefaultRecords";
             listViewItem8.Checked = true;
             listViewItem8.StateImageIndex = 1;
+            listViewItem8.Tag = "DefaultRecords";
             listViewItem9.Checked = true;
             listViewItem9.StateImageIndex = 1;
             listViewItem10.Checked = true;
@@ -109,6 +110,8 @@
             listViewItem14.StateImageIndex = 1;
             listViewItem15.Checked = true;
             listViewItem15.StateImageIndex = 1;
+            listViewItem16.Checked = true;
+            listViewItem16.StateImageIndex = 1;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
@@ -124,11 +127,12 @@
             listViewItem12,
             listViewItem13,
             listViewItem14,
-            listViewItem15});
+            listViewItem15,
+            listViewItem16});
             this.listView1.Location = new System.Drawing.Point(12, 49);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(362, 335);
+            this.listView1.Size = new System.Drawing.Size(362, 343);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -142,7 +146,7 @@
             // 
             this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpload.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnUpload.Location = new System.Drawing.Point(218, 410);
+            this.btnUpload.Location = new System.Drawing.Point(218, 416);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 23);
             this.btnUpload.TabIndex = 1;
@@ -154,7 +158,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(299, 410);
+            this.btnCancel.Location = new System.Drawing.Point(299, 416);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -164,8 +168,8 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 19);
             this.label1.Name = "label1";
@@ -180,7 +184,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(386, 457);
+            this.ClientSize = new System.Drawing.Size(386, 463);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnUpload);

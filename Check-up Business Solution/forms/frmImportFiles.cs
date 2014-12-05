@@ -2182,7 +2182,7 @@ namespace Check_up.forms
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
                             sql = "SET @frmWHouse=(SELECT frmWHouse FROM inventorytransfer WHERE docId='" + docId + "');";
-                            sql += "SET @toWHouse=(SELECT frmWHouse FROM inventorytransfer WHERE docId='" + docId + "');";
+                            sql += "SET @toWHouse=(SELECT toWHouse FROM inventorytransfer WHERE docId='" + docId + "');";
                             sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@toWHouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty + ";";
                             sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@frmWHouse;";
                             db.executeNonQuery(sql, vars.MySqlConnection);

@@ -200,68 +200,68 @@ namespace Check_upTests
             row["description"] = "Item 2";
             row["warehouseRow"] = "MAIN";
             row["vatable"] = "N";
-            row["realBsNetPrchsPrc"] = 2;
-            row["realBsGrossPrchsPrc"] = 2;
-            row["realNetPrchsPrc"] = 2;
-            row["realGrossPrchsPrc"] = 2;
+            row["realBsNetPrchsPrc"] = 2.00;
+            row["realBsGrossPrchsPrc"] = 2.00;
+            row["realNetPrchsPrc"] = 2.00;
+            row["realGrossPrchsPrc"] = 2.00;
             row["qty"] = 10;
             row["baseUoM"] = "N";
             row["qtyPrPrchsUoM"] = 2;
             row["prcntDscnt"] = 0.00;
             row["amtDscnt"] = 0.00;
-            row["netPrchsPrc"] = 40;
-            row["grossPrchsPrc"] = 40;
-            row["rowNetTotal"] = 40;
-            row["rowGrossTotal"] = 40;
+            row["netPrchsPrc"] = 40.00;
+            row["grossPrchsPrc"] = 40.00;
+            row["rowNetTotal"] = 40.00;
+            row["rowGrossTotal"] = 40.00;
 
             table.Rows.Add(row);
 
             //2nd record
             row = table.NewRow();
             row["indx"] = 1;
-            row["vendorCode"] = "S-2";
-            row["vendorName"] = "XYZ Corporation";
+            row["vendorCode"] = "S-1";
+            row["vendorName"] = "ABC Corporation";
             row["itemCode"] = "MAINITM2";
             row["description"] = "Item 2";
             row["warehouseRow"] = "MAIN";
             row["vatable"] = "N";
-            row["realBsNetPrchsPrc"] = 2;
-            row["realBsGrossPrchsPrc"] = 2;
-            row["realNetPrchsPrc"] = 2;
-            row["realGrossPrchsPrc"] = 2;
+            row["realBsNetPrchsPrc"] = 2.00;
+            row["realBsGrossPrchsPrc"] = 2.00;
+            row["realNetPrchsPrc"] = 2.00;
+            row["realGrossPrchsPrc"] = 2.00;
             row["qty"] = 10;
             row["baseUoM"] = "N";
             row["qtyPrPrchsUoM"] = 3;
             row["prcntDscnt"] = 0.00;
             row["amtDscnt"] = 0.00;
-            row["netPrchsPrc"] = 60;
-            row["grossPrchsPrc"] = 60;
-            row["rowNetTotal"] = 60;
-            row["rowGrossTotal"] = 60;
+            row["netPrchsPrc"] = 60.00;
+            row["grossPrchsPrc"] = 60.00;
+            row["rowNetTotal"] = 60.00;
+            row["rowGrossTotal"] = 60.00;
             table.Rows.Add(row);
 
             // 3rd record
             row = table.NewRow();
             row["indx"] = 2;
             row["vendorCode"] = "S-1";
-            row["vendorName"] = "ABC Enterprises";
+            row["vendorName"] = "ABC Corporation";
             row["itemCode"] = "MAINITM3";
             row["description"] = "Item 3";
             row["warehouseRow"] = "MAIN";
             row["vatable"] = "N";
-            row["realBsNetPrchsPrc"] = 2;
-            row["realBsGrossPrchsPrc"] = 2;
-            row["realNetPrchsPrc"] = 2;
-            row["realGrossPrchsPrc"] = 2;
+            row["realBsNetPrchsPrc"] = 2.00;
+            row["realBsGrossPrchsPrc"] = 2.00;
+            row["realNetPrchsPrc"] = 2.00;
+            row["realGrossPrchsPrc"] = 2.00;
             row["qty"] = 10;
             row["baseUoM"] = "N";
             row["qtyPrPrchsUoM"] = 4;
             row["prcntDscnt"] = 0.00;
             row["amtDscnt"] = 0.00;
-            row["netPrchsPrc"] = 80;
-            row["grossPrchsPrc"] = 80;
-            row["rowNetTotal"] = 80;
-            row["rowGrossTotal"] = 80;
+            row["netPrchsPrc"] = 80.00;
+            row["grossPrchsPrc"] = 80.00;
+            row["rowNetTotal"] = 80.00;
+            row["rowGrossTotal"] = 80.00;
             table.Rows.Add(row);
 
             DeliveryReceipt deliveryReceipt = new DeliveryReceipt();
@@ -331,13 +331,13 @@ namespace Check_upTests
             //purchase prices
             header.Add("totalPrcntDscnt", 0);
             header.Add("totalAmtDscnt", 0);
-            header.Add("netTotal", 18);
-            header.Add("grossTotal", 18);
+            header.Add("netTotal", 18.00);
+            header.Add("grossTotal", 18.00);
             //retail prices
-            header.Add("totalPrcntDscntRtl", 0);
-            header.Add("totalAmtDscntRtl", 0);
-            header.Add("netTotalRtl", 27);
-            header.Add("grossTotalRtl", 27);
+            header.Add("totalPrcntDscntRtl", 0.00);
+            header.Add("totalAmtDscntRtl", 0.00);
+            header.Add("netTotalRtl", 27.00);
+            header.Add("grossTotalRtl", 27.00);
 
             DataRow row;
             
@@ -564,12 +564,31 @@ namespace Check_upTests
             Assert.AreEqual(DBNull.Value, dt.Rows[0]["exported"]);
             Assert.AreEqual(DBNull.Value, dt.Rows[1]["exported"]);
             Assert.AreEqual(DBNull.Value, dt.Rows[2]["exported"]);
-            //continue here...
 
-            cmd = new MySqlCommand("select * from item_warehouse", vars.MySqlConnection);
+            cmd = new MySqlCommand("select inStock from item_warehouse where itemCode='MAINITM1' and whCode='MAIN'", vars.MySqlConnection);
             da = new MySqlDataAdapter(cmd);
             da.Fill(dt = new DataTable());
-            // continue here...
+            Assert.AreEqual(16D, dt.Rows[0]["inStock"]);
+            cmd = new MySqlCommand("select inStock from item_warehouse where itemCode='MAINITM1' and whCode='US-FL'", vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt = new DataTable());
+            Assert.AreEqual(4D, dt.Rows[0]["inStock"]);
+            cmd = new MySqlCommand("select inStock from item_warehouse where itemCode='MAINITM2' and whCode='MAIN'", vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt = new DataTable());
+            Assert.AreEqual(21D, dt.Rows[0]["inStock"]);
+            cmd = new MySqlCommand("select inStock from item_warehouse where itemCode='MAINITM2' and whCode='US-FL'", vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt = new DataTable());
+            Assert.AreEqual(9D, dt.Rows[0]["inStock"]);
+            cmd = new MySqlCommand("select inStock from item_warehouse where itemCode='MAINITM3' and whCode='MAIN'", vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt = new DataTable());
+            Assert.AreEqual(24D, dt.Rows[0]["inStock"]);
+            cmd = new MySqlCommand("select inStock from item_warehouse where itemCode='MAINITM3' and whCode='US-FL'", vars.MySqlConnection);
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt = new DataTable());
+            Assert.AreEqual(16D, dt.Rows[0]["inStock"]);
         }
 
         [TestMethod]
@@ -673,7 +692,7 @@ namespace Check_upTests
             row["grossPrcRtl"] = 6; // has to be removed soon
             row["netPrcRtl"] = 6; // has to be removed soon
             row["amtDscntRtl"] = 0;
-            row["rowNetTotalRtl"] = 0;
+            row["rowNetTotalRtl"] = 6;
             row["rowGrossTotalRtl"] = 6;
             table.Rows.Add(row);
 
