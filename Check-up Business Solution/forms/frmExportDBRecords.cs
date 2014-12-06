@@ -139,7 +139,7 @@ namespace Check_up.forms
             }
 
             //Let's export itemmasterdata records.
-            tableName = "itemmasterdata_"; //with underscore            
+            tableName = "itemmasterdata_"; //with underscore
             filename = tableName + timeStamp + ".json";
             fullPath = Application.StartupPath + @"\json\Out\" + filename;
 
@@ -165,6 +165,47 @@ namespace Check_up.forms
                 db = new database(); dt = new DataTable();
                 db.executeNonQuery(sql, vars.MySqlConnection);
 
+                insertIntoExportedFiles(filename, fullPath);
+            }
+
+            //Let's export item_warehouse
+            tableName = "item-warehouse_"; //with underscore
+            filename = tableName + timeStamp + ".json";
+            fullPath = Application.StartupPath + @"\json\Out\" + filename;
+
+            sql = "SELECT * from item_warehouse WHERE exported IS NULL OR exported = 0 ORDER BY itemCode, whCode";
+            db = new database(); dt = new DataTable();
+            dt = db.select(sql, vars.MySqlConnection);
+            if (dt.Rows.Count > 0)
+            {
+                using (StreamWriter file = File.CreateText(fullPath))
+                {
+                    serializer = new JsonSerializer();
+                    serializer.Serialize(file, dt);
+                }
+                rowCount = dt.Rows.Count;
+
+                DataTable item_warehouse = new DataTable();
+                DataColumn column;
+                DataRow row;
+
+                column = item_warehouse.Columns.Add("itemCode", typeof(String));
+                item_warehouse.Columns.Add("whCode", typeof(String));
+
+                for (i = 0; i < rowCount; i++)
+                {
+                    row = item_warehouse.NewRow();
+                    row["itemCode"] = dt.Rows[i]["itemCode"].ToString();
+                    row["whCode"] = dt.Rows[i]["whCode"].ToString();
+                    item_warehouse.Rows.Add(row);
+                }
+
+                rowCount = item_warehouse.Rows.Count; sql = "";
+                for (i = 0; i < rowCount; i++)
+                    sql += "UPDATE item_warehouse SET exported=1 WHERE itemCode='" + item_warehouse.Rows[i]["itemCode"].ToString() + "' AND whCode='" + item_warehouse.Rows[i]["whCode"].ToString() + "';";
+
+                db = new database(); dt = new DataTable();
+                db.executeNonQuery(sql, vars.MySqlConnection);
                 insertIntoExportedFiles(filename, fullPath);
             }
 

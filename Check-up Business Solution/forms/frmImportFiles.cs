@@ -79,46 +79,48 @@ namespace Check_up.forms
                     row["No"] = 3;
                 if (filename.StartsWith("itemmasterdata_"))
                     row["No"] = 4;
-                if (filename.StartsWith("pricelist_"))
+                if (filename.StartsWith("item-warehouse_"))
                     row["No"] = 5;
-                if (filename.StartsWith("pricelisthistory_"))
+                if (filename.StartsWith("pricelist_"))
                     row["No"] = 6;
-                if (filename.StartsWith("barcode_"))
+                if (filename.StartsWith("pricelisthistory_"))
                     row["No"] = 7;
-                if (filename.StartsWith("barcodehistory_"))
+                if (filename.StartsWith("barcode_"))
                     row["No"] = 8;
-                if (filename.StartsWith("purchaseorder_"))
+                if (filename.StartsWith("barcodehistory_"))
                     row["No"] = 9;
-                if (filename.StartsWith("purchaseorder-item_"))
+                if (filename.StartsWith("purchaseorder_"))
                     row["No"] = 10;
-                if (filename.StartsWith("grpo_"))
+                if (filename.StartsWith("purchaseorder-item_"))
                     row["No"] = 11;
-                if (filename.StartsWith("grpo-item_"))
+                if (filename.StartsWith("grpo_"))
                     row["No"] = 12;
-                if (filename.StartsWith("inventorytransfer_"))
+                if (filename.StartsWith("grpo-item_"))
                     row["No"] = 13;
-                if (filename.StartsWith("inventorytransfer-item_"))
+                if (filename.StartsWith("inventorytransfer_"))
                     row["No"] = 14;
-                if (filename.StartsWith("goodsreturn_"))
+                if (filename.StartsWith("inventorytransfer-item_"))
                     row["No"] = 15;
-                if (filename.StartsWith("goodsreturn-item_"))
+                if (filename.StartsWith("goodsreturn_"))
                     row["No"] = 16;
-                if (filename.StartsWith("salesinvoice_"))
+                if (filename.StartsWith("goodsreturn-item_"))
                     row["No"] = 17;
-                if (filename.StartsWith("salesinvoice-item_"))
+                if (filename.StartsWith("salesinvoice_"))
                     row["No"] = 18;
-                if (filename.StartsWith("salesreturn_"))
+                if (filename.StartsWith("salesinvoice-item_"))
                     row["No"] = 19;
-                if (filename.StartsWith("salesreturn-item_"))
+                if (filename.StartsWith("salesreturn_"))
                     row["No"] = 20;
-                if (filename.StartsWith("deliveryreceipt_"))
+                if (filename.StartsWith("salesreturn-item_"))
                     row["No"] = 21;
-                if (filename.StartsWith("deliveryreceipt-item_"))
+                if (filename.StartsWith("deliveryreceipt_"))
                     row["No"] = 22;
-                if (filename.StartsWith("inventoryposting_"))
+                if (filename.StartsWith("deliveryreceipt-item_"))
                     row["No"] = 23;
-                if (filename.StartsWith("inventoryposting-item_"))
+                if (filename.StartsWith("inventoryposting_"))
                     row["No"] = 24;
+                if (filename.StartsWith("inventoryposting-item_"))
+                    row["No"] = 25;
 
                 row["Filename"] = filename;
                 row["FileFullPath"] = fileFullPath;
@@ -214,7 +216,7 @@ namespace Check_up.forms
             listView1.Items.Clear();
             frmImportFiles_Load(sender, e);
 
-            DialogResult result = MessageBox.Show(this, "Import the files on the list now? Please wait until it finished importing to avoid inventory problems.", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show(this, "Import the files on the list now?\nPlease wait until it finished importing to avoid inventory problems.", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.No)
                 return;
 
@@ -516,6 +518,44 @@ namespace Check_up.forms
                         sql += " VALUES('" + itemCode + "'," + description + "," + shortName + ",'" + vatable + "'," + vendor + "," + qtyPrPrchsUoM + "," + qtyPrSaleUoM + ",'" + prchsUoM + "','" + saleUoM + "','" + varWeightItm + "'," + remarks + "," + minStock + "," + maxStock + "," + deactivated + "," + createDate + ",'" + createdBy + "'," + updateDate + "," + updatedBy + "," + trans + ",1)";
                         sql += " ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id),description=VALUES(description),shortName=VALUES(shortName),vatable=VALUES(vatable),vendor=VALUES(vendor),varWeightItm=VALUES(varWeightItm),remarks=VALUES(remarks),minStock=VALUES(minStock),maxStock=VALUES(maxStock),deactivated=VALUES(deactivated),updateDate=VALUES(updateDate),updatedBy=VALUES(updatedBy),trans=VALUES(trans)";
                         
+                        db = new database();
+                        if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
+                            cntProcessed++;
+                    }
+                    if (cntProcessed == recordsCount)
+                    {
+                        recordImportedFiles(filename, fullPath);
+                        moveFile(ref i, ref filename);
+                    }
+                }
+
+                // let's import warehouse inventory
+                cntProcessed = 0;
+                if (tableName == "item-warehouse")
+                {
+                    string itemCode, whCode;
+
+                    recordsCount = dt.Rows.Count;
+                    for (a = 0; a < recordsCount; a++)
+                    {
+                        if (dt.Rows[a]["itemCode"] == DBNull.Value || dt.Rows[a]["itemCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "item_warehouse.itemCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            itemCode = dt.Rows[a]["itemCode"].ToString();
+
+                        if (dt.Rows[a]["whCode"] == DBNull.Value || dt.Rows[a]["whCode"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "item_warehouse.whCode " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            whCode= dt.Rows[a]["whCode"].ToString();
+
+                        sql = "INSERT ignore INTO item_warehouse(itemCode,whCode,exported) values('" + itemCode + "','" + whCode + "',1)";
+
                         db = new database();
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                             cntProcessed++;
@@ -1314,7 +1354,7 @@ namespace Check_up.forms
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
-                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty;
+                            sql = "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)+" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode='" + warehouse + "';";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -1600,7 +1640,7 @@ namespace Check_up.forms
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
-                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty;
+                            sql = "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)+" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode='" + warehouse + "';";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -1778,14 +1818,16 @@ namespace Check_up.forms
                         db = new database();
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                         {
-                            sql = "SET @warehouse=(SELECT warehouse FROM inventoryposting WHERE docId='" + docId + "');";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + varianceQty + ") ON DUPLICATE KEY UPDATE inStock=inStock";
                             // inventoryposting_item.varianceQty can be negative
+                            string sql_varianceQty;
                             if (Int32.Parse(varianceQty) >= 0)
-                                sql += sql + "+" + varianceQty;
+                                sql_varianceQty = "+" + varianceQty;
                             else
-                                sql += sql + "-" + varianceQty;
-                            
+                                sql_varianceQty = "-" + varianceQty;
+
+                            sql = "SET @warehouse=(SELECT warehouse FROM inventoryposting WHERE docId='" + docId + "');";
+                            //sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + varianceQty + ") ON DUPLICATE KEY UPDATE inStock=inStock"; //previous
+                            sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)" + sql_varianceQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@warehouse;";                            
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -2183,7 +2225,7 @@ namespace Check_up.forms
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
                             sql = "SET @frmWHouse=(SELECT frmWHouse FROM inventorytransfer WHERE docId='" + docId + "');";
                             sql += "SET @toWHouse=(SELECT toWHouse FROM inventorytransfer WHERE docId='" + docId + "');";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@toWHouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty + ";";
+                            sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)+" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@toWHouse;";
                             sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@frmWHouse;";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
@@ -2476,7 +2518,8 @@ namespace Check_up.forms
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrPrchsUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
-                            sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + baseQty;
+                            // sql = "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "','" + warehouse + "'," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + baseQty;
+                            sql = "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode='" + warehouse + "';";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -2763,7 +2806,8 @@ namespace Check_up.forms
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrSaleUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
                             sql = "SET @warehouse=(SELECT warehouse FROM salesinvoice WHERE docId='" + docId + "');";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + baseQty + ";";
+                            // sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-" + baseQty + ";";
+                            sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)-" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@warehouse;";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
@@ -3050,7 +3094,8 @@ namespace Check_up.forms
                         {
                             baseQty = ((baseUoM == "N") ? Decimal.Parse(qtyPrSaleUoM) * Decimal.Parse(qty) : Decimal.Parse(qty));
                             sql = "SET @warehouse=(SELECT warehouse FROM salesreturn WHERE docId='" + docId + "');";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty + ";";
+                            //sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + itemCode + "',@warehouse," + baseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + baseQty + ";";
+                            sql += "UPDATE item_warehouse SET inStock=ifnull(inStock, 0)+" + baseQty + " WHERE itemCode='" + itemCode + "' AND wHCode=@warehouse;";
                             db.executeNonQuery(sql, vars.MySqlConnection);
                             cntProcessed++;
                         }
