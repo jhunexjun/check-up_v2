@@ -63,6 +63,7 @@
     <Compile Include="InventoryTransferTest.cs" />
     <Compile Include="DefaultDatabaseTest.cs" />
     <Compile Include="SalesInvoiceTest.cs" />
+    <Compile Include="BaseDatabaseTest.cs" />
     <Compile Include="WarehouseTest.cs" />
     <Compile Include="UserTests.cs" />
     <Compile Include="functions\functions.cs">

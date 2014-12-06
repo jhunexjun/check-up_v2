@@ -22,7 +22,8 @@ namespace Check_up.forms
 
         private void frmItemSearch_Load(object sender, EventArgs e)
         {
-            sql = "SELECT description FROM itemmasterdata ORDER BY description";
+            /*
+             sql = "SELECT description FROM itemmasterdata ORDER BY description";
             db = new database(); dt = new DataTable();
             dt = db.select(sql, vars.MySqlConnection);
             
@@ -41,6 +42,7 @@ namespace Check_up.forms
             source.AddRange(description);
 
             txtDescription.AutoCompleteCustomSource = source;
+             */
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -88,7 +90,6 @@ namespace Check_up.forms
 
         public void writeCSV(DataGridView gridIn, string outputFile)
         {
-            //test to see if the DataGridView has any rows
             if (gridIn.RowCount > 0)
             {
                 string value = "";
