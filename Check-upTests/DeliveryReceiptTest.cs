@@ -214,7 +214,7 @@ namespace Check_upTests
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             da.Fill(dt);
-            Assert.AreEqual(1, dt.Rows[0]["id"]); //firtst record starts with 1
+            Assert.AreEqual(1, dt.Rows[0]["id"]); //first record starts with 1
             Assert.AreEqual(dt.Rows[0]["docId"], "MAIN1");
             Assert.AreEqual(dt.Rows[0]["warehouse"], "MAIN");
             Assert.AreEqual(dt.Rows[0]["postingDate"], DateTime.Today);

@@ -2647,7 +2647,7 @@ namespace Check_up.forms
                 cntProcessed = 0;
                 if (tableName == "salesinvoice-item")
                 {
-                    string docId,indx,itemCode,description,vatable,saleUoM,qtyPrSaleUoM,netPrchsPrc,grossPrchsPrc,realBsNetSalePrc,realBsGrossSalePrc,qty,baseUoM,prcntDscnt,amtDscnt,netSalePrc,grossSalePrc,rowNetTotal,rowGrossTotal;
+                    string docId,indx,itemCode,description,vatable,saleUoM,qtyPrPrchsUoM,qtyPrSaleUoM,netBsPrchsPrc,grossBsPrchsPrc,netBsSalePrc,grossBsSalePrc,qty,baseUoM,prcntDscnt,amtDscnt,netSalePrc,grossSalePrc,rowNetTotal,rowGrossTotal;
 
                     recordsCount = dt.Rows.Count;
                     for (a = 0; a < recordsCount; a++)
@@ -2694,6 +2694,14 @@ namespace Check_up.forms
                         else
                             saleUoM = dt.Rows[a]["saleUoM"].ToString();
 
+                        if (dt.Rows[a]["qtyPrPrchsUoM"] == DBNull.Value || dt.Rows[a]["qtyPrPrchsUoM"].ToString() == "")
+                        {
+                            MessageBox.Show(this, "salesinvoice_item.qtyPrPrchsUoM " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                            qtyPrPrchsUoM = dt.Rows[a]["qtyPrPrchsUoM"].ToString();
+
                         if (dt.Rows[a]["qtyPrSaleUoM"] == DBNull.Value || dt.Rows[a]["qtyPrSaleUoM"].ToString() == "")
                         {
                             MessageBox.Show(this, "salesinvoice_item.qtyPrSaleUoM " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2702,37 +2710,37 @@ namespace Check_up.forms
                         else
                             qtyPrSaleUoM = dt.Rows[a]["qtyPrSaleUoM"].ToString();
 
-                        if (dt.Rows[a]["netPrchsPrc"] == DBNull.Value || dt.Rows[a]["netPrchsPrc"].ToString() == "")
+                        if (dt.Rows[a]["netBsPrchsPrc"] == DBNull.Value || dt.Rows[a]["netBsPrchsPrc"].ToString() == "")
                         {
-                            MessageBox.Show(this, "salesinvoice_item.netPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(this, "salesinvoice_item.netBsPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         else
-                            netPrchsPrc = dt.Rows[a]["netPrchsPrc"].ToString();
+                            netBsPrchsPrc = dt.Rows[a]["netBsPrchsPrc"].ToString();
 
-                        if (dt.Rows[a]["grossPrchsPrc"] == DBNull.Value || dt.Rows[a]["grossPrchsPrc"].ToString() == "")
+                        if (dt.Rows[a]["grossBsPrchsPrc"] == DBNull.Value || dt.Rows[a]["grossBsPrchsPrc"].ToString() == "")
                         {
-                            MessageBox.Show(this, "salesinvoice_item.grossPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(this, "salesinvoice_item.grossBsPrchsPrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         else
-                            grossPrchsPrc = dt.Rows[a]["grossPrchsPrc"].ToString();
+                            grossBsPrchsPrc = dt.Rows[a]["grossBsPrchsPrc"].ToString();
 
-                        if (dt.Rows[a]["realBsNetSalePrc"] == DBNull.Value || dt.Rows[a]["realBsNetSalePrc"].ToString() == "")
+                        if (dt.Rows[a]["netBsSalePrc"] == DBNull.Value || dt.Rows[a]["netBsSalePrc"].ToString() == "")
                         {
-                            MessageBox.Show(this, "salesinvoice_item.realBsNetSalePrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(this, "salesinvoice_item.netBsSalePrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         else
-                            realBsNetSalePrc = dt.Rows[a]["realBsNetSalePrc"].ToString();
-
-                        if (dt.Rows[a]["realBsGrossSalePrc"] == DBNull.Value || dt.Rows[a]["realBsGrossSalePrc"].ToString() == "")
+                            netBsSalePrc = dt.Rows[a]["netBsSalePrc"].ToString();
+                        
+                        if (dt.Rows[a]["grossBsSalePrc"] == DBNull.Value || dt.Rows[a]["grossBsSalePrc"].ToString() == "")
                         {
-                            MessageBox.Show(this, "salesinvoice_item.realBsGrossSalePrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(this, "salesinvoice_item.grossBsSalePrc " + defaultError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         else
-                            realBsGrossSalePrc = dt.Rows[a]["realBsGrossSalePrc"].ToString();
+                            grossBsSalePrc = dt.Rows[a]["grossBsSalePrc"].ToString();
 
                         if (dt.Rows[a]["qty"] == DBNull.Value || dt.Rows[a]["qty"].ToString() == "")
                         {
@@ -2798,8 +2806,8 @@ namespace Check_up.forms
                         else
                             rowGrossTotal = dt.Rows[a]["rowGrossTotal"].ToString();
 
-                        sql = "INSERT IGNORE INTO salesinvoice_item(docId,indx,itemCode,description,vatable,saleUoM,qtyPrSaleUoM,netPrchsPrc,grossPrchsPrc,realBsNetSalePrc,realBsGrossSalePrc,qty,baseUoM,prcntDscnt,amtDscnt,netSalePrc,grossSalePrc,rowNetTotal,rowGrossTotal,exported)";
-                        sql += " VALUES('" + docId + "'," + indx + ",'" + itemCode + "'," + description + ",'" + vatable + "','" + saleUoM + "'," + qtyPrSaleUoM + "," + netPrchsPrc + "," + grossPrchsPrc + "," + realBsNetSalePrc + "," + realBsGrossSalePrc + "," + qty + ",'" + baseUoM + "'," + prcntDscnt + "," + amtDscnt + "," + netSalePrc + "," + grossSalePrc + "," + rowNetTotal + "," + rowGrossTotal + ",1)";
+                        sql = "INSERT IGNORE INTO salesinvoice_item(docId,indx,itemCode,description,vatable,saleUoM,qtyPrPrchsUoM,qtyPrSaleUoM,netBsPrchsPrc,grossBsPrchsPrc,netBsSalePrc,grossBsSalePrc,qty,baseUoM,prcntDscnt,amtDscnt,netSalePrc,grossSalePrc,rowNetTotal,rowGrossTotal,exported)";
+                        sql += " VALUES('" + docId + "'," + indx + ",'" + itemCode + "'," + description + ",'" + vatable + "','" + saleUoM + "," + qtyPrPrchsUoM + "'," + qtyPrSaleUoM + "," + netBsPrchsPrc + "," + grossBsPrchsPrc + "," + netBsSalePrc + "," + grossBsSalePrc + "," + qty + ",'" + baseUoM + "'," + prcntDscnt + "," + amtDscnt + "," + netSalePrc + "," + grossSalePrc + "," + rowNetTotal + "," + rowGrossTotal + ",1)";
 
                         db = new database();
                         if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)

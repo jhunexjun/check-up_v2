@@ -293,6 +293,12 @@ namespace Check_upTests
             Assert.IsTrue(registerItems());
             Assert.IsTrue(addDeliveryReceipt());
 
+            // Let's check the inventory before we substract it for the sales invoice.
+            MySqlCommand cmd = new MySqlCommand("select * from item_warehouse where itemCode = 'MAINITM1' AND whCode = 'MAIN'", vars.MySqlConnection);
+            DataTable dt = new DataTable(); MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+            Assert.AreEqual(20D, dt.Rows[0]["inStock"]);
+
             //let's create the table for the row
             DataTable table = createTableColumns();
 
@@ -305,7 +311,7 @@ namespace Check_upTests
 
             DateTime datetime = DateTime.Today;
             header.Add("postingDate", datetime.ToString("yyyy/MM/dd"));
-            header.Add("remarks1", null);
+            header.Add("remarks1", "this is remarks 1.");
             header.Add("remarks2", null);
             header.Add("totalPrcntDscnt", 10m);
             header.Add("totalAmtDscnt", 20m);
@@ -340,11 +346,39 @@ namespace Check_upTests
             SalesInvoice salesInvoice = new SalesInvoice();
             Assert.IsTrue(salesInvoice.addSalesInvoice(header, table));
 
-            //MySqlCommand cmd 
+            // Let's check the inventory after we substracted it for the sales invoice
+            cmd = new MySqlCommand("select * from item_warehouse where itemCode = 'MAINITM1' AND whCode = 'MAIN'", vars.MySqlConnection);
+            dt = new DataTable(); da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+            Assert.AreEqual(1, dt.Rows.Count);
+            Assert.AreEqual(18D, dt.Rows[0]["inStock"]);
 
-            MySqlCommand cmd = new MySqlCommand("select * from salesinvoice_item", vars.MySqlConnection);
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            cmd = new MySqlCommand("select * from salesinvoice", vars.MySqlConnection);
+            dt = new DataTable();
+            da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+            Assert.AreEqual(1, dt.Rows[0]["id"]);
+            Assert.AreEqual("MAIN1", dt.Rows[0]["docId"]);
+            Assert.AreEqual("C-1", dt.Rows[0]["customerCode"]);
+            Assert.AreEqual("ABC Corporation", dt.Rows[0]["customerName"]);
+            Assert.AreEqual("MAIN", dt.Rows[0]["warehouse"]);
+            Assert.AreEqual(DateTime.Today.ToString("G"), dt.Rows[0]["postingDate"].ToString());
+            Assert.AreEqual("this is remarks 1.", dt.Rows[0]["remarks1"]);
+            Assert.AreEqual(DBNull.Value, dt.Rows[0]["remarks2"]);
+            Assert.AreEqual(10m, dt.Rows[0]["totalPrcntDscnt"]);
+            Assert.AreEqual(20m, dt.Rows[0]["totalAmtDscnt"]);
+            Assert.AreEqual(180m, dt.Rows[0]["netTotal"]);
+            Assert.AreEqual(201.6m, dt.Rows[0]["grossTotal"]);
+            Assert.IsNotNull(dt.Rows[0]["createDate"]);
+            Assert.AreEqual("admin", dt.Rows[0]["createdBy"]);
+            Assert.AreEqual(DBNull.Value, dt.Rows[0]["updateDate"]);
+            Assert.AreEqual(DBNull.Value, dt.Rows[0]["updatedBy"]);
+            Assert.AreEqual(DBNull.Value, dt.Rows[0]["exported"]);
+
+            // let's check the row
+            cmd = new MySqlCommand("select * from salesinvoice_item", vars.MySqlConnection);
+            dt = new DataTable();
+            da = new MySqlDataAdapter(cmd);
             da.Fill(dt);
             Assert.AreEqual("MAIN1", dt.Rows[0]["docId"]);
             Assert.AreEqual("Item 1", dt.Rows[0]["description"]);
@@ -354,6 +388,14 @@ namespace Check_upTests
             Assert.AreEqual(1m, dt.Rows[0]["qtyPrSaleUoM"]);
             Assert.AreEqual(10m, dt.Rows[0]["netBsPrchsPrc"]);
             Assert.AreEqual(100m, dt.Rows[0]["netBsSalePrc"]);
+            Assert.AreEqual(112m, dt.Rows[0]["grossBsSalePrc"]);
+            Assert.AreEqual(2m, dt.Rows[0]["qty"]);
+            Assert.AreEqual("N", dt.Rows[0]["baseUoM"]);
+            Assert.AreEqual(10m, dt.Rows[0]["prcntDscnt"]);
+            Assert.AreEqual(22.4m, dt.Rows[0]["amtDscnt"]);
+            Assert.AreEqual(180m, dt.Rows[0]["rowNetTotal"]);
+            Assert.AreEqual(201.6m, dt.Rows[0]["rowGrossTotal"]);
+            Assert.AreEqual(DBNull.Value, dt.Rows[0]["exported"]);
         }
     }
 }
