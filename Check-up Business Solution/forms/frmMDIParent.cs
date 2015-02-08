@@ -168,7 +168,7 @@ namespace Check_up.forms
 
         private void acToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form f = new frmARInvoice();
+            Form f = new frmSalesInvoice();
             f.MdiParent = this;
             f.Show();
         }

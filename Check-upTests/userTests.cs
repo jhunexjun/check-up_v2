@@ -27,6 +27,7 @@ namespace Check_upTests
             Hashtable ht = new Hashtable();
             ht = functions.readDbConfigFile();
             Assert.IsNotNull(ht);
+            Assert.IsTrue(functions.dumpDatabase(ht));
             Assert.IsTrue(functions.dropAndCreateDatabase(ht));
             
             // we have to select db again because it was dropped above.
@@ -121,5 +122,6 @@ namespace Check_upTests
             Assert.AreEqual(dt.Rows[0]["username"], "admin");
             Assert.AreEqual(dt.Rows[0]["fName"], "John2");
         }
+
     }
 }

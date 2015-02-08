@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.Windows.Forms;
 using Check_up.classes;
+using MySql.Data.MySqlClient;
 
 namespace Check_up.classes
 {
@@ -94,8 +95,14 @@ namespace Check_up.classes
             }
 
             // let's check other criterias
+            string sql = "";
             foreach (DataRow row in tableRows.Rows)
             {
+                if (row["indx"] == DBNull.Value)
+                {
+                    MessageBox.Show(Form.ActiveForm, "Row Index cannot be null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
                 if (row["indx"].ToString() == "")
                 {
                     MessageBox.Show(Form.ActiveForm, "Row Index cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -106,6 +113,24 @@ namespace Check_up.classes
                 if (!int.TryParse(row["indx"].ToString(), out result))
                 {
                     MessageBox.Show(Form.ActiveForm, "Row index must be numeric.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
+
+                if (row["vendorCode"] == DBNull.Value)
+                {
+                    MessageBox.Show(Form.ActiveForm, "Row vendor code cannot be null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
+                sql = "select `code` from businesspartner where `code`=@vendorCode";
+                DataTable dt = new DataTable();
+                MySqlCommand cmd = new MySqlCommand(sql, vars.MySqlConnection);
+                cmd.Prepare();
+                cmd.Parameters.AddWithValue("@vendorCode", row["vendorCode"]);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+                if (dt.Rows.Count <= 0)
+                {
+                    MessageBox.Show(Form.ActiveForm, "No reference to vendor code '" + row["vendorCode"].ToString() + "'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
@@ -188,11 +213,11 @@ namespace Check_up.classes
             header["postingDate"] = dateTime.ToString("yyyy/MM/dd");
 
             string sql;
-            sql = "START TRANSACTION;";
-            sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='DR');";
+            sql = "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
+            sql = "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='DR');";
             sql += "SET @docId=CONCAT(@terminalId, @newId);";
             sql += "INSERT INTO deliveryreceipt(docId,warehouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,remarks1,remarks2,createdBy,createDate)";
-            sql += " VALUES(@docId,@warehouse,@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@remarks1,@remarks2,@createdBy,DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'));";
+            sql += " VALUES(@docId,@warehouse,@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@remarks1,@remarks2,@createdBy,@date);";
 
             int i;
             for (i = 0; i < rowsCount; i++)
@@ -226,7 +251,8 @@ namespace Check_up.classes
                 sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + sql_itemCode + "," + sql_warehouseRow + ",@baseQty" + i + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+@baseQty" + i + ";";
             }
             sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='DR';";
-            sql += "COMMIT;";
+
+            MySqlTransaction trans = vars.MySqlConnection.BeginTransaction();
 
             try
             {
@@ -271,14 +297,24 @@ namespace Check_up.classes
                     cmd.Parameters.AddWithValue("@rowGrossTotal" + i, tableRows.Rows[i]["rowGrossTotal"]);
                 }
 
-                if (cmd.ExecuteNonQuery() > 1)
-                    return true;
-                else
-                    return false;
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                return true;
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(Form.ActiveForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Form.ActiveForm, "There was an error found, this will attempt to roll back transaction.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                try
+                {
+                    trans.Rollback();
+                    MessageBox.Show(Form.ActiveForm, "Rolling back transaction has been successful.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (MySqlException ex2)
+                {
+                    MessageBox.Show(Form.ActiveForm, ex2.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 return false;
             }
         }

@@ -14,6 +14,12 @@ namespace Check_up.classes
     {
         private bool checkHeadersForAdd(Hashtable header)
         {
+            // Note: This class should create the docId, give the terminal id instead.
+            if (!header.Contains("terminalId"))
+            {
+                MessageBox.Show(Form.ActiveForm, "Please indicate 'terminal id' key in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
             if(!header.Contains("customerCode"))
             {
                 MessageBox.Show(Form.ActiveForm, "Please indicate 'Customer code' in the hash.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -70,19 +76,20 @@ namespace Check_up.classes
             importantColumns.Add("indx");
             importantColumns.Add("itemCode");
             importantColumns.Add("description");
-            importantColumns.Add("warehouseRow");
             importantColumns.Add("vatable");
-            importantColumns.Add("realBsNetPrchsPrc");
-            importantColumns.Add("realBsGrossPrchsPrc");
-            importantColumns.Add("realNetPrchsPrc");
-            importantColumns.Add("realGrossPrchsPrc");
+            importantColumns.Add("saleUoM");
+            importantColumns.Add("qtyPrPrchsUoM");
+            importantColumns.Add("qtyPrSaleUoM");
+            importantColumns.Add("netBsPrchsPrc");
+            importantColumns.Add("grossBsPrchsPrc");
+            importantColumns.Add("netBsSalePrc");
+            importantColumns.Add("grossBsSalePrc");
             importantColumns.Add("qty");
             importantColumns.Add("baseUoM");
-            importantColumns.Add("qtyPrPrchsUoM");
             importantColumns.Add("prcntDscnt");
             importantColumns.Add("amtDscnt");
-            importantColumns.Add("netPrchsPrc");
-            importantColumns.Add("grossPrchsPrc");
+            importantColumns.Add("netSalePrc");
+            importantColumns.Add("grossSalePrc");
             importantColumns.Add("rowNetTotal");
             importantColumns.Add("rowGrossTotal");
 
@@ -125,29 +132,34 @@ namespace Check_up.classes
                     MessageBox.Show(Form.ActiveForm, "Row 'sale UOM' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
+                if (row["qtyPrPrchsUoM"].ToString() == "")
+                {
+                    MessageBox.Show(Form.ActiveForm, "Row 'Qty per purchase UoM' cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
                 if (row["qtyPrSaleUoM"].ToString() == "")
                 {
                     MessageBox.Show(Form.ActiveForm, "Row 'Qty Per Sale UoM' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
-                if (row["netPrchsPrc"].ToString() == "")
+                if (row["netBsPrchsPrc"].ToString() == "")
                 {
-                    MessageBox.Show(Form.ActiveForm, "Row 'net purchase price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(Form.ActiveForm, "Row 'net base purchase price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
-                if (row["grossPrchsPrc"].ToString() == "")
+                if (row["grossBsPrchsPrc"].ToString() == "")
                 {
-                    MessageBox.Show(Form.ActiveForm, "Row 'gross purchase Price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(Form.ActiveForm, "Row 'gross base purchase Price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
-                if (row["realBsNetSalePrc"].ToString() == "")
+                if (row["netBsSalePrc"].ToString() == "")
                 {
-                    MessageBox.Show(Form.ActiveForm, "Row 'real base net sale price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(Form.ActiveForm, "Row 'net base sale price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
-                if (row["realBsGrossSalePrc"].ToString() == "")
+                if (row["grossBsSalePrc"].ToString() == "")
                 {
-                    MessageBox.Show(Form.ActiveForm, "Row 'real base gross sale price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(Form.ActiveForm, "Row 'gross base sale price' cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
                 if (row["qty"].ToString() == "")
@@ -246,20 +258,20 @@ namespace Check_up.classes
             return header;
         }
 
-        public bool addDeliveryReceipt(Hashtable header, DataTable tableRows)
+        public bool addSalesInvoice(Hashtable header, DataTable tableRows)
         {
-            if (!checkHeadersForAdd(header))
-                return false;
-
-            if (!checkRowsForAdd(tableRows))
-                return false;
-
             int rowsCount = tableRows.Rows.Count;
             if (rowsCount < 1)
             {
                 MessageBox.Show(Form.ActiveForm, "No data to record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
+            
+            if (!checkHeadersForAdd(header))
+                return false;
+
+            if (!checkRowsForAdd(tableRows))
+                return false;
 
             if (!checkHeadersAndRowsForAdd(header, tableRows))
                 return false;
@@ -274,7 +286,7 @@ namespace Check_up.classes
             sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='SI');";
             sql += "SET @docId=CONCAT(@terminalId, @newId);";
             sql += "INSERT INTO salesinvoice(docId,customerCode,customerName,warehouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal,remarks1,remarks2,createDate,createdBy)";
-            sql += " VALUES(@docId,@customerCode,@customerName,@warehouse,@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@remarks1,@remarks2,@date,@createdby)";
+            sql += " VALUES(@docId,@customerCode,@customerName,@warehouse,@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal,@remarks1,@remarks2,@date,@createdBy);";
             sql += "UPDATE businesspartner SET trans='Y' WHERE code=@customerCode;";
 
             int i;
@@ -282,16 +294,17 @@ namespace Check_up.classes
             {
                 string indx = "@indx" + i;
                 string itemcode = "@itemcode" + i;
-                string description = "@description" + 1;
+                string description = "@description" + i;
                 string vatable = "@vatable" + i;
-                string netPrchsPrc = "@netPrhcsPrc" + i;
-                string grossPrchsPrc = "@grossPrchsPrc" + i;
                 string saleUoM = "@saleUoM" + i;
-                string baseUoM = "@baseUoM" + i;
+                string qtyPrPrchsUoM = "@qtyPrPrchsUoM" + i;
                 string qtyPrSaleUoM = "@qtyPrSaleUoM" + i;
-                string realBsNetSalePrc = "@realBsNetSalePrc" + i;
-                string realBsGrossSalePrc = "@realBsGrossSalePrc" + i;
+                string netBsPrchsPrc = "@netBsPrchsPrc" + i;
+                string grossBsPrchsPrc = "@grossBsPrchsPrc" + i;
+                string netBsSalePrc = "@netBsSalePrc" + i;
+                string grossBsSalePrc = "@grossBsSalePrc" + i;
                 string qty = "@qty" + i;
+                string baseUoM = "@baseUoM" + i;
                 string prcntDscnt = "@prcntDscnt" + i;
                 string amtDscnt = "@amtDscnt" + i;
                 string netSalePrc = "@netSalePrc" + i;
@@ -300,8 +313,8 @@ namespace Check_up.classes
                 string rowGrossTotal = "@rowGrossTotal" + i;
 
                 sql += "SET @baseQty" + i + "=(case when " + baseUoM + "='N' then " + qtyPrSaleUoM + "*" + qty + " else " + qty + " end);"; // varBaseQty = ((varBaseUoM == "N") ? varQtyPrSaleUoM * varQty : varQty);
-                sql += "INSERT INTO salesinvoice_item(docId,indx,itemCode,description,saleUoM,qtyPrSaleUoM,qty,baseUoM,prcntDscnt,amtDscnt,vatable,netSalePrc,grossSalePrc,realBsNetSalePrc,realBsGrossSalePrc,netPrchsPrc,grossPrchsPrc,rowNetTotal,rowGrossTotal)";
-                sql += " VALUES(@docId," + indx + "," + itemcode + "," + description + "," + saleUoM + "," + qtyPrSaleUoM + "," + qty + "," + baseUoM + "," + prcntDscnt + "," + amtDscnt + "," + vatable + "," + netSalePrc + "," + grossSalePrc + "," + realBsNetSalePrc + "," + realBsGrossSalePrc + "," + netPrchsPrc + "," + grossPrchsPrc + "," + rowNetTotal + "," + rowGrossTotal + ");";
+                sql += "INSERT INTO salesinvoice_item(docId,indx,itemCode,description,vatable,saleUoM,qtyPrPrchsUoM,qtyPrSaleUoM,netBsPrchsPrc,grossBsPrchsPrc,netBsSalePrc,grossBsSalePrc,qty,baseUoM,prcntDscnt,amtDscnt,netSalePrc,grossSalePrc,rowNetTotal,rowGrossTotal)";
+                sql += " VALUES(@docId," + indx + "," + itemcode + "," + description + "," + vatable + "," + saleUoM + "," + qtyPrPrchsUoM + "," + qtyPrSaleUoM + "," + netBsPrchsPrc + "," + grossBsPrchsPrc + "," + netBsSalePrc + "," + grossBsSalePrc + "," + qty + "," + baseUoM + "," + prcntDscnt + "," + amtDscnt + "," + netSalePrc + "," + grossSalePrc + "," + rowNetTotal + "," + rowGrossTotal + ");";
                 sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode=" + itemcode + ";";
                 sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES(" + itemcode + ",@warehouse,@baseQty) ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)-@baseQty" + i + ";";
             }
@@ -326,7 +339,7 @@ namespace Check_up.classes
                 cmd.Parameters.AddWithValue("@grossTotal", header["grossTotal"]);
                 cmd.Parameters.AddWithValue("@remarks1", header["remarks1"]);
                 cmd.Parameters.AddWithValue("@remarks2", header["remarks2"]);
-                cmd.Parameters.AddWithValue("@createdby", header["createdby"]);
+                cmd.Parameters.AddWithValue("@createdBy", header["createdBy"]);
 
                 //rows
                 for (i = 0; i < rowsCount; i++)
@@ -335,14 +348,15 @@ namespace Check_up.classes
                     cmd.Parameters.AddWithValue("@itemcode" + i, tableRows.Rows[i]["itemcode"]);
                     cmd.Parameters.AddWithValue("@description" + i, tableRows.Rows[i]["description"]);
                     cmd.Parameters.AddWithValue("@vatable" + i, tableRows.Rows[i]["vatable"]);
-                    cmd.Parameters.AddWithValue("@netPrchsPrc" + i, tableRows.Rows[i]["netPrchsPrc"]);
-                    cmd.Parameters.AddWithValue("@grossPrchsPrc" + i, tableRows.Rows[i]["grossPrchsPrc"]);
                     cmd.Parameters.AddWithValue("@saleUoM" + i, tableRows.Rows[i]["saleUoM"]);
-                    cmd.Parameters.AddWithValue("@baseUoM" + i, tableRows.Rows[i]["baseUoM"]);
+                    cmd.Parameters.AddWithValue("@qtyPrPrchsUoM" + i, tableRows.Rows[i]["qtyPrPrchsUoM"]);
                     cmd.Parameters.AddWithValue("@qtyPrSaleUoM" + i, tableRows.Rows[i]["qtyPrSaleUoM"]);
-                    cmd.Parameters.AddWithValue("@realBsNetSalePrc" + i, tableRows.Rows[i]["realBsNetSalePrc"]);
-                    cmd.Parameters.AddWithValue("@realBsGrossSalePrc" + i, tableRows.Rows[i]["realBsGrossSalePrc"]);
+                    cmd.Parameters.AddWithValue("@netBsPrchsPrc" + i, tableRows.Rows[i]["netBsPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@grossBsPrchsPrc" + i, tableRows.Rows[i]["grossBsPrchsPrc"]);
+                    cmd.Parameters.AddWithValue("@netBsSalePrc" + i, tableRows.Rows[i]["netBsSalePrc"]);
+                    cmd.Parameters.AddWithValue("@grossBsSalePrc" + i, tableRows.Rows[i]["grossBsSalePrc"]);
                     cmd.Parameters.AddWithValue("@qty" + i, tableRows.Rows[i]["qty"]);
+                    cmd.Parameters.AddWithValue("@baseUoM" + i, tableRows.Rows[i]["baseUoM"]);                    
                     cmd.Parameters.AddWithValue("@prcntDscnt" + i, tableRows.Rows[i]["prcntDscnt"]);
                     cmd.Parameters.AddWithValue("@amtDscnt" + i, tableRows.Rows[i]["amtDscnt"]);
                     cmd.Parameters.AddWithValue("@netSalePrc" + i, tableRows.Rows[i]["netSalePrc"]);
@@ -365,9 +379,9 @@ namespace Check_up.classes
                     trans.Rollback();
                     MessageBox.Show(Form.ActiveForm, "Rolling back transaction has been successful.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                catch (MySqlException ex1)
+                catch (MySqlException ex2)
                 {
-                    MessageBox.Show(Form.ActiveForm, ex1.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Form.ActiveForm, ex2.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return false;
             }

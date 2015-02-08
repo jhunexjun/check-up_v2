@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using Check_up.classes;
+using MySql.Data.MySqlClient;
 
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.ReportSource;
@@ -15,7 +17,7 @@ using CrystalDecisions.Windows.Forms;
 
 namespace Check_up.forms
 {
-    public partial class frmARInvoice : Form
+    public partial class frmSalesInvoice : Form
     {
         DataTable table;
         DataTable dt;
@@ -25,7 +27,11 @@ namespace Check_up.forms
         string sql;
         int i, rowCount;
 
-        public frmARInvoice()
+        MySqlCommand cmd; MySqlDataAdapter da;
+
+        Hashtable header;
+
+        public frmSalesInvoice()
         {
             InitializeComponent();
             dgvItems.CellEndEdit += new DataGridViewCellEventHandler(dgvItems_CellEndEdit);
@@ -601,6 +607,8 @@ namespace Check_up.forms
                     if (MessageBox.Show(this, "Are you sure you want to save this?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                         return;
 
+                    header = new Hashtable();
+                    
                     DateTime dateTime = DateTime.Parse(txtPostingDate.Text.Trim());
                     string strDateTime = dateTime.ToString("yyyy/MM/dd");
 

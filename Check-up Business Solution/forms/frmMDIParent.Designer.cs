@@ -206,8 +206,8 @@
             this.acToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
             this.acToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("acToolStripMenuItem.Image")));
             this.acToolStripMenuItem.Name = "acToolStripMenuItem";
-            this.acToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.acToolStripMenuItem.Text = "A/R Invoice";
+            this.acToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.acToolStripMenuItem.Text = "Sales Invoice";
             this.acToolStripMenuItem.Click += new System.EventHandler(this.acToolStripMenuItem_Click);
             // 
             // returnToolStripMenuItem
@@ -215,7 +215,7 @@
             this.returnToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
             this.returnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("returnToolStripMenuItem.Image")));
             this.returnToolStripMenuItem.Name = "returnToolStripMenuItem";
-            this.returnToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.returnToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.returnToolStripMenuItem.Text = "Sales Return";
             this.returnToolStripMenuItem.ToolTipText = "Use this document to send the items back from customer.";
             this.returnToolStripMenuItem.Click += new System.EventHandler(this.returnToolStripMenuItem_Click);

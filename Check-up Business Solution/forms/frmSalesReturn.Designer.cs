@@ -341,9 +341,9 @@
             this.dgvItems.AllowUserToAddRows = false;
             this.dgvItems.AllowUserToDeleteRows = false;
             this.dgvItems.AllowUserToResizeRows = false;
-            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvItems.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -566,6 +566,7 @@
             // 
             this.txtSalesReturnNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSalesReturnNo.Location = new System.Drawing.Point(856, 31);
+            this.txtSalesReturnNo.MaxLength = 21;
             this.txtSalesReturnNo.Name = "txtSalesReturnNo";
             this.txtSalesReturnNo.Size = new System.Drawing.Size(81, 20);
             this.txtSalesReturnNo.TabIndex = 0;
@@ -583,6 +584,7 @@
             // txtCustomerName
             // 
             this.txtCustomerName.Location = new System.Drawing.Point(127, 51);
+            this.txtCustomerName.MaxLength = 60;
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(302, 20);
             this.txtCustomerName.TabIndex = 5;
@@ -619,6 +621,7 @@
             // txtCustomerCode
             // 
             this.txtCustomerCode.Location = new System.Drawing.Point(127, 27);
+            this.txtCustomerCode.MaxLength = 15;
             this.txtCustomerCode.Name = "txtCustomerCode";
             this.txtCustomerCode.Size = new System.Drawing.Size(100, 20);
             this.txtCustomerCode.TabIndex = 3;

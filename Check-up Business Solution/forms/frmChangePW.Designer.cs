@@ -62,7 +62,7 @@
             // txtOld
             // 
             this.txtOld.Location = new System.Drawing.Point(136, 33);
-            this.txtOld.MaxLength = 15;
+            this.txtOld.MaxLength = 20;
             this.txtOld.Name = "txtOld";
             this.txtOld.PasswordChar = '*';
             this.txtOld.Size = new System.Drawing.Size(143, 20);
@@ -71,7 +71,7 @@
             // txtNew
             // 
             this.txtNew.Location = new System.Drawing.Point(136, 59);
-            this.txtNew.MaxLength = 15;
+            this.txtNew.MaxLength = 20;
             this.txtNew.Name = "txtNew";
             this.txtNew.PasswordChar = '*';
             this.txtNew.Size = new System.Drawing.Size(143, 20);
@@ -80,7 +80,7 @@
             // txtConfirm
             // 
             this.txtConfirm.Location = new System.Drawing.Point(136, 85);
-            this.txtConfirm.MaxLength = 15;
+            this.txtConfirm.MaxLength = 20;
             this.txtConfirm.Name = "txtConfirm";
             this.txtConfirm.PasswordChar = '*';
             this.txtConfirm.Size = new System.Drawing.Size(143, 20);

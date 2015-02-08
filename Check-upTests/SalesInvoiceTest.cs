@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 namespace Check_upTests
 {
     [TestClass]
-    public class SalesInvoice
+    public class SalesInvoiceTest
     {
         [TestInitialize]
         public void setUp()
@@ -261,11 +261,12 @@ namespace Check_upTests
             table.Columns.Add("description");
             table.Columns.Add("vatable");
             table.Columns.Add("saleUoM");
+            table.Columns.Add("qtyPrPrchsUoM");
             table.Columns.Add("qtyPrSaleUoM");
-            table.Columns.Add("netPrchsPrc");
-            table.Columns.Add("grossPrchsPrc");
-            table.Columns.Add("realBsNetSalePrc");
-            table.Columns.Add("realBsGrossSalePrc");
+            table.Columns.Add("netBsPrchsPrc");
+            table.Columns.Add("grossBsPrchsPrc");
+            table.Columns.Add("netBsSalePrc");
+            table.Columns.Add("grossBsSalePrc");
             table.Columns.Add("qty");
             table.Columns.Add("baseUoM");
             table.Columns.Add("prcntDscnt");
@@ -288,15 +289,16 @@ namespace Check_upTests
             vars.terminalId = "MAIN"; vars.username = "admin";
 
             //add these pre-requisites records.
-            Assert.IsTrue(addBusinessPartners());
+            Assert.IsTrue(this.addBusinessPartners());
             Assert.IsTrue(registerItems());
             Assert.IsTrue(addDeliveryReceipt());
 
             //let's create the table for the row
-            createTableColumns();
+            DataTable table = createTableColumns();
 
             //let's start now the data to get inserted.
             Hashtable header = new Hashtable();
+            header.Add("terminalId", vars.terminalId);
             header.Add("customerCode", "C-1");
             header.Add("customerName", "ABC Corporation");
             header.Add("warehouse", "MAIN");
@@ -305,11 +307,53 @@ namespace Check_upTests
             header.Add("postingDate", datetime.ToString("yyyy/MM/dd"));
             header.Add("remarks1", null);
             header.Add("remarks2", null);
-            header.Add("totalPrcntDscnt", 0);
-            header.Add("totalAmtDscnt", 0);
-            header.Add("netTotal", "");
-            header.Add("customerCode", "");
-            header.Add("customerCode", "");
+            header.Add("totalPrcntDscnt", 10m);
+            header.Add("totalAmtDscnt", 20m);
+            header.Add("netTotal", 180m);
+            header.Add("grossTotal", 201.6m);
+            header.Add("createdBy", "admin");
+
+            DataRow row;
+            row = table.NewRow();
+            row["indx"] = 0;
+            row["itemCode"] = "MAINITM1";
+            row["description"] = "Item 1";
+            row["vatable"] = "Y";
+            row["saleUoM"] = "PC";
+            row["qtyPrPrchsUoM"] = 1;
+            row["qtyPrSaleUoM"] = 1;
+            row["netBsPrchsPrc"] = 10;
+            row["grossBsPrchsPrc"] = 11.2;
+            row["netBsSalePrc"] = 100;
+            row["grossBsSalePrc"] = 112;
+            row["qty"] = 2;
+            row["baseUoM"] = "N";
+            row["prcntDscnt"] = 10;
+            row["amtDscnt"] = 22.4;
+            row["netSalePrc"] = 20;
+            row["grossSalePrc"] = 10;
+            row["rowNetTotal"] = 180;
+            row["rowGrossTotal"] = 201.6;
+
+            table.Rows.Add(row);
+
+            SalesInvoice salesInvoice = new SalesInvoice();
+            Assert.IsTrue(salesInvoice.addSalesInvoice(header, table));
+
+            //MySqlCommand cmd 
+
+            MySqlCommand cmd = new MySqlCommand("select * from salesinvoice_item", vars.MySqlConnection);
+            DataTable dt = new DataTable();
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+            Assert.AreEqual("MAIN1", dt.Rows[0]["docId"]);
+            Assert.AreEqual("Item 1", dt.Rows[0]["description"]);
+            Assert.AreEqual("Y", dt.Rows[0]["vatable"]);
+            Assert.AreEqual("PC", dt.Rows[0]["saleUoM"]);
+            Assert.AreEqual(1m, dt.Rows[0]["qtyPrPrchsUoM"]);
+            Assert.AreEqual(1m, dt.Rows[0]["qtyPrSaleUoM"]);
+            Assert.AreEqual(10m, dt.Rows[0]["netBsPrchsPrc"]);
+            Assert.AreEqual(100m, dt.Rows[0]["netBsSalePrc"]);
         }
     }
 }

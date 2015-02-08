@@ -114,6 +114,7 @@
             // txtItemCode
             // 
             this.txtItemCode.Location = new System.Drawing.Point(78, 16);
+            this.txtItemCode.MaxLength = 15;
             this.txtItemCode.Name = "txtItemCode";
             this.txtItemCode.Size = new System.Drawing.Size(100, 20);
             this.txtItemCode.TabIndex = 0;
@@ -139,6 +140,7 @@
             // txtDescription
             // 
             this.txtDescription.Location = new System.Drawing.Point(78, 42);
+            this.txtDescription.MaxLength = 250;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(216, 20);
             this.txtDescription.TabIndex = 1;
@@ -156,6 +158,7 @@
             // txtShortName
             // 
             this.txtShortName.Location = new System.Drawing.Point(382, 42);
+            this.txtShortName.MaxLength = 100;
             this.txtShortName.Name = "txtShortName";
             this.txtShortName.Size = new System.Drawing.Size(151, 20);
             this.txtShortName.TabIndex = 3;
@@ -182,6 +185,7 @@
             // txtUnitPrice
             // 
             this.txtUnitPrice.Location = new System.Drawing.Point(70, 70);
+            this.txtUnitPrice.MaxLength = 20;
             this.txtUnitPrice.Name = "txtUnitPrice";
             this.txtUnitPrice.Size = new System.Drawing.Size(121, 20);
             this.txtUnitPrice.TabIndex = 5;
@@ -283,6 +287,7 @@
             // txtVendor
             // 
             this.txtVendor.Location = new System.Drawing.Point(620, 41);
+            this.txtVendor.MaxLength = 15;
             this.txtVendor.Name = "txtVendor";
             this.txtVendor.Size = new System.Drawing.Size(131, 20);
             this.txtVendor.TabIndex = 7;
@@ -354,9 +359,9 @@
             // dgvInventory
             // 
             this.dgvInventory.AllowUserToAddRows = false;
-            this.dgvInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvInventory.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -398,6 +403,7 @@
             // txtQtyPrPrchsUoM
             // 
             this.txtQtyPrPrchsUoM.Location = new System.Drawing.Point(139, 40);
+            this.txtQtyPrPrchsUoM.MaxLength = 15;
             this.txtQtyPrPrchsUoM.Name = "txtQtyPrPrchsUoM";
             this.txtQtyPrPrchsUoM.Size = new System.Drawing.Size(69, 20);
             this.txtQtyPrPrchsUoM.TabIndex = 12;
@@ -416,6 +422,7 @@
             // txtQtyPrSalesUoM
             // 
             this.txtQtyPrSalesUoM.Location = new System.Drawing.Point(139, 92);
+            this.txtQtyPrSalesUoM.MaxLength = 20;
             this.txtQtyPrSalesUoM.Name = "txtQtyPrSalesUoM";
             this.txtQtyPrSalesUoM.Size = new System.Drawing.Size(69, 20);
             this.txtQtyPrSalesUoM.TabIndex = 14;
@@ -424,9 +431,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(15, 197);
@@ -482,6 +489,7 @@
             // txtMinStock
             // 
             this.txtMinStock.Location = new System.Drawing.Point(333, 16);
+            this.txtMinStock.MaxLength = 15;
             this.txtMinStock.Name = "txtMinStock";
             this.txtMinStock.Size = new System.Drawing.Size(69, 20);
             this.txtMinStock.TabIndex = 15;
@@ -491,6 +499,7 @@
             // txtMaxStock
             // 
             this.txtMaxStock.Location = new System.Drawing.Point(333, 40);
+            this.txtMaxStock.MaxLength = 15;
             this.txtMaxStock.Name = "txtMaxStock";
             this.txtMaxStock.Size = new System.Drawing.Size(69, 20);
             this.txtMaxStock.TabIndex = 16;
@@ -529,6 +538,7 @@
             // txtPurchaseUoM
             // 
             this.txtPurchaseUoM.Location = new System.Drawing.Point(139, 14);
+            this.txtPurchaseUoM.MaxLength = 20;
             this.txtPurchaseUoM.Name = "txtPurchaseUoM";
             this.txtPurchaseUoM.Size = new System.Drawing.Size(69, 20);
             this.txtPurchaseUoM.TabIndex = 11;
@@ -538,6 +548,7 @@
             // txtSaleUoM
             // 
             this.txtSaleUoM.Location = new System.Drawing.Point(139, 66);
+            this.txtSaleUoM.MaxLength = 15;
             this.txtSaleUoM.Name = "txtSaleUoM";
             this.txtSaleUoM.Size = new System.Drawing.Size(69, 20);
             this.txtSaleUoM.TabIndex = 13;

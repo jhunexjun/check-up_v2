@@ -827,99 +827,6 @@ namespace Check_up.forms
                         txtDeliveryReceiptNo.Text = dt.Rows[0][0].ToString();
                         setCntrlToAfterSaveMode();
                     }
-
-
-                    /*
-                     decimal totalPrcntDscnt, totalAmtDscnt, netTotal, grossTotal;
-                    totalPrcntDscnt = Decimal.Parse(txtTotalPrcntDscnt.Text);
-                    totalAmtDscnt = Decimal.Parse(txtTotalAmtDscnt.Text);
-                    netTotal = Decimal.Parse(txtNetTotal.Text);
-                    grossTotal = Decimal.Parse(txtGrossTotal.Text);
-
-                    DateTime dateTime = DateTime.Parse(txtPostingDate.Text.Trim());
-                    string strDateTime = dateTime.ToString("yyyy/MM/dd");
-
-                    sql = "START TRANSACTION;";
-                    sql += "SET @date=DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');";
-                    sql += "SET @postingDate=DATE_FORMAT('" + strDateTime + "', '%Y-%m-%d');";
-                    sql += "SET @user_id=" + vars.user_id + ";";
-                    sql += "SET @newId=(SELECT CAST(lastNo+1 AS char(11)) FROM documents WHERE documentCode='DR');";
-                    sql += "SET @docId=CONCAT('" + vars.terminalId + "', @newId);";
-                    sql += "SET @totalPrcntDscnt=" + totalPrcntDscnt + ";";
-                    sql += "SET @totalAmtDscnt=" + totalAmtDscnt + ";";
-                    sql += "SET @netTotal=" + netTotal + ";";
-                    sql += "SET @grossTotal=" + grossTotal + ";";
-                    sql += "INSERT INTO deliveryreceipt(docId,warehouse,postingDate,totalPrcntDscnt,totalAmtDscnt,netTotal,grossTotal";
-                    if (txtRemarks1.Text.Trim() != "")
-                        sql += ",remarks1";
-                    if (txtRemarks2.Text.Trim() != "")
-                        sql += ",remarks2";
-                    sql += ",createDate,createdBy)";
-                    sql += " VALUES(@docId,'" + cboWarehouse.Text + "',@postingDate,@totalPrcntDscnt,@totalAmtDscnt,@netTotal,@grossTotal";
-                    if (txtRemarks1.Text.Trim() != "")
-                        sql += ",'" + txtRemarks1.Text.Trim() + "'";
-                    if (txtRemarks2.Text.Trim() != "")
-                        sql += ",'" + txtRemarks2.Text.Trim() + "'";
-                    sql += ",@date,@user_id);";
-
-                    rowCount = dgvItems.Rows.Count;
-
-                    for (i = 0; i < rowCount; i++)
-                    {
-                        if (!dgvItems.Rows[i].IsNewRow && dgvItems.Rows[i].Cells[0].Value.ToString() != "")
-                        {
-                            string varVendorCode, varVendorName, varItemCode, varDescription, varVatable, varBaseUoM, varWhCode;
-                            decimal varQty, varPrcntDscnt, varAmtDscnt, varNetPrchsPrc, varGrossPrchsPrc, varRowNetTotal, varRowGrossTotal, varQtyPrPrchsUoM, varRealNetPrchsPrc, varRealGrossPrchsPrc, varRealBsNetPrchsPrc, varRealBsGrossPrchsPrc, varBaseQty;
-
-                            varVendorCode = dgvItems.Rows[i].Cells["colVendorCode"].Value.ToString();
-                            varVendorName = dgvItems.Rows[i].Cells["colVendorName"].Value.ToString();
-                            varVendorName = varVendorName.Replace("'", "''");
-
-                            varItemCode = dgvItems.Rows[i].Cells["itemCode"].Value.ToString();
-                            varDescription = dgvItems.Rows[i].Cells["description"].Value.ToString();
-                            varQty = Decimal.Parse(dgvItems.Rows[i].Cells["Qty"].Value.ToString());
-                            varVatable = dgvItems.Rows[i].Cells["vatable"].Value.ToString();
-                            varQtyPrPrchsUoM = Decimal.Parse(dgvItems.Rows[i].Cells["qtyPrPrchsUoM"].Value.ToString());
-                            varBaseUoM = fx.null2EmptyStr(dgvItems.Rows[i].Cells["baseUoM"].Value);
-                            varRealBsNetPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realBsNetPrchsPrc"].Value.ToString());
-                            varRealBsGrossPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realBsGrossPrchsPrc"].Value.ToString());
-                            varRealNetPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realNetPrchsPrc"].Value.ToString());
-                            varRealGrossPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["realGrossPrchsPrc"].Value.ToString());
-                            varPrcntDscnt = Decimal.Parse(dgvItems.Rows[i].Cells["prcntDscnt"].Value.ToString());
-                            varGrossPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["grossPrchsPrc"].Value.ToString());
-                            varNetPrchsPrc = Decimal.Parse(dgvItems.Rows[i].Cells["netPrchsPrc"].Value.ToString());
-                            varAmtDscnt = Decimal.Parse(dgvItems.Rows[i].Cells["amtDscnt"].Value.ToString());
-                            varRowNetTotal = Decimal.Parse(dgvItems.Rows[i].Cells["rowNetTotal"].Value.ToString());
-                            varRowGrossTotal = Decimal.Parse(dgvItems.Rows[i].Cells["rowGrossTotal"].Value.ToString());
-
-                            varBaseQty = ((varBaseUoM == "N") ? varQtyPrPrchsUoM * varQty : varQty);
-
-                            // for the meantime we just deduct the qty from warehouse in the header so we just override it.
-                            // row warehouse is hidden for the meantime.
-                            varWhCode = cboWarehouse.Text;
-
-                            sql += "INSERT INTO deliveryreceipt_item(docId,indx,vendorCode,vendorName,itemCode,description,warehouse,vatable,realBsNetPrchsPrc,realBsGrossPrchsPrc,realNetPrchsPrc,realGrossPrchsPrc,qty,baseUoM,qtyPrPrchsUoM,prcntDscnt,amtDscnt,netPrchsPrc,grossPrchsPrc,rowNetTotal,rowGrossTotal)";
-                            sql += " VALUES(@docId," + i + ",'" + varVendorCode + "','" + varVendorName + "','" + varItemCode + "','" + varDescription + "','" + varWhCode + "','" + varVatable + "'," + varRealBsNetPrchsPrc + "," + varRealBsGrossPrchsPrc + "," + varRealNetPrchsPrc + "," + varRealGrossPrchsPrc + "," + varQty + ",'" + varBaseUoM + "'," + varQtyPrPrchsUoM + "," + varPrcntDscnt + "," + varAmtDscnt + "," + varNetPrchsPrc + "," + varGrossPrchsPrc + "," + varRowNetTotal + "," + varRowGrossTotal + ");";
-
-                            sql += "UPDATE businesspartner SET trans='Y' WHERE code='" + varVendorCode + "';";
-                            sql += "UPDATE itemmasterdata SET trans='Y' WHERE itemCode='" + varItemCode + "';";
-                            sql += "INSERT INTO item_warehouse(itemCode,whCode,inStock) VALUES('" + varItemCode + "','" + varWhCode + "'," + varBaseQty + ") ON DUPLICATE KEY UPDATE inStock=ifnull(inStock, 0)+" + varBaseQty + ";";
-                        }
-                    }
-                    sql += "UPDATE documents SET lastNo=CAST(@newId AS UNSIGNED) WHERE documentCode='DR';";
-                    sql += "COMMIT;";
-
-                    db = new database();
-                    if (db.executeNonQuery(sql, vars.MySqlConnection) > 0)
-                    {
-                        MessageBox.Show(this, "Saving has been successful", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        db = new database(); dt = new DataTable();
-                        dt = db.select("SELECT docId FROM deliveryreceipt ORDER BY id DESC LIMIT 1", vars.MySqlConnection);
-                        txtDeliveryReceiptNo.Text = dt.Rows[0][0].ToString();
-                        setCntrlToAfterSaveMode();
-                    }
-                      
-                     */
                 }
             }
         }
@@ -1072,6 +979,16 @@ namespace Check_up.forms
                 return false;
             }
 
+            // if vendor code column is not empty
+            for (i = 0; i < rowCount; i++ )
+            {
+                if (dgvItems.Rows[i].Cells["colVendorCode"].Value.ToString().Trim() == "")
+                {
+                    MessageBox.Show(this, "No Vendor Code at row #" + i++, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            
             return true;
         }
 

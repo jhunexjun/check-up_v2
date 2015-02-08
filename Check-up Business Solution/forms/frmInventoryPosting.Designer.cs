@@ -112,9 +112,9 @@
             // 
             this.dgvItems.AllowUserToAddRows = false;
             this.dgvItems.AllowUserToResizeRows = false;
-            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvItems.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -176,7 +176,7 @@
             this.colVariance.HeaderText = "Variance (pc)";
             this.colVariance.Name = "colVariance";
             this.colVariance.ReadOnly = true;
-            this.colVariance.Width = 88;
+            this.colVariance.Width = 87;
             // 
             // colPrchsPrc
             // 
@@ -283,6 +283,7 @@
             // 
             this.txtInvPostingNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtInvPostingNo.Location = new System.Drawing.Point(840, 24);
+            this.txtInvPostingNo.MaxLength = 21;
             this.txtInvPostingNo.Name = "txtInvPostingNo";
             this.txtInvPostingNo.Size = new System.Drawing.Size(108, 20);
             this.txtInvPostingNo.TabIndex = 0;

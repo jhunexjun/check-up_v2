@@ -8,11 +8,16 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Collections;
 using Check_up;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Check_upTests
 {
     public static class functions
     {
+        private static string path = "";
+        private static Hashtable ht;
+
         //used to read the database.ini file for the database login
         public static Hashtable readDbConfigFile()
         {
@@ -56,7 +61,7 @@ namespace Check_upTests
         }
 
         //we need to make sure that a fresh new copy of database schema is used.
-        public static bool dropAndCreateDatabase(Hashtable ht)
+        public static bool dropAndCreateDatabase(Hashtable hashTable)
         {
             string connectionString = "SERVER=" + ht["datasource"] + ";UID=" + ht["username"] + ";PASSWORD=" + ht["password"] + ";Allow User Variables=True";
             vars.MySqlConnection = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
@@ -78,10 +83,39 @@ namespace Check_upTests
             }
         }
 
+        public static bool dumpDatabase(Hashtable hashTable)
+        {
+            ht = hashTable;
+            path = @"C:\\Users\\Jhunex\\Documents\\Visual Studio 2013\\Projects\\pmorcilladev\\Check-up Business Solution\\databases\\0schema.sql";
+            
+            StreamWriter file = new StreamWriter(path);
+            ProcessStartInfo proc = new ProcessStartInfo();
+            proc.FileName = "C:\\xampp\\mysql\\bin\\mysqldump";
+            proc.RedirectStandardInput = false;
+            proc.RedirectStandardOutput = true;
+            string cmd = string.Format(@" -d -u{0} -p{1} -h{2} {3}", ht["username"], ht["password"], ht["datasource"], "check-up_pmorcilladev");
+            proc.Arguments = cmd;
+            proc.UseShellExecute = false;
+            proc.CreateNoWindow = true;
+            Process p = Process.Start(proc);
+            string res = p.StandardOutput.ReadToEnd();
+
+            string pattern = " AUTO_INCREMENT=[0-9]+";
+            string replacement = "";
+            Regex regEx = new Regex(pattern);
+            res = regEx.Replace(res, replacement);
+
+            file.Write(res);
+            p.WaitForExit();
+            file.Close();
+            p.Close();
+            
+            return true;
+        }
+
         //this recreates database.
         public static bool reloadDatabase() {
             string query;
-            string path = @"C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\databases\0schema.sql";
 
             using (StreamReader sr = new StreamReader(path))
                 query = sr.ReadToEnd();

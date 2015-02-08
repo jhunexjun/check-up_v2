@@ -1,6 +1,6 @@
 ﻿namespace Check_up.forms
 {
-    partial class frmARInvoice
+    partial class frmSalesInvoice
     {
         /// <summary>
         /// Required designer variable.
@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmARInvoice));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSalesInvoice));
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnFind = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -137,6 +137,7 @@
             // txtCustomerCode
             // 
             this.txtCustomerCode.Location = new System.Drawing.Point(126, 27);
+            this.txtCustomerCode.MaxLength = 15;
             this.txtCustomerCode.Name = "txtCustomerCode";
             this.txtCustomerCode.Size = new System.Drawing.Size(100, 20);
             this.txtCustomerCode.TabIndex = 2;
@@ -146,6 +147,7 @@
             // 
             this.txtSalesInvoiceNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSalesInvoiceNo.Location = new System.Drawing.Point(856, 30);
+            this.txtSalesInvoiceNo.MaxLength = 21;
             this.txtSalesInvoiceNo.Name = "txtSalesInvoiceNo";
             this.txtSalesInvoiceNo.Size = new System.Drawing.Size(81, 20);
             this.txtSalesInvoiceNo.TabIndex = 0;
@@ -163,6 +165,7 @@
             // txtCustomerName
             // 
             this.txtCustomerName.Location = new System.Drawing.Point(126, 50);
+            this.txtCustomerName.MaxLength = 60;
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(302, 20);
             this.txtCustomerName.TabIndex = 4;
@@ -181,9 +184,9 @@
             this.dgvItems.AllowUserToAddRows = false;
             this.dgvItems.AllowUserToDeleteRows = false;
             this.dgvItems.AllowUserToResizeRows = false;
-            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvItems.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -229,8 +232,8 @@
             // 
             // vatable
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.vatable.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.vatable.DefaultCellStyle = dataGridViewCellStyle15;
             this.vatable.FillWeight = 112.9661F;
             this.vatable.HeaderText = "Vatable";
             this.vatable.MaxInputLength = 1;
@@ -240,10 +243,10 @@
             // 
             // Qty
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N6";
-            dataGridViewCellStyle2.NullValue = "0.00";
-            this.Qty.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle16.Format = "N6";
+            dataGridViewCellStyle16.NullValue = "0.00";
+            this.Qty.DefaultCellStyle = dataGridViewCellStyle16;
             this.Qty.FillWeight = 59.72825F;
             this.Qty.HeaderText = "Qty";
             this.Qty.Name = "Qty";
@@ -261,8 +264,8 @@
             // 
             // qtyPrSaleUoM
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.qtyPrSaleUoM.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.qtyPrSaleUoM.DefaultCellStyle = dataGridViewCellStyle17;
             this.qtyPrSaleUoM.FillWeight = 130.6474F;
             this.qtyPrSaleUoM.HeaderText = "Qty/Sale UoM";
             this.qtyPrSaleUoM.Name = "qtyPrSaleUoM";
@@ -270,8 +273,8 @@
             // 
             // saleUoM
             // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.saleUoM.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.saleUoM.DefaultCellStyle = dataGridViewCellStyle18;
             this.saleUoM.FillWeight = 107.8605F;
             this.saleUoM.HeaderText = "Sale UoM";
             this.saleUoM.Name = "saleUoM";
@@ -280,11 +283,11 @@
             // 
             // realBsNetSalePrc
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle5.Format = "N6";
-            dataGridViewCellStyle5.NullValue = "0.00";
-            this.realBsNetSalePrc.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle19.Format = "N6";
+            dataGridViewCellStyle19.NullValue = "0.00";
+            this.realBsNetSalePrc.DefaultCellStyle = dataGridViewCellStyle19;
             this.realBsNetSalePrc.FillWeight = 93.64573F;
             this.realBsNetSalePrc.HeaderText = "Real Base Net Sale Price";
             this.realBsNetSalePrc.Name = "realBsNetSalePrc";
@@ -293,11 +296,11 @@
             // 
             // realBsGrossSalePrc
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle6.Format = "N6";
-            dataGridViewCellStyle6.NullValue = "0.00";
-            this.realBsGrossSalePrc.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle20.Format = "N6";
+            dataGridViewCellStyle20.NullValue = "0.00";
+            this.realBsGrossSalePrc.DefaultCellStyle = dataGridViewCellStyle20;
             this.realBsGrossSalePrc.FillWeight = 102.3697F;
             this.realBsGrossSalePrc.HeaderText = "Real Base Gross Sale Price";
             this.realBsGrossSalePrc.Name = "realBsGrossSalePrc";
@@ -306,11 +309,11 @@
             // 
             // netPrchsPrc
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle7.Format = "N6";
-            dataGridViewCellStyle7.NullValue = "0.00";
-            this.netPrchsPrc.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle21.Format = "N6";
+            dataGridViewCellStyle21.NullValue = "0.00";
+            this.netPrchsPrc.DefaultCellStyle = dataGridViewCellStyle21;
             this.netPrchsPrc.FillWeight = 110.2788F;
             this.netPrchsPrc.HeaderText = "Net Pur. Price";
             this.netPrchsPrc.Name = "netPrchsPrc";
@@ -319,11 +322,11 @@
             // 
             // grossPrchsPrc
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle8.Format = "N6";
-            dataGridViewCellStyle8.NullValue = "0.00";
-            this.grossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle22.Format = "N6";
+            dataGridViewCellStyle22.NullValue = "0.00";
+            this.grossPrchsPrc.DefaultCellStyle = dataGridViewCellStyle22;
             this.grossPrchsPrc.FillWeight = 110.7466F;
             this.grossPrchsPrc.HeaderText = "Gross Pur. Price";
             this.grossPrchsPrc.Name = "grossPrchsPrc";
@@ -332,11 +335,11 @@
             // 
             // netSalePrc
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle9.Format = "N6";
-            dataGridViewCellStyle9.NullValue = "0.00";
-            this.netSalePrc.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle23.Format = "N6";
+            dataGridViewCellStyle23.NullValue = "0.00";
+            this.netSalePrc.DefaultCellStyle = dataGridViewCellStyle23;
             this.netSalePrc.FillWeight = 79.63597F;
             this.netSalePrc.HeaderText = "Net Sale Price";
             this.netSalePrc.Name = "netSalePrc";
@@ -345,11 +348,11 @@
             // 
             // grossSalePrc
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle10.Format = "N6";
-            dataGridViewCellStyle10.NullValue = "0.00";
-            this.grossSalePrc.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle24.Format = "N6";
+            dataGridViewCellStyle24.NullValue = "0.00";
+            this.grossSalePrc.DefaultCellStyle = dataGridViewCellStyle24;
             this.grossSalePrc.FillWeight = 87.7643F;
             this.grossSalePrc.HeaderText = "Gross Sale Price";
             this.grossSalePrc.Name = "grossSalePrc";
@@ -358,10 +361,10 @@
             // 
             // prcntDscnt
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "N6";
-            dataGridViewCellStyle11.NullValue = "0.00";
-            this.prcntDscnt.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle25.Format = "N6";
+            dataGridViewCellStyle25.NullValue = "0.00";
+            this.prcntDscnt.DefaultCellStyle = dataGridViewCellStyle25;
             this.prcntDscnt.FillWeight = 83.12262F;
             this.prcntDscnt.HeaderText = "% Discnt";
             this.prcntDscnt.Name = "prcntDscnt";
@@ -369,10 +372,10 @@
             // 
             // amtDscnt
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.Format = "N6";
-            dataGridViewCellStyle12.NullValue = "0.00";
-            this.amtDscnt.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle26.Format = "N6";
+            dataGridViewCellStyle26.NullValue = "0.00";
+            this.amtDscnt.DefaultCellStyle = dataGridViewCellStyle26;
             this.amtDscnt.FillWeight = 104.8852F;
             this.amtDscnt.HeaderText = "Amt Discount";
             this.amtDscnt.Name = "amtDscnt";
@@ -380,11 +383,11 @@
             // 
             // rowNetTotal
             // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle13.Format = "N6";
-            dataGridViewCellStyle13.NullValue = "0.00";
-            this.rowNetTotal.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle27.Format = "N6";
+            dataGridViewCellStyle27.NullValue = "0.00";
+            this.rowNetTotal.DefaultCellStyle = dataGridViewCellStyle27;
             this.rowNetTotal.FillWeight = 76.35129F;
             this.rowNetTotal.HeaderText = "Row Net Total";
             this.rowNetTotal.Name = "rowNetTotal";
@@ -393,11 +396,11 @@
             // 
             // rowGrossTotal
             // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle14.Format = "N6";
-            dataGridViewCellStyle14.NullValue = "0.00";
-            this.rowGrossTotal.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle28.Format = "N6";
+            dataGridViewCellStyle28.NullValue = "0.00";
+            this.rowGrossTotal.DefaultCellStyle = dataGridViewCellStyle28;
             this.rowGrossTotal.FillWeight = 84.17857F;
             this.rowGrossTotal.HeaderText = "Row Gross Total";
             this.rowGrossTotal.Name = "rowGrossTotal";
