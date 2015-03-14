@@ -126,6 +126,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classes\BackupDatabase.cs" />
     <Compile Include="classes\BCrypt.cs">
       <SubType>Code</SubType>
     </Compile>

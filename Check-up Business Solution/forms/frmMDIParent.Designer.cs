@@ -75,6 +75,8 @@
             this.transmitRecordsToServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.downloadRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.backupDatabaseRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,7 +208,7 @@
             this.acToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
             this.acToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("acToolStripMenuItem.Image")));
             this.acToolStripMenuItem.Name = "acToolStripMenuItem";
-            this.acToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.acToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.acToolStripMenuItem.Text = "Sales Invoice";
             this.acToolStripMenuItem.Click += new System.EventHandler(this.acToolStripMenuItem_Click);
             // 
@@ -215,7 +217,7 @@
             this.returnToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
             this.returnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("returnToolStripMenuItem.Image")));
             this.returnToolStripMenuItem.Name = "returnToolStripMenuItem";
-            this.returnToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.returnToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.returnToolStripMenuItem.Text = "Sales Return";
             this.returnToolStripMenuItem.ToolTipText = "Use this document to send the items back from customer.";
             this.returnToolStripMenuItem.Click += new System.EventHandler(this.returnToolStripMenuItem_Click);
@@ -241,6 +243,7 @@
             this.goodsReceiptToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.goodsReceiptToolStripMenuItem.Text = "Purchase Order";
             this.goodsReceiptToolStripMenuItem.ToolTipText = "Use to order items from a vendor.";
+            this.goodsReceiptToolStripMenuItem.Visible = false;
             this.goodsReceiptToolStripMenuItem.Click += new System.EventHandler(this.poToolStripMenuItem_Click);
             // 
             // toolStripMenuItem6
@@ -251,6 +254,7 @@
             this.toolStripMenuItem6.Size = new System.Drawing.Size(177, 22);
             this.toolStripMenuItem6.Text = "Goods Receipt PO";
             this.toolStripMenuItem6.ToolTipText = "You create this doucment when you receive goods from the vendor.";
+            this.toolStripMenuItem6.Visible = false;
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // deliveryReceiptToolStripMenuItem
@@ -337,6 +341,7 @@
             this.toolStripMenuItem8.Text = "Goods Return";
             this.toolStripMenuItem8.ToolTipText = "The goods return document is used to return delivered goods to vendors or to reve" +
     "rse a purchasing transaction.";
+            this.toolStripMenuItem8.Visible = false;
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // toolStripSeparator4
@@ -405,6 +410,7 @@
             this.purchaseOrderToolStripMenuItem.Name = "purchaseOrderToolStripMenuItem";
             this.purchaseOrderToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.purchaseOrderToolStripMenuItem.Text = "Purchase Order";
+            this.purchaseOrderToolStripMenuItem.Visible = false;
             this.purchaseOrderToolStripMenuItem.Click += new System.EventHandler(this.purchaseOrderToolStripMenuItem_Click);
             // 
             // goodsReceiptPOToolStripMenuItem
@@ -414,6 +420,7 @@
             this.goodsReceiptPOToolStripMenuItem.Name = "goodsReceiptPOToolStripMenuItem";
             this.goodsReceiptPOToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.goodsReceiptPOToolStripMenuItem.Text = "Goods Receipt PO";
+            this.goodsReceiptPOToolStripMenuItem.Visible = false;
             this.goodsReceiptPOToolStripMenuItem.Click += new System.EventHandler(this.goodsReceiptPOToolStripMenuItem_Click);
             // 
             // drTtoolStripMenuItem9
@@ -490,7 +497,9 @@
             this.uploadRecordsToolStripMenuItem,
             this.transmitRecordsToServerToolStripMenuItem,
             this.toolStripSeparator1,
-            this.downloadRecordsToolStripMenuItem});
+            this.downloadRecordsToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.backupDatabaseRecordsToolStripMenuItem});
             this.toolsToolStripMenuItem.Enabled = false;
             this.toolsToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
@@ -527,6 +536,19 @@
             this.downloadRecordsToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.downloadRecordsToolStripMenuItem.Text = "Import Database Records";
             this.downloadRecordsToolStripMenuItem.Click += new System.EventHandler(this.downloadRecordsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(245, 6);
+            // 
+            // backupDatabaseRecordsToolStripMenuItem
+            // 
+            this.backupDatabaseRecordsToolStripMenuItem.Name = "backupDatabaseRecordsToolStripMenuItem";
+            this.backupDatabaseRecordsToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.backupDatabaseRecordsToolStripMenuItem.Text = "Backup Database Records";
+            this.backupDatabaseRecordsToolStripMenuItem.ToolTipText = "Do this everyday after office hours.";
+            this.backupDatabaseRecordsToolStripMenuItem.Click += new System.EventHandler(this.backupDatabaseRecordsToolStripMenuItem_Click);
             // 
             // windowsToolStripMenuItem
             // 
@@ -646,7 +668,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadRecordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadRecordsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem transmitRecordsToServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salesReportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem purchaseOrderToolStripMenuItem;
@@ -666,6 +687,9 @@
         private System.Windows.Forms.ToolStripMenuItem drTtoolStripMenuItem9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem inventoryPostingToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem backupDatabaseRecordsToolStripMenuItem;
     }
 }
 

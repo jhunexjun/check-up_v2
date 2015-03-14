@@ -86,11 +86,11 @@ namespace Check_upTests
         public static bool dumpDatabase(Hashtable hashTable)
         {
             ht = hashTable;
-            path = @"C:\\Users\\Jhunex\\Documents\\Visual Studio 2013\\Projects\\pmorcilladev\\Check-up Business Solution\\databases\\0schema.sql";
+            path = @"C:\Users\Jhunex\Documents\Visual Studio 2013\Projects\pmorcilladev\Check-up Business Solution\databases\0schema.sql";
             
             StreamWriter file = new StreamWriter(path);
             ProcessStartInfo proc = new ProcessStartInfo();
-            proc.FileName = "C:\\xampp\\mysql\\bin\\mysqldump";
+            proc.FileName = @"C:\xampp\mysql\bin\mysqldump";
             proc.RedirectStandardInput = false;
             proc.RedirectStandardOutput = true;
             string cmd = string.Format(@" -d -u{0} -p{1} -h{2} {3}", ht["username"], ht["password"], ht["datasource"], "check-up_pmorcilladev");

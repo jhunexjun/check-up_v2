@@ -10,6 +10,9 @@ using System.IO;
 using System.Xml;
 using System.Net;
 using System.Diagnostics;
+using Check_up.classes;
+using System.Collections;
+using MySql.Data.MySqlClient;
 
 namespace Check_up.forms
 {
@@ -56,13 +59,13 @@ namespace Check_up.forms
             this.Text = Application.ProductName + " 2014";
 
             // check the expiration of the license
-            DateTime dateTimeExpiration = new DateTime(2015, 04, 30, 0, 0, 0);
+            DateTime dateTimeExpiration = new DateTime(2015, 04, 01, 0, 0, 0);
             DateTime currentDate = DateTime.Today.Date;
             int i = DateTime.Compare(dateTimeExpiration, currentDate);
             if (i < 0)
             {
-                forceCloseApp = true;
                 MessageBox.Show(this, "License has already been expired. Please contact the programmer.", "Expired license", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                forceCloseApp = true;
                 Application.Exit();
             }
 
@@ -112,9 +115,7 @@ namespace Check_up.forms
             foreach (Form frm in fc)
             {
                 if (frm.Name == frmNameProperty)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -401,6 +402,49 @@ namespace Check_up.forms
             Form f = new frmInventoryPostingReport();
             f.MdiParent = this;
             f.Show();
+        }
+
+        private void backupDatabaseRecordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(this, "Do you want to backup database now?", "Backup Database", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.No)
+                return;
+
+            Hashtable ht = new Hashtable();
+
+            try
+            {
+                using (StreamReader sr = new StreamReader("check-up.ini"))
+                {
+                    string line; int position;
+
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        position = line.IndexOf("=");
+                        if (line.StartsWith("datasource"))
+                            ht["datasource"] = line.Substring(position + 1);
+                        if (line.StartsWith("database"))
+                            ht["database"] = line.Substring(position + 1);
+                        if (line.StartsWith("username"))
+                            ht["username"] = line.Substring(position + 1);
+                        if (line.StartsWith("password"))
+                        {
+                            ht["password"] = line.Substring(position + 1);
+                            ht["password"] = CryptorEngine.Decrypt(ht["password"].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            BackupDatabase dbBackup = new BackupDatabase();
+            string timeStamp = fx.getTimeStamp(DateTime.Now);
+
+            string absolutePath = Application.StartupPath + @"\database\" + timeStamp + ".sql";
+            if (dbBackup.backupDatabase(ht, absolutePath))
+                MessageBox.Show(this, "Successfully dumped database records to " + absolutePath + ".", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
