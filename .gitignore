@@ -3,6 +3,7 @@
 0schema.sql
 backup
 test
+database/*
 
 References
 *.xls
