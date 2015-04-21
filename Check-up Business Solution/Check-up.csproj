@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="classes\database.cs" />
     <Compile Include="classes\DBConnect.cs" />
+    <Compile Include="classes\LicenseExpiry.cs" />
     <Compile Include="classes\SalesInvoice.cs" />
     <Compile Include="classes\Users.cs" />
     <Compile Include="classes\BusinessPartner.cs" />

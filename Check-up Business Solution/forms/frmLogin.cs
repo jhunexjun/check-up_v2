@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using MySql.Data.MySqlClient;
 using System.IO;
+using Check_up.classes;
 
 namespace Check_up.forms
 {
@@ -72,7 +73,16 @@ namespace Check_up.forms
                 }
                                 
                 if (connected == true)
-                {
+                {                 
+                    LicenseExpiry license = new LicenseExpiry();
+                    if (license.expiredLicense())
+                    {
+                        MessageBox.Show(this, "License has already been expired. Please contact the programmer.", "Expired license", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        frmMDIParent.forceCloseApp = true;
+                        Application.Exit();
+                    }
+
+
                     database query = new database();
                     string sql = "SET @username='" + txtUsername.Text.Trim() + "';";
                     sql += "SELECT username,password,deactivated,role FROM users where username=@username;";

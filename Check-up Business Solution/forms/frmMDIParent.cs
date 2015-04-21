@@ -18,7 +18,7 @@ namespace Check_up.forms
 {
     public partial class frmMDIParent : Form
     {
-        bool forceCloseApp = false;
+        public static bool forceCloseApp = false;
 
         public frmMDIParent()
         {
@@ -56,18 +56,7 @@ namespace Check_up.forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = Application.ProductName + " 2014";
-
-            // check the expiration of the license
-            DateTime dateTimeExpiration = new DateTime(2015, 04, 01, 0, 0, 0);
-            DateTime currentDate = DateTime.Today.Date;
-            int i = DateTime.Compare(dateTimeExpiration, currentDate);
-            if (i < 0)
-            {
-                MessageBox.Show(this, "License has already been expired. Please contact the programmer.", "Expired license", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                forceCloseApp = true;
-                Application.Exit();
-            }
+            this.Text = Application.ProductName + " 2014";            
 
             loginToolStripMenuItem_Click(sender, e);
         }

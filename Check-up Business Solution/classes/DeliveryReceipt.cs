@@ -7,7 +7,6 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.Windows.Forms;
 using Check_up.classes;
-using MySql.Data.MySqlClient;
 
 namespace Check_up.classes
 {
