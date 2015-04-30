@@ -37,9 +37,12 @@ namespace Check_up.forms
             string pw = txtPw.Text.Trim();
             pw = CryptorEngine.Encrypt(pw);
 
+            string expiryDate = "2015-05-07";
+            expiryDate = CryptorEngine.Encrypt(expiryDate);
+
             if ((datasource != "") && (database != "") && (username != "") && (pw != ""))
             {
-                string[] lines = { "[database]", ";client configuration", "datasource=" + datasource, "database=" + database, "username=" + username, "password=" + pw, "\n;default user image directory", "user_image_location=" };
+                string[] lines = { "[database]", ";client configuration", "datasource=" + datasource, "database=" + database, "username=" + username, "password=" + pw, "\n;default user image directory", "user_image_location=", "\n;lincense_expiry=" + expiryDate };
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(Application.StartupPath + "\\check-up.ini"))
                 {
                     foreach (string line in lines)
